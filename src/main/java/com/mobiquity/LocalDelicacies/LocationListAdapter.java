@@ -41,8 +41,8 @@ public class LocationListAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView( int i, View view, ViewGroup viewGroup )
+    public View getView( int position, View convertView, ViewGroup viewGroup )
     {
-        return null;
+        return convertView;
     }
 }

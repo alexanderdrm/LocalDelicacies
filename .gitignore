@@ -1,6 +1,7 @@
 build.xml
 gen/*
 local.properties
+project.properties
 out/*
 target/*
 tmp/*

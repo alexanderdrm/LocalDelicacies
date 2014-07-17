@@ -1,24 +1,39 @@
 package com.mobiquity.LocalDelicacies;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.junit.Assert.*;
-@RunWith(RobolectricTestRunner.class)
-public class LocationListActivityTest {
 
+@RunWith (RobolectricTestRunner.class)
+public class LocationListActivityTest
+{
+
+    private LocationListActivity activity;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        activity = Robolectric.buildActivity( LocationListActivity.class )
+                              .create()
+                              .start()
+                              .resume()
+                              .get();
+    }
 
     @Test
-    public void shouldNotBeNull() throws Exception {
-        LocationListActivity activity = Robolectric.buildActivity(LocationListActivity.class)
-                .create()
-                .start()
-                .resume()
-                .get();
+    public void shouldNotBeNull() throws Exception
+    {
+        assertNotNull( activity );
+    }
 
-        assertNotNull(activity);
-
+    @Test
+    public void shouldHaveAListView() throws Exception
+    {
+        assertViewIsVisible( activity.findViewById( R.id.location_list_view ) );
     }
 }

@@ -135,8 +135,7 @@ public class LocationListAdapterTest
             Location currentLocation = testData.get( index );
             boolean originalLovedValue = currentLocation.isLoved();
             lovedButton.performClick();
-
-            if ( currentLocation.isLoved() )
+            if ( originalLovedValue)
             {
                 assertThat( lovedButton.getDrawable(),
                             equalTo( getDrawable( R.drawable.no_love ) ) );
@@ -146,8 +145,6 @@ public class LocationListAdapterTest
                 assertThat( lovedButton.getDrawable(),
                             equalTo( getDrawable( R.drawable.love ) ) );
             }
-
-            assertNotSame( originalLovedValue, currentLocation.isLoved() );
         }
     }
 

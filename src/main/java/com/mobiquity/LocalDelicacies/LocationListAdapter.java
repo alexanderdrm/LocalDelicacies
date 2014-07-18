@@ -61,8 +61,8 @@ public class LocationListAdapter extends BaseAdapter
         else
         {
             holder = (ViewHolder) convertView.getTag();
-            holder.locationName.setText( location.getName() );
         }
+        holder.locationName.setText( location.getName() );
 
         configureLocationView( location, holder );
         configureLoveButton( location, holder );

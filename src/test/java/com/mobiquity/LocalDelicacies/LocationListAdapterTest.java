@@ -111,11 +111,17 @@ public class LocationListAdapterTest
             View view = getViewById( index );
             ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
             assertViewIsVisible( lovedButton );
-            Location currentLocation = testData.get(index);
-            if(currentLocation.isLoved())
-                assertThat(lovedButton.getDrawable(), equalTo( getDrawable( R.drawable.love ) ));
+            Location currentLocation = testData.get( index );
+            if ( currentLocation.isLoved() )
+            {
+                assertThat( lovedButton.getDrawable(),
+                            equalTo( getDrawable( R.drawable.love ) ) );
+            }
             else
-                assertThat(lovedButton.getDrawable(), equalTo(getDrawable(R.drawable.no_love)));
+            {
+                assertThat( lovedButton.getDrawable(),
+                            equalTo( getDrawable( R.drawable.no_love ) ) );
+            }
         }
     }
 
@@ -149,7 +155,7 @@ public class LocationListAdapterTest
     {
         testData = new ArrayList<Location>();
         testData.add( new Location( "hello", "goodbye" ) );
-        testData.add( new Location( "yo", "lo", true) );
+        testData.add( new Location( "yo", "lo", true ) );
 
         return testData;
     }

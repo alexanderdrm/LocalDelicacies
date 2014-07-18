@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,11 +31,7 @@ public class LocationListAdapterTest
     @Before
     public void setUp() throws Exception
     {
-        activity = Robolectric.buildActivity( Activity.class )
-                              .create()
-                              .start()
-                              .resume()
-                              .get();
+        activity = FragmentUtil.createActivity();
 
         testData = generateTestData();
         locationListAdapter = new LocationListAdapter( activity, testData );
@@ -49,7 +46,7 @@ public class LocationListAdapterTest
     @Test
     public void getCount_shouldReturnCorrectCount()
     {
-        assertTrue( locationListAdapter.getCount() == testData.size() );
+        assertTrue(locationListAdapter.getCount() == testData.size());
     }
 
     @Test
@@ -67,7 +64,7 @@ public class LocationListAdapterTest
     {
         for ( int index = 0; index < testData.size(); index++ )
         {
-            assertThat( (int) locationListAdapter.getItemId( index ),
+            assertThat( (int) locationListAdapter.getItemId(index),
                         equalTo( index ) );
         }
     }
@@ -77,7 +74,7 @@ public class LocationListAdapterTest
     {
         for ( int index = 0; index < testData.size(); index++ )
         {
-            assertNotNull( getViewById( index ) );
+            assertNotNull(getViewById(index));
         }
     }
 
@@ -158,7 +155,7 @@ public class LocationListAdapterTest
             Location currentLocation = testData.get( index );
             boolean originalLovedValue = currentLocation.isLoved();
             lovedButton.performClick();
-            assertNotSame( originalLovedValue, currentLocation.isLoved() );
+            assertNotSame(originalLovedValue, currentLocation.isLoved());
         }
     }
 

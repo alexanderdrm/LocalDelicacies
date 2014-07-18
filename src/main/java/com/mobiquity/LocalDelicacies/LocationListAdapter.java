@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class LocationListAdapter extends BaseAdapter
 {
-    private Context           theContext;
+    private Context             theContext;
     private ArrayList<Location> locationList;
 
     public LocationListAdapter( Context theContext,
@@ -47,8 +47,9 @@ public class LocationListAdapter extends BaseAdapter
     public View getView( int position, View convertView, ViewGroup parent )
     {
         LayoutInflater inflater = (LayoutInflater) theContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        ViewHolder holder;
+        Location location = locationList.get( position );
 
+        ViewHolder holder;
         if ( convertView == null )
         {
             convertView = inflater.inflate( R.layout.list_location,
@@ -60,22 +61,46 @@ public class LocationListAdapter extends BaseAdapter
         else
         {
             holder = (ViewHolder) convertView.getTag();
-            holder.locationName.setText(locationList.get(position).getName());
+            holder.locationName.setText( location.getName() );
         }
 
-        configureLocationView(locationList.get(position), holder);
+        configureLocationView( location, holder );
+        configureLoveButton( location, holder );
+
+
         return convertView;
     }
 
-    private void configureLocationView(Location location, ViewHolder holder)
+    private void configureLoveButton( final Location location,
+                                      final ViewHolder holder )
     {
-        if(location.isLoved())
+        holder.lovedButton.setOnClickListener( new View.OnClickListener()
         {
-            holder.lovedButton.setImageDrawable(theContext.getResources().getDrawable(R.drawable.love));
+            @Override
+            public void onClick( View v )
+            {
+                if ( location.isLoved() )
+                {
+                    holder.lovedButton.setImageResource( R.drawable.no_love );
+                }
+                else
+                {
+                    holder.lovedButton.setImageResource( R.drawable.love );
+                }
+                location.setLoved( !location.isLoved() );
+            }
+        } );
+    }
+
+    private void configureLocationView( Location location, ViewHolder holder )
+    {
+        if ( location.isLoved() )
+        {
+            holder.lovedButton.setImageDrawable( theContext.getResources().getDrawable( R.drawable.love ) );
         }
         else
         {
-            holder.lovedButton.setImageDrawable(theContext.getResources().getDrawable(R.drawable.no_love));
+            holder.lovedButton.setImageDrawable( theContext.getResources().getDrawable( R.drawable.no_love ) );
         }
     }
 

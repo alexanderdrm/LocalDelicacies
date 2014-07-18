@@ -131,8 +131,37 @@ public class LocationListAdapterTest
         for ( int index = 0; index < testData.size(); index++ )
         {
             View view = getViewById( index );
-            View lovedButton = view.findViewById( R.id.loved_button );
-            assertViewIsVisible( lovedButton );
+            ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
+            Location currentLocation = testData.get( index );
+            boolean originalLovedValue = currentLocation.isLoved();
+            lovedButton.performClick();
+
+            if ( currentLocation.isLoved() )
+            {
+                assertThat( lovedButton.getDrawable(),
+                            equalTo( getDrawable( R.drawable.no_love ) ) );
+            }
+            else
+            {
+                assertThat( lovedButton.getDrawable(),
+                            equalTo( getDrawable( R.drawable.love ) ) );
+            }
+
+            assertNotSame( originalLovedValue, currentLocation.isLoved() );
+        }
+    }
+
+    @Test
+    public void getView_loveButtonShouldSwapLoveValue() throws Exception
+    {
+        for ( int index = 0; index < testData.size(); index++ )
+        {
+            View view = getViewById( index );
+            ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
+            Location currentLocation = testData.get( index );
+            boolean originalLovedValue = currentLocation.isLoved();
+            lovedButton.performClick();
+            assertNotSame( originalLovedValue, currentLocation.isLoved() );
         }
     }
 

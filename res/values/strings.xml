@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocalDelicacies</string>
+    <string name="app_name">LocalDelicacies</string><string name="LOVE_THIS_BUTTON">Love this city button</string>
 </resources>

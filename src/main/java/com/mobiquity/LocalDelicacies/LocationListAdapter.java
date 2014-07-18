@@ -69,6 +69,7 @@ public class LocationListAdapter extends BaseAdapter
     {
         public TextView  locationName;
         public ImageView locationImage;
+        public ImageView lovedButton;
 
         public static ViewHolder createViewHolder( View theView )
         {
@@ -76,6 +77,7 @@ public class LocationListAdapter extends BaseAdapter
 
             holder.locationName = (TextView) theView.findViewById( R.id.location_name );
             holder.locationImage = (ImageView) theView.findViewById( R.id.location_image );
+            holder.lovedButton = (ImageView) theView.findViewById( R.id.loved_button );
 
             return holder;
         }

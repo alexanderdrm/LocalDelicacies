@@ -2,6 +2,7 @@ package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
+import static com.mobiquity.LocalDelicacies.support.ResourceLocator.getDrawable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -81,22 +83,46 @@ public class LocationListAdapterTest
 
     private View createRecycledView()
     {
-        View theView = View.inflate(activity, R.layout.list_location, null);
-        LocationListAdapter.ViewHolder holder = LocationListAdapter.ViewHolder.createViewHolder(theView);
-        theView.setTag(holder);
+        View theView = View.inflate( activity, R.layout.list_location, null );
+        LocationListAdapter.ViewHolder holder = LocationListAdapter.ViewHolder.createViewHolder( theView );
+        theView.setTag( holder );
         return theView;
     }
 
     @Test
-    public void getView_shouldBeConfigured() throws Exception {
-    for ( int index = 0; index < testData.size(); index++ )
+    public void getView_shouldBeConfigured() throws Exception
+    {
+        for ( int index = 0; index < testData.size(); index++ )
         {
             View view = getViewById( index );
             TextView locationName = (TextView) view.findViewById( R.id.location_name );
             assertViewIsVisible( locationName );
             assertThat( locationName.getText().toString(),
                         equalTo( testData.get( index ).getName() ) );
-            assertViewIsVisible(view.findViewById(R.id.location_image));
+            assertViewIsVisible( view.findViewById( R.id.location_image ) );
+        }
+    }
+
+    @Test
+    public void getView_shouldHaveLoveButton() throws Exception
+    {
+        for ( int index = 0; index < testData.size(); index++ )
+        {
+            View view = getViewById( index );
+            ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
+            assertViewIsVisible( lovedButton );
+            assertThat(lovedButton.getDrawable(), equalTo( getDrawable( R.drawable.love ) ));
+        }
+    }
+
+    @Test
+    public void getView_loveButtonShouldSwapImages() throws Exception
+    {
+        for ( int index = 0; index < testData.size(); index++ )
+        {
+            View view = getViewById( index );
+            View lovedButton = view.findViewById( R.id.loved_button );
+            assertViewIsVisible( lovedButton );
         }
     }
 

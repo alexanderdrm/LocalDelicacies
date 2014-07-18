@@ -26,6 +26,13 @@ public class LocationListActivity extends Activity {
         ArrayList<Location> list = new ArrayList<Location>();
         list.add(new Location("Las Vegas", null));
         list.add(new Location("Nevada", null, true));
+        list.add(new Location("Philly", null, true));
+        list.add(new Location("Gainseville", null, true));
+        list.add(new Location("Tallahassee", null, true));
+        list.add(new Location("Amsterdam", null, true));
+        list.add(new Location("Oaxaca", null, true));
+        list.add(new Location("Portland", null, true));
+        list.add(new Location("London", null, true));
         return list;
     }
 }

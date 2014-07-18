@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/location_list_view"
+    <fragment
+        android:id="@+id/location_list_fragment"
+        android:name="com.mobiquity.LocalDelicacies.LocationListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

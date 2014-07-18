@@ -32,6 +32,13 @@ public class LocationListActivityTest
     }
 
     @Test
+    public void shouldHaveLocationListFragment() throws Exception
+    {
+        activity.getFragmentManager().findFragmentById( R.id.location_list_fragment );
+
+    }
+
+    @Test
     public void shouldHaveAListView() throws Exception
     {
         assertViewIsVisible( activity.findViewById( R.id.location_list_view ) );

@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class LocationListAdapter extends BaseAdapter
 {
     private Context           theContext;
-    private ArrayList<String> locationList;
+    private ArrayList<Location> locationList;
 
     public LocationListAdapter( Context theContext,
-                                ArrayList<String> locationList )
+                                ArrayList<Location> locationList )
     {
         this.theContext = theContext;
         this.locationList = locationList;
@@ -46,9 +46,9 @@ public class LocationListAdapter extends BaseAdapter
     @Override
     public View getView( int position, View convertView, ViewGroup parent )
     {
-        LayoutInflater inflater = (LayoutInflater) theContext.getSystemService(
-        Context.LAYOUT_INFLATER_SERVICE );
+        LayoutInflater inflater = (LayoutInflater) theContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         ViewHolder holder;
+
         if ( convertView == null )
         {
             convertView = inflater.inflate( R.layout.list_location,

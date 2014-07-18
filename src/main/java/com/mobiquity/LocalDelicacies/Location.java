@@ -7,11 +7,19 @@ public class Location
 {
     private String  name;
     private String imageURL;
+    private boolean loved;
 
-    public Location( String name, String imageUrl )
+    public Location( String name, String imageURL )
     {
         this.name = name;
-        this.imageURL = imageUrl;
+        this.imageURL = imageURL;
+        loved = false;
+    }
+
+    public Location(String name, String imageURL, boolean loved)
+    {
+        this(name, imageURL);
+        this.loved = loved;
     }
 
     public String getName()
@@ -32,5 +40,13 @@ public class Location
     public void setImageURL( String imageURL )
     {
         this.imageURL = imageURL;
+    }
+
+    public boolean isLoved() {
+        return loved;
+    }
+
+    public void setLoved(boolean loved) {
+        this.loved = loved;
     }
 }

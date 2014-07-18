@@ -62,7 +62,21 @@ public class LocationListAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
             holder.locationName.setText(locationList.get(position).getName());
         }
+
+        configureLocationView(locationList.get(position), holder);
         return convertView;
+    }
+
+    private void configureLocationView(Location location, ViewHolder holder)
+    {
+        if(location.isLoved())
+        {
+            holder.lovedButton.setImageDrawable(theContext.getResources().getDrawable(R.drawable.love));
+        }
+        else
+        {
+            holder.lovedButton.setImageDrawable(theContext.getResources().getDrawable(R.drawable.no_love));
+        }
     }
 
     public static class ViewHolder

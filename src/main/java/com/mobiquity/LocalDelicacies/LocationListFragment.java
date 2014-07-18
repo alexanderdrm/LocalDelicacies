@@ -15,25 +15,23 @@ import java.util.ArrayList;
 public class LocationListFragment extends Fragment
 {
 
-    private LocationListAdapter adapter;
-    private View listView;
+    protected LocationListAdapter adapter;
+    protected ListView locationListView;
+    protected View rootView;
+
 
     @Override
     public View onCreateView( LayoutInflater inflater,
                               ViewGroup container,
                               Bundle savedInstanceState )
     {
-        listView = inflater.inflate( R.layout.fragment_location_list,
+        rootView = inflater.inflate( R.layout.fragment_location_list,
                                         container,
                                         false );
-        return listView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter = new LocationListAdapter(getActivity(), createDummyData());
-        ((ListView)listView).setAdapter(adapter);
+        adapter = new LocationListAdapter(inflater.getContext(), createDummyData());
+        locationListView = (ListView) rootView.findViewById(R.id.location_list);
+        locationListView.setAdapter(adapter);
+        return rootView;
     }
 
     private ArrayList<Location> createDummyData()

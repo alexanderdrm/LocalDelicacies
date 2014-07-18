@@ -46,29 +46,36 @@ public class LocationListAdapter extends BaseAdapter
     @Override
     public View getView( int position, View convertView, ViewGroup parent )
     {
-        LayoutInflater inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) theContext.getSystemService(
+        Context.LAYOUT_INFLATER_SERVICE );
         ViewHolder holder;
-        if(convertView == null) {
-            convertView = inflater.inflate(R.layout.list_location, parent, false);
-            holder = ViewHolder.createViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
+        if ( convertView == null )
+        {
+            convertView = inflater.inflate( R.layout.list_location,
+                                            parent,
+                                            false );
+            holder = ViewHolder.createViewHolder( convertView );
+            convertView.setTag( holder );
+        }
+        else
+        {
             holder = (ViewHolder) convertView.getTag();
-
         }
         return convertView;
     }
 
     public static class ViewHolder
     {
-        public TextView locationName;
+        public TextView  locationName;
         public ImageView locationImage;
 
-        public static ViewHolder createViewHolder(View theView)
+        public static ViewHolder createViewHolder( View theView )
         {
             ViewHolder holder = new ViewHolder();
-            holder.locationName = (TextView) theView.findViewById(R.id.location_name);
-            holder.locationImage = (ImageView) theView.findViewById(R.id.location_image);
+
+            holder.locationName = (TextView) theView.findViewById( R.id.location_name );
+            holder.locationImage = (ImageView) theView.findViewById( R.id.location_image );
+
             return holder;
         }
     }

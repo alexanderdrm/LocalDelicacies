@@ -17,4 +17,11 @@ public class Assert
         assertThat( view.getVisibility(),
                     equalTo( View.VISIBLE ) );
     }
+
+    public static void assertViewIsGone( View view )
+    {
+        assertNotNull( view );
+        assertThat( view.getVisibility(),
+                    equalTo( View.GONE ) );
+    }
 }

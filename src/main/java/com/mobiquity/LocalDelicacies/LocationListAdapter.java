@@ -60,6 +60,7 @@ public class LocationListAdapter extends BaseAdapter
         else
         {
             holder = (ViewHolder) convertView.getTag();
+            holder.locationName.setText(locationList.get(position).getName());
         }
         return convertView;
     }

@@ -32,10 +32,20 @@ public class LocationListFragment extends Fragment
         adapter = new LocationListAdapter( inflater.getContext(),
                                            createDummyData() );
 
+        //adapter = new LocationListAdapter( inflater.getContext(),
+        //        new ArrayList<Location>());
+
         locationListView = (ListView) rootView.findViewById( R.id.location_list );
         locationListView.setAdapter( adapter );
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(adapter.isEmpty())
+            locationListView.setVisibility(View.GONE);
     }
 
     private ArrayList<Location> createDummyData()

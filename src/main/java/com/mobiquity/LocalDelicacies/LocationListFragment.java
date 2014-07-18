@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,10 @@ import java.util.ArrayList;
  */
 public class LocationListFragment extends Fragment
 {
+    protected View     rootView;
+    protected ListView locationListView;
 
     protected LocationListAdapter adapter;
-    protected ListView            locationListView;
-    protected View                rootView;
-
 
     @Override
     public View onCreateView( LayoutInflater inflater,
@@ -29,23 +29,31 @@ public class LocationListFragment extends Fragment
                                      container,
                                      false );
 
-        adapter = new LocationListAdapter( inflater.getContext(),
-                                           createDummyData() );
-
-        //adapter = new LocationListAdapter( inflater.getContext(),
-        //        new ArrayList<Location>());
-
         locationListView = (ListView) rootView.findViewById( R.id.location_list );
-        locationListView.setAdapter( adapter );
+        adapter = createAdapter( inflater.getContext() );
+        setAdapter( adapter);
 
         return rootView;
     }
 
+    protected LocationListAdapter createAdapter( Context context )
+    {
+        return new LocationListAdapter( context, createDummyData() );
+    }
+
+    private void setAdapter( LocationListAdapter adapter )
+    {
+        locationListView.setAdapter( adapter );
+    }
+
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
-        if(adapter.isEmpty())
-            locationListView.setVisibility(View.GONE);
+        if ( adapter.isEmpty() )
+        {
+            locationListView.setVisibility( View.GONE );
+        }
     }
 
     private ArrayList<Location> createDummyData()

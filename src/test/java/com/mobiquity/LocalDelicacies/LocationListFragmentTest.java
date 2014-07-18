@@ -1,10 +1,8 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,7 +67,8 @@ public class LocationListFragmentTest
 
         ListView listView = (ListView) emptyFragment.getView().findViewById( R.id.location_list );
         TextView emptyListMessage = (TextView) emptyFragment.getView()
-                                                            .findViewById( android.R.id.empty );
+                                                            .findViewById(
+                                                            android.R.id.empty );
 
         assertTrue( listView.getAdapter().isEmpty() );
         assertViewIsGone( listView );
@@ -79,16 +78,9 @@ public class LocationListFragmentTest
     private class TestEmptyLocationListFragment extends LocationListFragment
     {
         @Override
-        public View onCreateView( LayoutInflater inflater,
-                                  ViewGroup container,
-                                  Bundle savedInstanceState )
+        protected LocationListAdapter createAdapter( Context context )
         {
-            View rootView = super.onCreateView( inflater,
-                                                container,
-                                                savedInstanceState );
-            locationListView.setAdapter( new LocationListAdapter( inflater.getContext(),
-                                                                  new ArrayList<Location>() ) );
-            return rootView;
+            return new LocationListAdapter( context, new ArrayList<Location>() );
         }
     }
 }

@@ -8,6 +8,13 @@ import org.robolectric.Robolectric;
  */
 public class ResourceLocator
 {
+    public static String[] getStringArray( int id )
+    {
+        return Robolectric.application
+                          .getResources()
+                          .getStringArray( id );
+    }
+
     public static Drawable getDrawable( int id )
     {
         return Robolectric.application

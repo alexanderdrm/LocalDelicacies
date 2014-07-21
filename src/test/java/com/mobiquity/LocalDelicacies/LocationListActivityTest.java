@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,8 +31,6 @@ public class LocationListActivityTest
     private LocationListActivity activity;
 
     private DrawerLayout  drawerLayout;
-    private ListAdapter   adapter;
-    private ListView      drawerList;
     private NavigationBus bus;
 
     @Before
@@ -43,9 +42,6 @@ public class LocationListActivityTest
                               .resume()
                               .get();
         drawerLayout = (DrawerLayout) activity.findViewById( R.id.drawer_layout );
-        drawerList = (ListView) activity.findViewById( R.id.navigation_drawer_fragment );
-        adapter = drawerList.getAdapter();
-
         bus = NavigationBus.getInstance();
         bus.register( activity );
     }
@@ -65,44 +61,13 @@ public class LocationListActivityTest
     @Test
     public void shouldHaveNavidgationDrawerFragment() throws Exception
     {
-        assertNotNull( activity.getFragmentManager().findFragmentById( R.id.navigation_drawer_fragment ) );
+        assertNotNull(activity.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment));
     }
 
     @Test
     public void shouldHaveNavigationDrawer() throws Exception
     {
         assertViewIsVisible( drawerLayout );
-    }
-
-    @Test
-    public void shouldHaveNavDrawerOptions() throws Exception
-    {
-        ListView drawerList = (ListView) activity.findViewById( R.id.navigation_drawer_fragment );
-        String[] stringArray = ResourceLocator.getStringArray( R.array.nav_titles );
-        for ( int index = 0; index < adapter.getCount() - 1; index++ )
-        {
-            assertThat( stringArray[index],
-                        equalTo( drawerList.getAdapter().getItem( index ) ) );
-        }
-    }
-
-    @Test
-    public void navDrawer_ShouldHaveItemClickListener() throws Exception
-    {
-        assertNotNull( drawerList.getOnItemClickListener() );
-    }
-
-    @Test
-    public void navDrawer_ShouldDisplayToastWhenClicked() throws Exception
-    {
-        for ( int index = 0; index < adapter.getCount(); index++ )
-        {
-            TextView navItem = (TextView) adapter.getView( index, null, null );
-            Robolectric.shadowOf( drawerList ).performItemClick( index );
-            ShadowHandler.idleMainLooper();
-            assertThat( ShadowToast.getTextOfLatestToast(),
-                        equalTo( navItem.getText().toString() ) );
-        }
     }
 
     @Test
@@ -115,10 +80,10 @@ public class LocationListActivityTest
     @Test
     public void shouldCloseDrawerLayoutOnEvent() throws Exception
     {
-        drawerLayout.openDrawer( drawerList );
-        assertTrue( drawerLayout.isDrawerOpen( drawerList ) );
-        bus.post( new NavigationDrawerClickEvent( "" ) );
-        assertFalse( drawerLayout.isDrawerOpen( drawerList ) );
+        drawerLayout.openDrawer(Gravity.START);
+        assertTrue( drawerLayout.isDrawerOpen(Gravity.START ) );
+        bus.post(new NavigationDrawerClickEvent(""));
+        assertFalse( drawerLayout.isDrawerOpen( Gravity.START ) );
     }
 
     @Test
@@ -126,8 +91,8 @@ public class LocationListActivityTest
     {
         MenuItem homeItem = new TestMenuItem( android.R.id.home );
         activity.onOptionsItemSelected( homeItem );
-        assertTrue( drawerLayout.isDrawerOpen( drawerList ) );
+        assertTrue( drawerLayout.isDrawerOpen( Gravity.START ) );
         activity.onOptionsItemSelected( homeItem );
-        assertFalse( drawerLayout.isDrawerOpen( drawerList ) );
+        assertFalse( drawerLayout.isDrawerOpen( Gravity.START ) );
     }
 }

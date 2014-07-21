@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class LocationListAdapterTest
 
     private View createRecycledView()
     {
-        View theView = View.inflate( activity, R.layout.list_location, null );
+        View theView = View.inflate( activity, R.layout.location_list_item, null );
         LocationListAdapter.ViewHolder holder = LocationListAdapter.ViewHolder.createViewHolder( theView );
         theView.setTag( holder );
         return theView;

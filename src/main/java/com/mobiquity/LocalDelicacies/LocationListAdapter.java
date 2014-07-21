@@ -52,7 +52,7 @@ public class LocationListAdapter extends BaseAdapter
         ViewHolder holder;
         if ( convertView == null )
         {
-            convertView = inflater.inflate( R.layout.list_location,
+            convertView = inflater.inflate( R.layout.location_list_item,
                                             parent,
                                             false );
             holder = ViewHolder.createViewHolder( convertView );

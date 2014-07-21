@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerFragment;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerItemClickListener;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationBus;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
@@ -15,9 +17,7 @@ import com.squareup.otto.Subscribe;
 
 public class LocationListActivity extends Activity
 {
-    private String[]     navigationListTitles;
     private DrawerLayout drawerLayout;
-    private ListView     drawerList;
     private ActionBarDrawerToggle drawerToggle;
 
     private CharSequence drawerTitle;
@@ -34,14 +34,9 @@ public class LocationListActivity extends Activity
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        navigationListTitles = getResources().getStringArray( R.array.nav_titles );
         drawerLayout = (DrawerLayout) findViewById( R.id.drawer_layout );
-        drawerList = (ListView) findViewById( R.id.navigation_drawer_fragment );
 
-        drawerList.setAdapter( new ArrayAdapter<String>( this,
-                                                         R.layout.drawer_list_item,
-                                                         navigationListTitles ) );
-        drawerList.setOnItemClickListener(new NavigationDrawerItemClickListener(this, navigationListTitles));
+
         initDrawer();
     }
 
@@ -103,6 +98,6 @@ public class LocationListActivity extends Activity
     public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)
     {
         title = event.getTitle();
-        drawerLayout.closeDrawer( drawerList );
+        drawerLayout.closeDrawer(Gravity.START);
     }
 }

@@ -1,15 +1,18 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationBus;
+import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.mobiquity.LocalDelicacies.support.ResourceLocator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowHandler;
@@ -24,7 +27,7 @@ public class LocationListActivityTest
 {
     private LocationListActivity activity;
 
-    private View          drawerLayout;
+    private DrawerLayout  drawerLayout;
     private ListAdapter   adapter;
     private ListView      drawerList;
     private NavigationBus bus;
@@ -37,7 +40,7 @@ public class LocationListActivityTest
                               .start()
                               .resume()
                               .get();
-        drawerLayout = activity.findViewById( R.id.drawer_layout );
+        drawerLayout = (DrawerLayout) activity.findViewById( R.id.drawer_layout );
         drawerList = (ListView) activity.findViewById( R.id.left_drawer );
         adapter = drawerList.getAdapter();
 
@@ -61,7 +64,6 @@ public class LocationListActivityTest
     public void shouldHaveNavigationDrawer() throws Exception
     {
         assertViewIsVisible( drawerLayout );
-        assertTrue( drawerLayout instanceof DrawerLayout );
     }
 
     @Test
@@ -96,11 +98,18 @@ public class LocationListActivityTest
     }
 
     @Test
-    public void shouldChangeActionBarTitleOnNavDrawerClickEventRecieved() throws
+    public void shouldChangeActionBarTitleOnNavDrawerClickEventReceived() throws
                                                                           Exception
     {
-        //Todo: test this...
+        //Todo: test this... returns null for the action bar title
     }
 
-    
+    @Test
+    public void shouldCloseDrawerLayoutOnEvent() throws Exception
+    {
+        drawerLayout.openDrawer( drawerList );
+        assertTrue( drawerLayout.isDrawerOpen( drawerList ) );
+        bus.post( new NavigationDrawerClickEvent( "" ) );
+        assertFalse( drawerLayout.isDrawerOpen( drawerList ) );
+    }
 }

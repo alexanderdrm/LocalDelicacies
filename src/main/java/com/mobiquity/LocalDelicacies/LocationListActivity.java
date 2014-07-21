@@ -85,5 +85,6 @@ public class LocationListActivity extends Activity
     public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)
     {
         title = event.getTitle();
+        drawerLayout.closeDrawer( drawerList );
     }
 }

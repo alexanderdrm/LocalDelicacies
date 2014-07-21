@@ -26,5 +26,6 @@ public class LocationListActivity extends Activity
         drawerList.setAdapter( new ArrayAdapter<String>( this,
                                                          R.layout.drawer_list_item,
                                                          navigationListTitles ) );
+        drawerList.setOnItemClickListener(new DrawerItemClickListener(this, navigationListTitles));
     }
 }

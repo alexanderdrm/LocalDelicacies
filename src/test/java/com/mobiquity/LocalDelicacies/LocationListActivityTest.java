@@ -4,12 +4,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.support.ResourceLocator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowHandler;
+import org.robolectric.shadows.ShadowToast;
 
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -21,7 +24,8 @@ public class LocationListActivityTest
     private LocationListActivity activity;
 
     private View        drawerLayout;
-    private ListAdapter getAdapter;
+    private ListAdapter adapter;
+    private ListView drawerList;
 
     @Before
     public void setUp() throws Exception
@@ -32,6 +36,9 @@ public class LocationListActivityTest
                               .resume()
                               .get();
         drawerLayout = activity.findViewById( R.id.drawer_layout );
+        drawerList = (ListView) activity.findViewById( R.id.left_drawer );
+        adapter = drawerList.getAdapter();
+
     }
 
     @Test
@@ -43,7 +50,7 @@ public class LocationListActivityTest
     @Test
     public void shouldHaveLocationListFragment() throws Exception
     {
-        assertNotNull( activity.getFragmentManager().findFragmentById( R.id.location_list_fragment ) );
+        assertNotNull(activity.getFragmentManager().findFragmentById(R.id.location_list_fragment));
     }
 
     @Test
@@ -58,11 +65,28 @@ public class LocationListActivityTest
     {
         ListView drawerList = (ListView) activity.findViewById( R.id.left_drawer );
         String[] stringArray = ResourceLocator.getStringArray( R.array.nav_titles );
-        getAdapter = drawerList.getAdapter();
-        for ( int index = 0; index < getAdapter.getCount() - 1; index++ )
+        for ( int index = 0; index < adapter.getCount() - 1; index++ )
         {
             assertThat( stringArray[index],
                         equalTo( drawerList.getAdapter().getItem( index ) ) );
+        }
+    }
+     @Test
+    public void navDrawer_ShouldHaveItemClickListener() throws Exception
+    {
+        assertNotNull(drawerList.getOnItemClickListener());
+    }
+
+    @Test
+    public void navDrawer_ShouldDisplayToastWhenClicked() throws Exception
+    {
+        for(int index = 0; index < adapter.getCount(); index++)
+        {
+            TextView navItem = (TextView) adapter.getView(index, null, null);
+            Robolectric.shadowOf(drawerList).performItemClick(index);
+            ShadowHandler.idleMainLooper();
+            assertThat(ShadowToast.getTextOfLatestToast(), equalTo(navItem.getText().toString()));
+
         }
     }
 }

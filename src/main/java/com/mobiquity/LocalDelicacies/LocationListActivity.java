@@ -36,7 +36,7 @@ public class LocationListActivity extends Activity
 
         navigationListTitles = getResources().getStringArray( R.array.nav_titles );
         drawerLayout = (DrawerLayout) findViewById( R.id.drawer_layout );
-        drawerList = (ListView) findViewById( R.id.left_drawer );
+        drawerList = (ListView) findViewById( R.id.navigation_drawer_fragment );
 
         drawerList.setAdapter( new ArrayAdapter<String>( this,
                                                          R.layout.drawer_list_item,
@@ -47,20 +47,20 @@ public class LocationListActivity extends Activity
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+        super.onPostCreate( savedInstanceState );
         drawerToggle.syncState();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        NavigationBus.getInstance().register(this);
+        NavigationBus.getInstance().register( this );
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        NavigationBus.getInstance().unregister(this);
+        NavigationBus.getInstance().unregister( this );
     }
 
     private void initDrawer()

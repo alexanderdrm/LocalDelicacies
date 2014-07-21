@@ -20,7 +20,6 @@ import org.robolectric.shadows.ShadowHandler;
 import org.robolectric.shadows.ShadowToast;
 import org.robolectric.tester.android.view.TestMenuItem;
 
-
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
@@ -44,7 +43,7 @@ public class LocationListActivityTest
                               .resume()
                               .get();
         drawerLayout = (DrawerLayout) activity.findViewById( R.id.drawer_layout );
-        drawerList = (ListView) activity.findViewById( R.id.left_drawer );
+        drawerList = (ListView) activity.findViewById( R.id.navigation_drawer_fragment );
         adapter = drawerList.getAdapter();
 
         bus = NavigationBus.getInstance();
@@ -64,15 +63,21 @@ public class LocationListActivityTest
     }
 
     @Test
+    public void shouldHaveNavidgationDrawerFragment() throws Exception
+    {
+        assertNotNull( activity.getFragmentManager().findFragmentById( R.id.navigation_drawer_fragment ) );
+    }
+
+    @Test
     public void shouldHaveNavigationDrawer() throws Exception
     {
-        assertViewIsVisible(drawerLayout);
+        assertViewIsVisible( drawerLayout );
     }
 
     @Test
     public void shouldHaveNavDrawerOptions() throws Exception
     {
-        ListView drawerList = (ListView) activity.findViewById( R.id.left_drawer );
+        ListView drawerList = (ListView) activity.findViewById( R.id.navigation_drawer_fragment );
         String[] stringArray = ResourceLocator.getStringArray( R.array.nav_titles );
         for ( int index = 0; index < adapter.getCount() - 1; index++ )
         {
@@ -115,15 +120,14 @@ public class LocationListActivityTest
         bus.post( new NavigationDrawerClickEvent( "" ) );
         assertFalse( drawerLayout.isDrawerOpen( drawerList ) );
     }
-     @Test
+
+    @Test
     public void shouldOpenDrawerOnHomeClick() throws Exception
     {
-        MenuItem homeItem = new TestMenuItem(android.R.id.home);
-        activity.onOptionsItemSelected(homeItem);
-        assertTrue(drawerLayout.isDrawerOpen(drawerList));
-        activity.onOptionsItemSelected(homeItem);
-        assertFalse(drawerLayout.isDrawerOpen(drawerList));
+        MenuItem homeItem = new TestMenuItem( android.R.id.home );
+        activity.onOptionsItemSelected( homeItem );
+        assertTrue( drawerLayout.isDrawerOpen( drawerList ) );
+        activity.onOptionsItemSelected( homeItem );
+        assertFalse( drawerLayout.isDrawerOpen( drawerList ) );
     }
-
-
 }

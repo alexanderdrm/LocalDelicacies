@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowHandler;
 import org.robolectric.shadows.ShadowToast;
+import org.robolectric.tester.android.view.TestMenuItem;
+
 
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -63,7 +66,7 @@ public class LocationListActivityTest
     @Test
     public void shouldHaveNavigationDrawer() throws Exception
     {
-        assertViewIsVisible( drawerLayout );
+        assertViewIsVisible(drawerLayout);
     }
 
     @Test
@@ -112,4 +115,15 @@ public class LocationListActivityTest
         bus.post( new NavigationDrawerClickEvent( "" ) );
         assertFalse( drawerLayout.isDrawerOpen( drawerList ) );
     }
+     @Test
+    public void shouldOpenDrawerOnHomeClick() throws Exception
+    {
+        MenuItem homeItem = new TestMenuItem(android.R.id.home);
+        activity.onOptionsItemSelected(homeItem);
+        assertTrue(drawerLayout.isDrawerOpen(drawerList));
+        activity.onOptionsItemSelected(homeItem);
+        assertFalse(drawerLayout.isDrawerOpen(drawerList));
+    }
+
+
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -45,6 +46,12 @@ public class LocationListActivity extends Activity
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         NavigationBus.getInstance().register(this);
@@ -80,6 +87,17 @@ public class LocationListActivity extends Activity
         };
         drawerLayout.setDrawerListener(drawerToggle);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //Checks if home icon was selected and lets nav drawer handle
+        if(drawerToggle.onOptionsItemSelected(item))
+            return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Subscribe
     public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)

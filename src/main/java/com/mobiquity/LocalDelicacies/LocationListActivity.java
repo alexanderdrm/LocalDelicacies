@@ -7,11 +7,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerFragment;
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerItemClickListener;
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationBus;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
@@ -49,13 +44,13 @@ public class LocationListActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        NavigationBus.getInstance().register( this );
+        ApplicationBus.getInstance().register( this );
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        NavigationBus.getInstance().unregister( this );
+        ApplicationBus.getInstance().unregister( this );
     }
 
     private void initDrawer()

@@ -1,14 +1,13 @@
-package com.mobiquity.LocalDelicacies.NavDrawer;
+package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.BaseEvent;
-import com.mobiquity.LocalDelicacies.LocationListActivity;
+import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.mobiquity.LocalDelicacies.support.BusHelper;
-import com.squareup.otto.Subscribe;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.*;
@@ -17,9 +16,9 @@ import static org.junit.Assert.*;
  * Created by jwashington on 7/21/14.
  */
 @RunWith(RobolectricTestRunner.class)
-public class NavigationBusTest {
+public class ApplicationBusTest {
     Activity activity;
-    NavigationBus bus;
+    ApplicationBus bus;
     BusHelper busHelper;
 
     @Before
@@ -27,7 +26,7 @@ public class NavigationBusTest {
     {
 
         busHelper = new BusHelper();
-        bus = NavigationBus.getInstance();
+        bus = ApplicationBus.getInstance();
         bus.register(busHelper);
     }
 

@@ -3,13 +3,8 @@ package com.mobiquity.LocalDelicacies;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationBus;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
-import com.mobiquity.LocalDelicacies.support.ResourceLocator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +12,9 @@ import org.junit.runner.RunWith;
 
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowHandler;
-import org.robolectric.shadows.ShadowToast;
 import org.robolectric.tester.android.view.TestMenuItem;
 
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 @RunWith (RobolectricTestRunner.class)
@@ -31,7 +23,7 @@ public class LocationListActivityTest
     private LocationListActivity activity;
 
     private DrawerLayout  drawerLayout;
-    private NavigationBus bus;
+    private ApplicationBus bus;
 
     @Before
     public void setUp() throws Exception
@@ -42,7 +34,7 @@ public class LocationListActivityTest
                               .resume()
                               .get();
         drawerLayout = (DrawerLayout) activity.findViewById( R.id.drawer_layout );
-        bus = NavigationBus.getInstance();
+        bus = ApplicationBus.getInstance();
         bus.register( activity );
     }
 

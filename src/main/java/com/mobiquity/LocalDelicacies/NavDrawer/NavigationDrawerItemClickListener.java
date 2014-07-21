@@ -5,8 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
 
 /**
  * Created by jwashington on 7/21/14.
@@ -30,7 +29,7 @@ public class NavigationDrawerItemClickListener implements ListView.OnItemClickLi
 
     private void selectItem(int position)
     {
-        NavigationBus.getInstance().post(new NavigationDrawerClickEvent(options[position]));
+        ApplicationBus.getInstance().post(new NavigationDrawerClickEvent(options[position]));
         Toast.makeText(context, options[position], Toast.LENGTH_SHORT).show();
     }
 }

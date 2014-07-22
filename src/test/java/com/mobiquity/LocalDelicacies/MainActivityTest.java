@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.Location.Location;
 import com.mobiquity.LocalDelicacies.Location.LocationClickedEvent;
 import com.mobiquity.LocalDelicacies.Location.LocationDetailActivity;
 import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
@@ -94,7 +95,7 @@ public class MainActivityTest
     }
 
     @Test
-    public void shouldOpenDrawerOnHomeClick() throws Exception
+    public void shouldToggleDrawerOnHomeClick() throws Exception
     {
         MenuItem homeItem = new TestMenuItem( android.R.id.home );
         activity.onOptionsItemSelected( homeItem );
@@ -123,7 +124,7 @@ public class MainActivityTest
     @Test
     public void shouldLaunchDetailActivity() throws Exception
     {
-        LocationClickedEvent event = new LocationClickedEvent();
+        LocationClickedEvent event = new LocationClickedEvent(new Location("TestLocation", null));
         bus.post(event);
         Intent intent = Robolectric.shadowOf(activity).getNextStartedActivity();
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);

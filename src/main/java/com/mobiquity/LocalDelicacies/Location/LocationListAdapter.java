@@ -49,7 +49,7 @@ public class LocationListAdapter extends BaseAdapter
     public View getView( int position, View convertView, ViewGroup parent )
     {
         LayoutInflater inflater = (LayoutInflater) theContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        Location location = locationList.get( position );
+        final Location location = locationList.get( position );
 
         ViewHolder holder;
         if ( convertView == null )
@@ -72,7 +72,7 @@ public class LocationListAdapter extends BaseAdapter
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApplicationBus.getInstance().post(new LocationClickedEvent());
+                ApplicationBus.getInstance().post(new LocationClickedEvent(location));
             }
         });
 

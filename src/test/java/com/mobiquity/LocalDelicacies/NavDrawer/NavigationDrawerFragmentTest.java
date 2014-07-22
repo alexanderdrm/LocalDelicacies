@@ -107,6 +107,8 @@ public class NavigationDrawerFragmentTest
     {
         Robolectric.shadowOf(drawerList).performItemClick( 0 );
         assertTrue(busHelper.getLastEvent() instanceof NavigationDrawerClickEvent);
+
+
     }
 
 

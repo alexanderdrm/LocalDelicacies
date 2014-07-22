@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocalDelicacies</string><string name="LOVE_THIS_BUTTON">Love this city button</string>
     <string name="location_image">Location</string>
-    <string name="no_locations">No data</string>
+    <string name="no_items">No data</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
 

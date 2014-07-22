@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
 import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
@@ -107,6 +108,9 @@ public class MainActivity extends Activity
         if (fragmentTag.equals(LocationListFragment.TAG))
         {
             fragment = new LocationListFragment();
+        } else if(fragmentTag.equals(DelicacyListFragment.TAG))
+        {
+            fragment = new DelicacyListFragment();
         }
 
         FragmentManager fragmentManager = getFragmentManager();

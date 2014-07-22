@@ -33,7 +33,7 @@ public class LocationListFragment extends Fragment
 
         locationListView = (ListView) rootView.findViewById( R.id.location_list );
         adapter = createAdapter( inflater.getContext() );
-        setAdapter( adapter);
+        locationListView.setAdapter(adapter);
 
         return rootView;
     }
@@ -41,11 +41,6 @@ public class LocationListFragment extends Fragment
     protected LocationListAdapter createAdapter( Context context )
     {
         return new LocationListAdapter( context, createDummyData() );
-    }
-
-    private void setAdapter( LocationListAdapter adapter )
-    {
-        locationListView.setAdapter( adapter );
     }
 
     @Override

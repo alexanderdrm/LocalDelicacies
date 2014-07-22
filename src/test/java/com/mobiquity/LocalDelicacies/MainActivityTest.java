@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
 import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 
@@ -102,8 +103,15 @@ public class MainActivityTest
     {
         ListView drawerList = (ListView) navigationDrawerFragment.getView();
         Fragment fragment;
+
+        //Locations Fragment
         Robolectric.shadowOf(drawerList).performItemClick(0);
         fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
         assertTrue(fragment instanceof LocationListFragment);
+
+        //Delicacies Fragment
+        Robolectric.shadowOf(drawerList).performItemClick(1);
+        fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        assertTrue(fragment instanceof DelicacyListFragment);
     }
 }

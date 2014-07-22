@@ -34,9 +34,13 @@ public class MainActivity extends Activity
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         drawerLayout = (DrawerLayout) findViewById( R.id.drawer_layout );
-
-
         initDrawer();
+        if(savedInstanceState == null)
+        {
+            title = getString(R.string.locations);
+            getActionBar().setTitle(title);
+            switchFragment(LocationListFragment.TAG);
+        }
     }
 
     @Override

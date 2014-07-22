@@ -54,7 +54,7 @@ public class LocationListAdapter extends BaseAdapter
         ViewHolder holder;
         if ( convertView == null )
         {
-            convertView = inflater.inflate( R.layout.location_list_item,
+            convertView = inflater.inflate( R.layout.layout_text_image,
                                             parent,
                                             false );
             holder = ViewHolder.createViewHolder( convertView );
@@ -123,9 +123,9 @@ public class LocationListAdapter extends BaseAdapter
         {
             ViewHolder holder = new ViewHolder();
 
-            holder.locationName = (TextView) theView.findViewById( R.id.location_name );
-            holder.locationImage = (ImageView) theView.findViewById( R.id.location_image );
-            holder.lovedButton = (ImageView) theView.findViewById( R.id.loved_button );
+            holder.locationName = (TextView) theView.findViewById( R.id.name);
+            holder.locationImage = (ImageView) theView.findViewById( R.id.image);
+            holder.lovedButton = (ImageView) theView.findViewById( R.id.bookmarked_button);
 
             return holder;
         }

@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView
-            android:id="@+id/location_image"
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -15,19 +12,19 @@
             android:src="@drawable/sample_image"/>
 
     <ImageView
-            android:id="@+id/loved_button"
+            android:id="@+id/bookmarked_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/LOVE_THIS_BUTTON"
             android:src="@drawable/love"
-            android:layout_alignTop="@+id/location_image" android:layout_alignParentEnd="true"/>
+            android:layout_alignTop="@+id/image" android:layout_alignParentEnd="true"/>
 
     <TextView
-            android:id="@+id/location_name"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/LocationTextStyle"
-            android:layout_alignBottom="@+id/location_image"/>
+            android:layout_alignBottom="@+id/image"/>
 </RelativeLayout>
 
 

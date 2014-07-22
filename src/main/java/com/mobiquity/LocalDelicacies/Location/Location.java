@@ -1,5 +1,7 @@
 package com.mobiquity.LocalDelicacies.Location;
 
+import android.os.Bundle;
+
 /**
  * @since 1.0
  */
@@ -48,5 +50,23 @@ public class Location
 
     public void setLoved(boolean loved) {
         this.loved = loved;
+    }
+
+    public static Bundle createBundleFromLocation(Location location)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putString("name", location.name);
+        bundle.putString("imageURL", location.imageURL);
+        bundle.putBoolean("loved", location.loved);
+        return bundle;
+    }
+
+    public static Location createLocationFromBundle(Bundle bundle)
+    {
+        return new Location(
+                bundle.getString("name"),
+                bundle.getString("imageURL"),
+                bundle.getBoolean("loved")
+        );
     }
 }

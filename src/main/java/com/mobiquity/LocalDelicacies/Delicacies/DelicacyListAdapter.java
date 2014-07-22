@@ -38,13 +38,14 @@ public class DelicacyListAdapter extends BaseAdapter {
         return position;
     }
 
+    //Todo: View Holder
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Delicacy delicacy = delicacies.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.delicacy_list_item, parent, false);
+        convertView = inflater.inflate(R.layout.layout_text_image, parent, false);
 
-        TextView delicacyName = (TextView) convertView.findViewById(R.id.delicacy_name);
+        TextView delicacyName = (TextView) convertView.findViewById(R.id.name);
         delicacyName.setText(delicacy.getName());
         return convertView;
     }

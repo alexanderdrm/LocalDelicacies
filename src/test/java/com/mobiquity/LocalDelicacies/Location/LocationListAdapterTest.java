@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobiquity.LocalDelicacies.Location.Location;
-import com.mobiquity.LocalDelicacies.Location.LocationListAdapter;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
@@ -82,7 +80,7 @@ public class LocationListAdapterTest
 
     private View createRecycledView()
     {
-        View theView = View.inflate( activity, R.layout.location_list_item, null );
+        View theView = View.inflate( activity, R.layout.layout_text_image, null );
         LocationListAdapter.ViewHolder holder = LocationListAdapter.ViewHolder.createViewHolder( theView );
         theView.setTag( holder );
         return theView;
@@ -94,11 +92,11 @@ public class LocationListAdapterTest
         for ( int index = 0; index < testData.size(); index++ )
         {
             View view = getViewById( index );
-            TextView locationName = (TextView) view.findViewById( R.id.location_name );
+            TextView locationName = (TextView) view.findViewById( R.id.name);
             assertViewIsVisible( locationName );
             assertThat( locationName.getText().toString(),
                         equalTo( testData.get( index ).getName() ) );
-            assertViewIsVisible( view.findViewById( R.id.location_image ) );
+            assertViewIsVisible( view.findViewById( R.id.image) );
         }
     }
 
@@ -108,7 +106,7 @@ public class LocationListAdapterTest
         for ( int index = 0; index < testData.size(); index++ )
         {
             View view = getViewById( index );
-            ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
+            ImageView lovedButton = (ImageView) view.findViewById( R.id.bookmarked_button);
             assertViewIsVisible( lovedButton );
             Location currentLocation = testData.get( index );
             if ( currentLocation.isLoved() )
@@ -130,7 +128,7 @@ public class LocationListAdapterTest
         for ( int index = 0; index < testData.size(); index++ )
         {
             View view = getViewById( index );
-            ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
+            ImageView lovedButton = (ImageView) view.findViewById( R.id.bookmarked_button);
             Location currentLocation = testData.get( index );
             boolean originalLovedValue = currentLocation.isLoved();
             lovedButton.performClick();
@@ -153,7 +151,7 @@ public class LocationListAdapterTest
         for ( int index = 0; index < testData.size(); index++ )
         {
             View view = getViewById( index );
-            ImageView lovedButton = (ImageView) view.findViewById( R.id.loved_button );
+            ImageView lovedButton = (ImageView) view.findViewById( R.id.bookmarked_button);
             Location currentLocation = testData.get( index );
             boolean originalLovedValue = currentLocation.isLoved();
             lovedButton.performClick();

@@ -84,7 +84,7 @@ public class DelicacyListAdapterTest
         for(int index = 0; index < testData.size(); index++)
         {
             View theView = delicacyListAdapter.getView(index, null, null);
-            View delicacyName = theView.findViewById(R.id.delicacy_name);
+            View delicacyName = theView.findViewById(R.id.name);
             assertViewIsVisible(delicacyName);
             assertTrue(delicacyName instanceof TextView);
             assertThat(((TextView) delicacyName).getText().toString(),

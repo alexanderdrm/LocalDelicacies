@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.Location.Location;
 import com.mobiquity.LocalDelicacies.Location.LocationClickedEvent;
 import com.mobiquity.LocalDelicacies.Location.LocationDetailActivity;
 import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
@@ -112,8 +113,7 @@ public class MainActivity extends Activity
     @Subscribe
     public void onLocationClicked(LocationClickedEvent event)
     {
-        Intent intent = new Intent(this, LocationDetailActivity.class);
-        startActivity(intent);
+       startActivity(LocationDetailActivity.createIntent(this, event.getLocation()));
     }
 
     private void switchFragment(String fragmentTag)

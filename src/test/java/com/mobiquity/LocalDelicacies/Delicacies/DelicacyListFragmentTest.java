@@ -1,11 +1,14 @@
 package com.mobiquity.LocalDelicacies.Delicacies;
 
+import android.app.Fragment;
 import com.mobiquity.LocalDelicacies.MainActivity;
+import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.util.FragmentTestUtil;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -15,23 +18,23 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
 
-public class DelicaciesActivityTest {
+public class DelicacyListFragmentTest {
 
-    private DelicaciesActivity activity;
+    private Fragment delicacyListFragment;
 
     @Before
     public void setUp() throws Exception
     {
-        activity = Robolectric.buildActivity(DelicaciesActivity.class)
-                .create()
-                .start()
-                .resume()
-                .get();
+        delicacyListFragment = new DelicacyListFragment();
+        FragmentUtil.startFragment(delicacyListFragment);
+
     }
 
     @Test
     public void shouldNotBeNull() throws Exception
     {
-        assertNotNull( activity );
+        assertNotNull( delicacyListFragment );
     }
+
+
 }

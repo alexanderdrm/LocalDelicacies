@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.R;
 
 import java.util.ArrayList;
@@ -65,8 +66,15 @@ public class LocationListAdapter extends BaseAdapter
         }
         holder.locationName.setText( location.getName() );
 
-        configureLocationView( location, holder );
+
+        configureLocationView(location, holder);
         configureLoveButton( location, holder );
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApplicationBus.getInstance().post(new LocationClickedEvent());
+            }
+        });
 
 
         return convertView;
@@ -122,4 +130,6 @@ public class LocationListAdapter extends BaseAdapter
             return holder;
         }
     }
+
+
 }

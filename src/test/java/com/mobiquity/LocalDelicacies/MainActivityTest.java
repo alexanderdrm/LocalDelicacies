@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -8,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.Location.LocationClickedEvent;
+import com.mobiquity.LocalDelicacies.Location.LocationDetailActivity;
 import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 
@@ -18,9 +21,11 @@ import org.junit.runner.RunWith;
 
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.tester.android.view.TestMenuItem;
 
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 @RunWith (RobolectricTestRunner.class)
@@ -113,5 +118,15 @@ public class MainActivityTest
         Robolectric.shadowOf(drawerList).performItemClick(1);
         fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
         assertTrue(fragment instanceof DelicacyListFragment);
+    }
+
+    @Test
+    public void shouldLaunchDetailActivity() throws Exception
+    {
+        LocationClickedEvent event = new LocationClickedEvent();
+        bus.post(event);
+        Intent intent = Robolectric.shadowOf(activity).getNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
+        assertThat(shadowIntent.getComponent().getClassName(), equalTo(LocationDetailActivity.class.getCanonicalName()));
     }
 }

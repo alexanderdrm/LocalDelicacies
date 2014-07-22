@@ -3,6 +3,7 @@ package com.mobiquity.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.Location.LocationClickedEvent;
+import com.mobiquity.LocalDelicacies.Location.LocationDetailActivity;
 import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
@@ -104,6 +107,13 @@ public class MainActivity extends Activity
         drawerLayout.closeDrawer(Gravity.START);
         switchFragment(event.getFragmentTag());
 
+    }
+
+    @Subscribe
+    public void onLocationClicked(LocationClickedEvent event)
+    {
+        Intent intent = new Intent(this, LocationDetailActivity.class);
+        startActivity(intent);
     }
 
     private void switchFragment(String fragmentTag)

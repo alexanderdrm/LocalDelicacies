@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
 
 import java.util.ArrayList;
@@ -39,8 +40,12 @@ public class DelicacyListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Delicacy delicacy = delicacies.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.delicacy_list_item, parent, false);
+
+        TextView delicacyName = (TextView) convertView.findViewById(R.id.delicacy_name);
+        delicacyName.setText(delicacy.getName());
         return convertView;
     }
 }

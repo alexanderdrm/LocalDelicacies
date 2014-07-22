@@ -1,7 +1,10 @@
 package com.mobiquity.LocalDelicacies.Delicacies;
 
 import android.app.Activity;
+import android.view.View;
+import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.Location.Location;
+import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -74,11 +78,25 @@ public class DelicacyListAdapterTest
         }
     }
 
+    @Test
+    public void getView_shouldContainDelicacyName() throws Exception
+    {
+        for(int index = 0; index < testData.size(); index++)
+        {
+            View theView = delicacyListAdapter.getView(index, null, null);
+            View delicacyName = theView.findViewById(R.id.delicacy_name);
+            assertViewIsVisible(delicacyName);
+            assertTrue(delicacyName instanceof TextView);
+            assertThat(((TextView) delicacyName).getText().toString(),
+                    equalTo(testData.get(index).getName()));
+        }
+    }
+
     private ArrayList<Delicacy> generateTestData()
     {
         ArrayList<Delicacy> data = new ArrayList<Delicacy>();
-        data.add(new Delicacy());
-        data.add(new Delicacy());
+        data.add(new Delicacy("Apple", null));
+        data.add(new Delicacy("Banana", null));
         return data;
     }
 }

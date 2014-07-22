@@ -105,7 +105,7 @@ public class LocationListAdapter extends BaseAdapter
         }
     }
 
-    public static class ViewHolder
+    protected static class ViewHolder
     {
         public TextView  locationName;
         public ImageView locationImage;

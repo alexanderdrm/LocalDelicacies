@@ -35,7 +35,7 @@ public class DelicacyListFragment extends Fragment {
 
     protected DelicacyListAdapter createAdapter(Context context)
     {
-        return new DelicacyListAdapter(context, new ArrayList<Delicacy>());
+        return new DelicacyListAdapter(context, createDummyData());
     }
 
     @Override
@@ -45,5 +45,14 @@ public class DelicacyListFragment extends Fragment {
         {
             delicacyListView.setVisibility(View.GONE);
         }
+    }
+
+    private ArrayList<Delicacy> createDummyData()
+    {
+        ArrayList<Delicacy> list = new ArrayList<Delicacy>();
+        list.add(new Delicacy("Apple", null));
+        list.add(new Delicacy("Chocolate", null));
+        return  list;
+
     }
 }

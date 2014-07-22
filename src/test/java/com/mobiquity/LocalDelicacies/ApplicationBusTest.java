@@ -1,8 +1,6 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
-import com.mobiquity.LocalDelicacies.ApplicationBus;
-import com.mobiquity.LocalDelicacies.BaseEvent;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.mobiquity.LocalDelicacies.support.BusHelper;
 import org.junit.Before;
@@ -39,17 +37,10 @@ public class ApplicationBusTest {
     @Test
     public void shouldPostNavigationDrawerClickEvent()
     {
-        NavigationDrawerClickEvent testEvent = new NavigationDrawerClickEvent("Test_Event");
+        BaseEvent testEvent = new NavigationDrawerClickEvent("Test_Event", "TAG");
         bus.post(testEvent);
         assertTrue(busHelper.getLastEvent() instanceof NavigationDrawerClickEvent);
     }
 
-    @Test
-    public void shouldNotPostEventsOtherThanNavigationDrawerClickEvent()
-    {
-        BaseEvent testEvent = new BaseEvent();
-        bus.post(testEvent);
-        assertNull(busHelper.getLastEvent());
-    }
 
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="faded_black">#BB000000</color>
-    <color name="drawer_color">#ffff</color>
+    <color name="faded_white">#FFF</color>
+    <color name="mobiquity_red">#9E2518</color>
+
 </resources>

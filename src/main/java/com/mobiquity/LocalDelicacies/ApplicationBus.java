@@ -15,11 +15,6 @@ public class ApplicationBus extends Bus {
         return instance;
     }
 
-    @Override
-    public void post(Object event) {
-        if(event instanceof NavigationDrawerClickEvent)
-            super.post(event);
-    }
 
     private ApplicationBus()
     {

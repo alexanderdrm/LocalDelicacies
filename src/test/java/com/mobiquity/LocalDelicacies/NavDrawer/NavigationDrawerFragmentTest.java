@@ -1,10 +1,14 @@
 package com.mobiquity.LocalDelicacies.NavDrawer;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.support.BusHelper;
 import com.mobiquity.LocalDelicacies.support.ResourceLocator;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,6 +22,7 @@ import org.robolectric.shadows.ShadowToast;
 
 import static com.mobiquity.LocalDelicacies.support.FragmentUtil.startFragment;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -31,6 +36,9 @@ public class NavigationDrawerFragmentTest
     private ListView drawerList;
 
     private NavigationDrawerFragment navFragment;
+    private ApplicationBus bus;
+    private BusHelper busHelper;
+
 
     @Before
     public void setUp()
@@ -40,6 +48,9 @@ public class NavigationDrawerFragmentTest
         startFragment(navFragment);
         drawerList = (ListView) navFragment.getView().findViewById(R.id.drawer_list);
         adapter = drawerList.getAdapter();
+        bus = ApplicationBus.getInstance();
+        busHelper = new BusHelper();
+        bus.register(busHelper);
     }
 
     @Test
@@ -55,7 +66,7 @@ public class NavigationDrawerFragmentTest
     }
 
     @Test
-    public void listViewShouldHaveAdapter() throws Exception
+    public void shouldHaveAdapter() throws Exception
     {
         Assert.assertNotNull(adapter);
     }
@@ -74,13 +85,13 @@ public class NavigationDrawerFragmentTest
     }
 
     @Test
-    public void shouldHaveNavDrawerOptions() throws Exception
+    public void shouldHaveNavDrawerItems() throws Exception
     {
         String[] stringArray = ResourceLocator.getStringArray(R.array.nav_titles);
         for ( int index = 0; index < adapter.getCount() - 1; index++ )
         {
             assertThat( stringArray[index],
-                    equalTo( drawerList.getAdapter().getItem( index ) ) );
+                    equalTo(adapter.getItem(index)) );
         }
     }
 
@@ -90,4 +101,15 @@ public class NavigationDrawerFragmentTest
     {
         Assert.assertNotNull(drawerList.getOnItemClickListener());
     }
+
+    @Test
+    public void shouldPostNavigationDrawerClickEvent() throws Exception
+    {
+        Robolectric.shadowOf(drawerList).performItemClick( 0 );
+        assertTrue(busHelper.getLastEvent() instanceof NavigationDrawerClickEvent);
+    }
+
+
+
+
 }

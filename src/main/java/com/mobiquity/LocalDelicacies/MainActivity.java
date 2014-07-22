@@ -1,6 +1,8 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,7 +12,7 @@ import android.view.View;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
-public class LocationListActivity extends Activity
+public class MainActivity extends Activity
 {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -22,7 +24,7 @@ public class LocationListActivity extends Activity
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_location_list );
+        setContentView( R.layout.activity_main);
         title = getTitle();
         drawerTitle = getTitle();
 
@@ -94,5 +96,25 @@ public class LocationListActivity extends Activity
     {
         title = event.getTitle();
         drawerLayout.closeDrawer(Gravity.START);
+        switchFragment(event.getFragmentTag());
+
+    }
+
+    private void switchFragment(String fragmentTag)
+    {
+        Fragment fragment = null;
+        if (fragmentTag.equals(LocationListFragment.TAG))
+        {
+            fragment = new LocationListFragment();
+        }
+
+        FragmentManager fragmentManager = getFragmentManager();
+        if(fragment != null)
+        {
+            fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+        }
+
     }
 }

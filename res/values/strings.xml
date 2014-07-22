@@ -5,4 +5,7 @@
     <string name="no_locations">No data</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+
+    <string name="locations">Locations</string>
+    <string name="delicaices">Delicacies</string>
 </resources>

@@ -7,18 +7,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
 
+import java.util.ArrayList;
+
 /**
  * Created by jwashington on 7/21/14.
  */
 public class NavigationDrawerItemClickListener implements ListView.OnItemClickListener {
 
     private Context context;
-    private String[] options;
+    private ArrayList<String> titles;
+    private ArrayList<String> fragmentTags;
 
-    public NavigationDrawerItemClickListener(Context context, String[] options)
+    public NavigationDrawerItemClickListener(Context context, ArrayList<String> titles, ArrayList<String> fragmentTags)
     {
         this.context = context;
-        this.options = options;
+        this.titles = titles;
+        this.fragmentTags = fragmentTags;
     }
 
     @Override
@@ -29,7 +33,7 @@ public class NavigationDrawerItemClickListener implements ListView.OnItemClickLi
 
     private void selectItem(int position)
     {
-        ApplicationBus.getInstance().post(new NavigationDrawerClickEvent(options[position]));
-        Toast.makeText(context, options[position], Toast.LENGTH_SHORT).show();
+        ApplicationBus.getInstance().post(new NavigationDrawerClickEvent(titles.get(position), fragmentTags.get(position)));
+        Toast.makeText(context, titles.get(position), Toast.LENGTH_SHORT).show();
     }
 }

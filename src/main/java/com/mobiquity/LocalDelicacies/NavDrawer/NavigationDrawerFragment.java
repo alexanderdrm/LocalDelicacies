@@ -7,7 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
+import com.mobiquity.LocalDelicacies.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
 
 /**
  * @since 1.0
@@ -15,14 +20,16 @@ import com.mobiquity.LocalDelicacies.R;
 public class NavigationDrawerFragment extends Fragment
 {
 
-    private String[]     navigationListTitles;
+    private ArrayList<String> navigationListTitles;
+    private ArrayList<String> fragmentTags;
     private ListView drawerList;
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        navigationListTitles = getResources().getStringArray( R.array.nav_titles );
+        setupNavigationDrawerTitlesAndFragments();
     }
 
     @Override
@@ -33,9 +40,38 @@ public class NavigationDrawerFragment extends Fragment
         View layout = inflater.inflate( R.layout.fragment_navigation_drawer, container, false );
         drawerList = (ListView) layout.findViewById(R.id.drawer_list);
         drawerList.setAdapter( new ArrayAdapter<String>(inflater.getContext(), R.layout.drawer_list_item, navigationListTitles));
-        drawerList.setOnItemClickListener(new NavigationDrawerItemClickListener(inflater.getContext(), navigationListTitles));
+        drawerList.setOnItemClickListener(
+                new NavigationDrawerItemClickListener(
+                        inflater.getContext(),
+                        navigationListTitles,
+                        fragmentTags)
+        );
 
         return layout;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ApplicationBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ApplicationBus.getInstance().unregister(this);
+    }
+
+
+    private void setupNavigationDrawerTitlesAndFragments()
+    {
+        navigationListTitles = new ArrayList<String>();
+        navigationListTitles.add(getResources().getString(R.string.locations));
+        navigationListTitles.add(getResources().getString(R.string.delicaices));
+
+        fragmentTags = new ArrayList<String>();
+        fragmentTags.add(LocationListFragment.TAG);
+        fragmentTags.add("");
     }
 
 }

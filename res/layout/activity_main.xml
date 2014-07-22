@@ -7,15 +7,15 @@
         android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <!--<FrameLayout
+    <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
-    <fragment
+            android:layout_height="match_parent" />
+    <!--<fragment
         android:id="@+id/location_list_fragment"
         android:name="com.mobiquity.LocalDelicacies.LocationListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <fragment
         android:id="@+id/navigation_drawer_fragment"

@@ -19,6 +19,7 @@ public class LocationListFragment extends Fragment
     protected ListView locationListView;
 
     protected LocationListAdapter adapter;
+    public static final String TAG = "LOCATION_LIST_FRAGMENT";
 
     @Override
     public View onCreateView( LayoutInflater inflater,

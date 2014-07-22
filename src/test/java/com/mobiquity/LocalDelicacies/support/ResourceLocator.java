@@ -1,5 +1,6 @@
 package com.mobiquity.LocalDelicacies.support;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import org.robolectric.Robolectric;
 
@@ -20,5 +21,12 @@ public class ResourceLocator
         return Robolectric.application
                           .getResources()
                           .getDrawable( id );
+    }
+
+    public static int getColor(int id)
+    {
+        return Robolectric.application
+                .getResources()
+                .getColor(id);
     }
 }

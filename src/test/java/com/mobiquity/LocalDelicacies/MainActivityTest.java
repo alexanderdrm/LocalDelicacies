@@ -1,11 +1,15 @@
 package com.mobiquity.LocalDelicacies;
 
+import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 
+import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerFragment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,26 +18,31 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.tester.android.view.TestMenuItem;
 
+import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsGone;
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.junit.Assert.*;
 
 @RunWith (RobolectricTestRunner.class)
-public class LocationListActivityTest
+public class MainActivityTest
 {
-    private LocationListActivity activity;
+    private MainActivity activity;
 
     private DrawerLayout  drawerLayout;
     private ApplicationBus bus;
+    private NavigationDrawerFragment navigationDrawerFragment;
+    private FrameLayout frameLayout;
 
     @Before
     public void setUp() throws Exception
     {
-        activity = Robolectric.buildActivity( LocationListActivity.class )
+        activity = Robolectric.buildActivity( MainActivity.class )
                               .create()
                               .start()
                               .resume()
                               .get();
         drawerLayout = (DrawerLayout) activity.findViewById( R.id.drawer_layout );
+        navigationDrawerFragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+        frameLayout = (FrameLayout) activity.findViewById(R.id.content_frame);
         bus = ApplicationBus.getInstance();
         bus.register( activity );
     }
@@ -45,19 +54,19 @@ public class LocationListActivityTest
     }
 
     @Test
-    public void shouldHaveLocationListFragment() throws Exception
+    public void shouldHaveFrameLayout() throws Exception
     {
-        assertNotNull( activity.getFragmentManager().findFragmentById( R.id.location_list_fragment ) );
+        assertViewIsVisible(frameLayout);
     }
 
     @Test
-    public void shouldHaveNavidgationDrawerFragment() throws Exception
+    public void shouldHaveNavigationDrawerFragment() throws Exception
     {
-        assertNotNull(activity.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment));
+        assertNotNull(navigationDrawerFragment);
     }
 
     @Test
-    public void shouldHaveNavigationDrawer() throws Exception
+    public void shouldHaveDrawerLayout() throws Exception
     {
         assertViewIsVisible( drawerLayout );
     }
@@ -74,7 +83,7 @@ public class LocationListActivityTest
     {
         drawerLayout.openDrawer(Gravity.START);
         assertTrue( drawerLayout.isDrawerOpen(Gravity.START ) );
-        bus.post(new NavigationDrawerClickEvent(""));
+        bus.post(new NavigationDrawerClickEvent("",""));
         assertFalse( drawerLayout.isDrawerOpen( Gravity.START ) );
     }
 
@@ -86,5 +95,15 @@ public class LocationListActivityTest
         assertTrue( drawerLayout.isDrawerOpen( Gravity.START ) );
         activity.onOptionsItemSelected( homeItem );
         assertFalse( drawerLayout.isDrawerOpen( Gravity.START ) );
+    }
+
+    @Test
+    public void shouldSwapFragmentsOnDrawerSelection() throws Exception
+    {
+        ListView drawerList = (ListView) navigationDrawerFragment.getView();
+        Fragment fragment;
+        Robolectric.shadowOf(drawerList).performItemClick(0);
+        fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        assertTrue(fragment instanceof LocationListFragment);
     }
 }

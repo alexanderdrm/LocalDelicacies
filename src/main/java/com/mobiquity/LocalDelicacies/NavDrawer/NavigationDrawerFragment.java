@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
-import com.mobiquity.LocalDelicacies.LocationListFragment;
+import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 

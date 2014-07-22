@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.Location;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.R;
 
 import java.util.ArrayList;
 

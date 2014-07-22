@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 
 import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerFragment;
@@ -18,7 +19,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.tester.android.view.TestMenuItem;
 
-import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsGone;
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static org.junit.Assert.*;
 

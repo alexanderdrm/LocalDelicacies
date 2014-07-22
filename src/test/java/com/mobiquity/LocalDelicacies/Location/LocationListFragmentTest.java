@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.Location;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -7,6 +7,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mobiquity.LocalDelicacies.Location.Location;
+import com.mobiquity.LocalDelicacies.Location.LocationListAdapter;
+import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
+import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 
 import org.junit.Before;
@@ -55,7 +59,7 @@ public class LocationListFragmentTest
         locationList = locationListFragment.getView().findViewById( R.id.location_list );
         ListAdapter adapter = ( (ListView) locationList ).getAdapter();
         assertNotNull( adapter );
-        assertTrue( adapter instanceof LocationListAdapter );
+        assertTrue( adapter instanceof LocationListAdapter);
     }
 
     @Test

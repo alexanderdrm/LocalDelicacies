@@ -9,7 +9,7 @@
             android:layout_centerInParent="true"
             android:contentDescription="@string/location_image"
             android:scaleType="fitXY"
-            android:src="@drawable/sample_image"/>
+            android:src="@drawable/sample_city"/>
 
     <ImageView
             android:id="@+id/bookmarked_button"

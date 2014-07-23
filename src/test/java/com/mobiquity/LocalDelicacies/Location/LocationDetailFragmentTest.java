@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,44 +25,34 @@ import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 
 
 @RunWith(RobolectricTestRunner.class)
-public class LocationDetailActivityTest {
+public class LocationDetailFragmentTest {
 
-    LocationDetailActivity activity;
-    Intent intent;
+    LocationDetailFragment locationDetailFragment;
 
     @Before
     public void setUp()
     {
-        intent = LocationDetailActivity.createIntent(
-                Robolectric.application.getApplicationContext(),
-                getTestLocation());
-
-        activity = Robolectric.buildActivity(LocationDetailActivity.class)
-                .withIntent(intent)
-                .create()
-                .start()
-                .resume()
-                .get();
+        locationDetailFragment = new LocationDetailFragment();
+        FragmentUtil.startFragment(locationDetailFragment);
 
     }
 
     @Test
     public void shouldNotBeNull() throws Exception
     {
-        assertNotNull(activity);
+        assertNotNull(locationDetailFragment);
     }
 
     @Test
-    public void shouldHaveAnIntent() throws Exception
+    public void shouldHaveArguments() throws Exception
     {
-        assertNotNull(activity.getIntent());
-        assertThat(intent, equalTo(activity.getIntent()));
+        assertNotNull(locationDetailFragment.getArguments());
     }
 
     @Test
-    public void shouldMakeLocationFromIntent() throws Exception
+    public void shouldMakeLocationFromArguments() throws Exception
     {
-        Bundle bundle = activity.getIntent().getExtras();
+        Bundle bundle = locationDetailFragment.getArguments();
         assertNotNull(bundle);
         Object location = getBundledLocation();
 
@@ -70,12 +61,10 @@ public class LocationDetailActivityTest {
         assertTrue(location.equals(getTestLocation()));
     }
 
-
-
     @Test
     public void shouldContainLocationName() throws Exception
     {
-        TextView locationName = (TextView) activity.findViewById(R.id.name);
+        TextView locationName = (TextView) locationDetailFragment.getView().findViewById(R.id.name);
         assertViewIsVisible(locationName);
         assertThat(locationName.getText().toString(), equalTo(getBundledLocation().getName()));
     }
@@ -83,36 +72,36 @@ public class LocationDetailActivityTest {
     @Test
     public void shouldContainLocationImage() throws Exception
     {
-        ImageView image = (ImageView)activity.findViewById(R.id.image);
+        ImageView image = (ImageView)locationDetailFragment.getView().findViewById(R.id.image);
         assertViewIsVisible(image);
     }
 
     @Test
     public void shouldContainLocationDescription() throws Exception
     {
-        TextView description = (TextView) activity.findViewById(R.id.description);
+        TextView description = (TextView) locationDetailFragment.getView().findViewById(R.id.description);
         assertViewIsVisible(description);
     }
 
     @Test
     public void shouldContainBookmarkImage() throws Exception
     {
-        ImageView bookmarkImage = (ImageView) activity.findViewById(R.id.bookmarked_button);
+        ImageView bookmarkImage = (ImageView) locationDetailFragment.getView().findViewById(R.id.bookmarked_button);
         assertViewIsVisible(bookmarkImage);
         if(getBundledLocation().isBookmarked())
         {
-            assertThat(bookmarkImage.getDrawable(), equalTo(activity.getResources().getDrawable(R.drawable.love)));
+            assertThat(bookmarkImage.getDrawable(), equalTo(locationDetailFragment.getActivity().getResources().getDrawable(R.drawable.love)));
         }
         else
         {
-            assertThat(bookmarkImage.getDrawable(), equalTo(activity.getResources().getDrawable(R.drawable.no_love)));
+            assertThat(bookmarkImage.getDrawable(), equalTo(locationDetailFragment.getActivity().getResources().getDrawable(R.drawable.no_love)));
 
         }
     }
 
     private Location getBundledLocation()
     {
-        return Location.createLocationFromBundle(activity.getIntent().getExtras());
+        return Location.createLocationFromBundle(locationDetailFragment.getArguments());
     }
 
     private Location getTestLocation()

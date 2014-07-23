@@ -56,7 +56,7 @@ public class LocationListAdapter extends BaseListAdapter
     private void configureView(final Location location, final ViewHolder holder)
     {
         holder.name.setText(location.getName());
-        holder.image.setImageResource(R.drawable.sample_image);
+        holder.image.setImageResource(R.drawable.sample_city);
 
         if ( location.isBookmarked() )
         {

@@ -5,8 +5,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
-import com.mobiquity.LocalDelicacies.location.Location;
-import com.mobiquity.LocalDelicacies.location.LocationDetailActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

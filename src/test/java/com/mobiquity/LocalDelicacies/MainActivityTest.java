@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
-import com.mobiquity.LocalDelicacies.location.LocationDetailActivity;
+import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
 import com.mobiquity.LocalDelicacies.location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 
@@ -128,6 +128,6 @@ public class MainActivityTest
         bus.post(event);
         Intent intent = Robolectric.shadowOf(activity).getNextStartedActivity();
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
-        assertThat(shadowIntent.getComponent().getClassName(), equalTo(LocationDetailActivity.class.getCanonicalName()));
+        assertThat(shadowIntent.getComponent().getClassName(), equalTo(LocationDetailFragment.class.getCanonicalName()));
     }
 }

@@ -13,8 +13,9 @@ import android.view.View;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailActivity;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
-import com.mobiquity.LocalDelicacies.location.LocationDetailActivity;
+import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
 import com.mobiquity.LocalDelicacies.location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
@@ -46,6 +47,8 @@ public class MainActivity extends Activity
             getActionBar().setTitle(title);
             switchFragment(LocationListFragment.TAG);
         }
+
+
     }
 
     @Override
@@ -114,9 +117,18 @@ public class MainActivity extends Activity
     @Subscribe
     public void onLocationClicked(LocationClickedEvent event)
     {
-        Intent intent = LocationDetailActivity.createIntent(this, event.getLocation());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-       startActivity(intent);
+        Fragment fragment = new LocationDetailFragment();
+        Bundle bundle = Location.createBundleFromLocation(event.getLocation());
+
+        switchFragment(fragment, bundle, event.getLocation().getName());
+    }
+
+    public void switchFragment(Fragment frag, Bundle b, String fragmentName) {
+        frag.setArguments(b);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, frag)
+                .addToBackStack(fragmentName)
+                .commit();
     }
 
     @Subscribe
@@ -133,9 +145,14 @@ public class MainActivity extends Activity
         if (fragmentTag.equals(LocationListFragment.TAG))
         {
             fragment = new LocationListFragment();
-        } else if(fragmentTag.equals(DelicacyListFragment.TAG))
+        }
+        else if(fragmentTag.equals(DelicacyListFragment.TAG))
         {
             fragment = new DelicacyListFragment();
+        }
+        else if(fragmentTag.equals(LocationDetailFragment.TAG))
+        {
+            fragment = new LocationDetailFragment();
         }
 
         FragmentManager fragmentManager = getFragmentManager();

@@ -13,10 +13,7 @@ import android.view.View;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailActivity;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.location.Location;
-import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
-import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
-import com.mobiquity.LocalDelicacies.location.LocationListFragment;
+import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
@@ -144,7 +141,7 @@ public class MainActivity extends Activity
         Fragment fragment = null;
         if (fragmentTag.equals(LocationListFragment.TAG))
         {
-            fragment = new LocationListFragment();
+            fragment = new LocationPagesFragment();
         }
         else if(fragmentTag.equals(DelicacyListFragment.TAG))
         {

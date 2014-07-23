@@ -57,11 +57,11 @@ public class DelicacyListAdapter extends BaseListAdapter {
 
         if(delicacy.isBookmarked())
         {
-            holder.bookmarkButton.setImageResource(R.drawable.no_love);
+            holder.bookmarkButton.setImageResource(R.drawable.love);
         }
         else
         {
-            holder.bookmarkButton.setImageResource(R.drawable.love);
+            holder.bookmarkButton.setImageResource(R.drawable.no_love);
         }
 
         holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {

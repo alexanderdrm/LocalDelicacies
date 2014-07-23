@@ -49,8 +49,8 @@ public class DelicacyListFragment extends Fragment {
     private ArrayList<Delicacy> createDummyData()
     {
         ArrayList<Delicacy> list = new ArrayList<Delicacy>();
-        list.add(new Delicacy("Apple", null));
-        list.add(new Delicacy("Chocolate", null));
+        list.add(new Delicacy("Apple", null, false));
+        list.add(new Delicacy("Chocolate", null, true));
         return  list;
 
     }

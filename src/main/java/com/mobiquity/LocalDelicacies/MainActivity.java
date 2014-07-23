@@ -10,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailActivity;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
 import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
 import com.mobiquity.LocalDelicacies.location.LocationDetailActivity;
@@ -115,6 +117,14 @@ public class MainActivity extends Activity
         Intent intent = LocationDetailActivity.createIntent(this, event.getLocation());
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
        startActivity(intent);
+    }
+
+    @Subscribe
+    public void onDelicacyClicked(DelicacyClickedEvent event)
+    {
+        Intent intent = DelicacyDetailActivity.createIntent(this, event.getDelicacy());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
     private void switchFragment(String fragmentTag)

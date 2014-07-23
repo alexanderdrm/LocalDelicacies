@@ -6,11 +6,19 @@ package com.mobiquity.LocalDelicacies.Delicacies;
 public class Delicacy {
     private String name;
     private String imageUrl;
+    private boolean bookmarked;
 
     public Delicacy(String name, String imageUrl)
     {
         this.name = name;
         this.imageUrl = imageUrl;
+        this.bookmarked = false;
+    }
+
+    public Delicacy(String name, String imageUrl, boolean bookmarked)
+    {
+        this(name, imageUrl);
+        this.bookmarked = bookmarked;
     }
 
     public String getName() {
@@ -27,5 +35,13 @@ public class Delicacy {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 }

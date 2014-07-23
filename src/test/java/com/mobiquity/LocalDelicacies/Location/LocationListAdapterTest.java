@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import static com.mobiquity.LocalDelicacies.BaseListAdapter.ViewHolder;
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static com.mobiquity.LocalDelicacies.support.ResourceLocator.getDrawable;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -81,7 +83,7 @@ public class LocationListAdapterTest
     private View createRecycledView()
     {
         View theView = View.inflate( activity, R.layout.layout_text_image, null );
-        LocationListAdapter.ViewHolder holder = LocationListAdapter.ViewHolder.createViewHolder( theView );
+        ViewHolder holder = ViewHolder.createViewHolder( theView );
         theView.setTag( holder );
         return theView;
     }
@@ -109,7 +111,7 @@ public class LocationListAdapterTest
             ImageView lovedButton = (ImageView) view.findViewById( R.id.bookmarked_button);
             assertViewIsVisible( lovedButton );
             Location currentLocation = testData.get( index );
-            if ( currentLocation.isLoved() )
+            if ( currentLocation.isBookmarked() )
             {
                 assertThat( lovedButton.getDrawable(),
                             equalTo( getDrawable( R.drawable.love ) ) );
@@ -130,7 +132,7 @@ public class LocationListAdapterTest
             View view = getViewById( index );
             ImageView lovedButton = (ImageView) view.findViewById( R.id.bookmarked_button);
             Location currentLocation = testData.get( index );
-            boolean originalLovedValue = currentLocation.isLoved();
+            boolean originalLovedValue = currentLocation.isBookmarked();
             lovedButton.performClick();
             if ( originalLovedValue)
             {
@@ -153,9 +155,9 @@ public class LocationListAdapterTest
             View view = getViewById( index );
             ImageView lovedButton = (ImageView) view.findViewById( R.id.bookmarked_button);
             Location currentLocation = testData.get( index );
-            boolean originalLovedValue = currentLocation.isLoved();
+            boolean originalLovedValue = currentLocation.isBookmarked();
             lovedButton.performClick();
-            assertNotSame(originalLovedValue, currentLocation.isLoved());
+            assertNotSame(originalLovedValue, currentLocation.isBookmarked());
         }
     }
 
@@ -169,7 +171,7 @@ public class LocationListAdapterTest
     @Test
     public void createHolder_shouldReturnViewHolder() throws Exception
     {
-        LocationListAdapter.ViewHolder holder = LocationListAdapter.ViewHolder
+        ViewHolder holder = ViewHolder
                                                                    .createViewHolder( createRecycledView() );
         assertNotNull( holder );
     }

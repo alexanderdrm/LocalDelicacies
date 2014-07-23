@@ -113,7 +113,9 @@ public class MainActivity extends Activity
     @Subscribe
     public void onLocationClicked(LocationClickedEvent event)
     {
-       startActivity(LocationDetailActivity.createIntent(this, event.getLocation()));
+        Intent intent = LocationDetailActivity.createIntent(this, event.getLocation());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+       startActivity(intent);
     }
 
     private void switchFragment(String fragmentTag)

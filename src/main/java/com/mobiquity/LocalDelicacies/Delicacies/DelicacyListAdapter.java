@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
+import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;
 
 import java.util.ArrayList;
@@ -13,40 +15,71 @@ import java.util.ArrayList;
 /**
  * Created by jwashington on 7/22/14.
  */
-public class DelicacyListAdapter extends BaseAdapter {
+public class DelicacyListAdapter extends BaseListAdapter {
 
-    private Context context;
-    private ArrayList<Delicacy> delicacies;
 
-    public DelicacyListAdapter(Context context, ArrayList<Delicacy> delicacies)
-    {
-        this.context = context;
-        this.delicacies = delicacies;
-    }
-    @Override
-    public int getCount() {
-        return delicacies.size();
+    public DelicacyListAdapter(Context context, ArrayList<Delicacy> items) {
+        super(context, items);
     }
 
-    @Override
-    public Object getItem(int position) {
-        return delicacies.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    //Todo: View Holder
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Delicacy delicacy = delicacies.get(position);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.layout_text_image, parent, false);
+        final Delicacy delicacy = (Delicacy) items.get(position);
 
-        TextView delicacyName = (TextView) convertView.findViewById(R.id.name);
-        delicacyName.setText(delicacy.getName());
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewHolder holder;
+
+        if(convertView == null)
+        {
+            convertView = inflater.inflate(R.layout.layout_text_image,
+                    parent,
+                    false);
+            holder = ViewHolder.createViewHolder(convertView);
+            convertView.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        configureView(delicacy, holder);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApplicationBus.getInstance().post(new DelicacyClickedEvent(delicacy));
+            }
+        });
         return convertView;
     }
+
+    private void configureView(final Delicacy delicacy, final ViewHolder holder)
+    {
+        holder.name.setText(delicacy.getName());
+        holder.image.setImageResource(R.drawable.sample_delicacy);
+
+        if(delicacy.isBookmarked())
+        {
+            holder.bookmarkButton.setImageResource(R.drawable.no_love);
+        }
+        else
+        {
+            holder.bookmarkButton.setImageResource(R.drawable.love);
+        }
+
+        holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(delicacy.isBookmarked())
+                {
+                    holder.bookmarkButton.setImageResource(R.drawable.love);
+                }
+                else
+                {
+                    holder.bookmarkButton.setImageResource(R.drawable.no_love);
+                }
+                delicacy.setBookmarked(!delicacy.isBookmarked());
+            }
+        });
+    }
+
 }

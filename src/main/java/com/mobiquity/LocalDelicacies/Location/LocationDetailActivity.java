@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
 
@@ -21,6 +22,7 @@ public class LocationDetailActivity extends Activity {
 
     private Location location;
     private TextView locationName;
+    private ImageView bookmarkedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,17 @@ public class LocationDetailActivity extends Activity {
 
         locationName = (TextView) findViewById(R.id.name);
         locationName.setText(location.getName());
+
+        bookmarkedButton = (ImageView) findViewById(R.id.bookmarked_button);
+        if(location.isBookmarked())
+            bookmarkedButton.setImageResource(R.drawable.love);
+        else
+            bookmarkedButton.setImageResource(R.drawable.no_love);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0,0);
+    }
 }

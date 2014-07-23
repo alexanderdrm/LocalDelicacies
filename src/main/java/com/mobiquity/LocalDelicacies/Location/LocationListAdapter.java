@@ -4,10 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
+import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;
 
 import java.util.ArrayList;
@@ -15,41 +13,19 @@ import java.util.ArrayList;
 /**
  * Created by jwashington on 7/17/14.
  */
-public class LocationListAdapter extends BaseAdapter
+public class LocationListAdapter extends BaseListAdapter
 {
-    private Context             theContext;
-    private ArrayList<Location> locationList;
 
-    public LocationListAdapter( Context theContext,
-                                ArrayList<Location> locationList )
-    {
-        this.theContext = theContext;
-        this.locationList = locationList;
-    }
 
-    @Override
-    public int getCount()
-    {
-        return locationList.size();
-    }
-
-    @Override
-    public Object getItem( int position )
-    {
-        return locationList.get( position );
-    }
-
-    @Override
-    public long getItemId( int position )
-    {
-        return position;
+    public LocationListAdapter(Context context, ArrayList<Location> items) {
+        super(context, items);
     }
 
     @Override
     public View getView( int position, View convertView, ViewGroup parent )
     {
-        LayoutInflater inflater = (LayoutInflater) theContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        final Location location = locationList.get( position );
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        final Location location = (Location) items.get( position );
 
         ViewHolder holder;
         if ( convertView == null )
@@ -64,11 +40,7 @@ public class LocationListAdapter extends BaseAdapter
         {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.locationName.setText( location.getName() );
-
-
-        configureLocationView(location, holder);
-        configureLoveButton( location, holder );
+        configureView(location, holder);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,56 +52,41 @@ public class LocationListAdapter extends BaseAdapter
         return convertView;
     }
 
-    private void configureLoveButton( final Location location,
-                                      final ViewHolder holder )
+
+    private void configureView(final Location location, final ViewHolder holder)
     {
-        holder.lovedButton.setOnClickListener( new View.OnClickListener()
+        holder.name.setText(location.getName());
+        holder.image.setImageResource(R.drawable.sample_image);
+
+        if ( location.isBookmarked() )
+        {
+            holder.bookmarkButton.setImageDrawable( context.getResources().getDrawable( R.drawable.love ) );
+        }
+        else
+        {
+            holder.bookmarkButton.setImageDrawable( context.getResources().getDrawable( R.drawable.no_love ) );
+        }
+
+        holder.bookmarkButton.setOnClickListener( new View.OnClickListener()
         {
             @Override
             public void onClick( View v )
             {
-                if ( location.isLoved() )
+                if ( location.isBookmarked() )
                 {
-                    holder.lovedButton.setImageResource( R.drawable.no_love );
+                    holder.bookmarkButton.setImageResource( R.drawable.no_love );
                 }
                 else
                 {
-                    holder.lovedButton.setImageResource( R.drawable.love );
+                    holder.bookmarkButton.setImageResource( R.drawable.love );
                 }
-                location.setLoved( !location.isLoved() );
+                location.setBookmarked(!location.isBookmarked());
             }
         } );
+
     }
 
-    private void configureLocationView( Location location, ViewHolder holder )
-    {
-        if ( location.isLoved() )
-        {
-            holder.lovedButton.setImageDrawable( theContext.getResources().getDrawable( R.drawable.love ) );
-        }
-        else
-        {
-            holder.lovedButton.setImageDrawable( theContext.getResources().getDrawable( R.drawable.no_love ) );
-        }
-    }
 
-    protected static class ViewHolder
-    {
-        public TextView  locationName;
-        public ImageView locationImage;
-        public ImageView lovedButton;
-
-        public static ViewHolder createViewHolder( View theView )
-        {
-            ViewHolder holder = new ViewHolder();
-
-            holder.locationName = (TextView) theView.findViewById( R.id.name);
-            holder.locationImage = (ImageView) theView.findViewById( R.id.image);
-            holder.lovedButton = (ImageView) theView.findViewById( R.id.bookmarked_button);
-
-            return holder;
-        }
-    }
 
 
 }

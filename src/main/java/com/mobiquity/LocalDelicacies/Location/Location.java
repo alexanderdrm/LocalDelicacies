@@ -9,19 +9,19 @@ public class Location
 {
     private String  name;
     private String imageURL;
-    private boolean loved;
+    private boolean bookmarked;
 
     public Location( String name, String imageURL )
     {
         this.name = name;
         this.imageURL = imageURL;
-        loved = false;
+        bookmarked = false;
     }
 
-    public Location(String name, String imageURL, boolean loved)
+    public Location(String name, String imageURL, boolean bookmarked)
     {
         this(name, imageURL);
-        this.loved = loved;
+        this.bookmarked = bookmarked;
     }
 
     public String getName()
@@ -44,12 +44,12 @@ public class Location
         this.imageURL = imageURL;
     }
 
-    public boolean isLoved() {
-        return loved;
+    public boolean isBookmarked() {
+        return bookmarked;
     }
 
-    public void setLoved(boolean loved) {
-        this.loved = loved;
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 
     public static Bundle createBundleFromLocation(Location location)
@@ -57,7 +57,7 @@ public class Location
         Bundle bundle = new Bundle();
         bundle.putString("name", location.name);
         bundle.putString("imageURL", location.imageURL);
-        bundle.putBoolean("loved", location.loved);
+        bundle.putBoolean("bookmarked", location.bookmarked);
         return bundle;
     }
 
@@ -66,7 +66,7 @@ public class Location
         return new Location(
                 bundle.getString("name"),
                 bundle.getString("imageURL"),
-                bundle.getBoolean("loved")
+                bundle.getBoolean("bookmarked")
         );
     }
 }

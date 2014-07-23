@@ -69,4 +69,26 @@ public class Location
                 bundle.getBoolean("bookmarked")
         );
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        if (bookmarked != location.bookmarked) return false;
+        if (imageURL != null ? !imageURL.equals(location.imageURL) : location.imageURL != null) return false;
+        if (!name.equals(location.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (imageURL != null ? imageURL.hashCode() : 0);
+        result = 31 * result + (bookmarked ? 1 : 0);
+        return result;
+    }
 }

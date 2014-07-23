@@ -34,7 +34,7 @@ public class LocationDetailActivityTest {
     {
         intent = LocationDetailActivity.createIntent(
                 Robolectric.application.getApplicationContext(),
-                new Location("TestLocation", null));
+                getTestLocation());
 
         activity = Robolectric.buildActivity(LocationDetailActivity.class)
                 .withIntent(intent)
@@ -63,19 +63,21 @@ public class LocationDetailActivityTest {
     {
         Bundle bundle = activity.getIntent().getExtras();
         assertNotNull(bundle);
-        Object location = Location.createLocationFromBundle(bundle);
+        Object location = getBundledLocation();
 
         assertNotNull(location);
         assertTrue(location instanceof Location);
-        assertThat(((Location) location).getName(), equalTo("TestLocation"));
+        assertTrue(location.equals(getTestLocation()));
     }
+
+
 
     @Test
     public void shouldContainLocationName() throws Exception
     {
         TextView locationName = (TextView) activity.findViewById(R.id.name);
         assertViewIsVisible(locationName);
-        assertThat(locationName.getText().toString(), equalTo(getLocation().getName()));
+        assertThat(locationName.getText().toString(), equalTo(getBundledLocation().getName()));
     }
 
     @Test
@@ -92,9 +94,30 @@ public class LocationDetailActivityTest {
         assertViewIsVisible(description);
     }
 
-    private Location getLocation()
+    @Test
+    public void shouldContainBookmarkImage() throws Exception
+    {
+        ImageView bookmarkImage = (ImageView) activity.findViewById(R.id.bookmarked_button);
+        assertViewIsVisible(bookmarkImage);
+        if(getBundledLocation().isBookmarked())
+        {
+            assertThat(bookmarkImage.getDrawable(), equalTo(activity.getResources().getDrawable(R.drawable.love)));
+        }
+        else
+        {
+            assertThat(bookmarkImage.getDrawable(), equalTo(activity.getResources().getDrawable(R.drawable.no_love)));
+
+        }
+    }
+
+    private Location getBundledLocation()
     {
         return Location.createLocationFromBundle(activity.getIntent().getExtras());
+    }
+
+    private Location getTestLocation()
+    {
+        return new Location("Test_Locaiton", null);
     }
 
 

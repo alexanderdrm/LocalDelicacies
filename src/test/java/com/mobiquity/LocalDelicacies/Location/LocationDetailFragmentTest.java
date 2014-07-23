@@ -33,6 +33,7 @@ public class LocationDetailFragmentTest {
     public void setUp()
     {
         locationDetailFragment = new LocationDetailFragment();
+        locationDetailFragment.setArguments(Location.createBundleFromLocation(getTestLocation()));
         FragmentUtil.startFragment(locationDetailFragment);
 
     }

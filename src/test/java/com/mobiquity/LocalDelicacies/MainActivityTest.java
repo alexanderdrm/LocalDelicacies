@@ -122,12 +122,11 @@ public class MainActivityTest
     }
 
     @Test
-    public void shouldLaunchDetailActivity() throws Exception
+    public void shouldLaunchDetailFragment() throws Exception
     {
         LocationClickedEvent event = new LocationClickedEvent(new Location("TestLocation", null));
         bus.post(event);
-        Intent intent = Robolectric.shadowOf(activity).getNextStartedActivity();
-        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
-        assertThat(shadowIntent.getComponent().getClassName(), equalTo(LocationDetailFragment.class.getCanonicalName()));
+        Fragment fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        assertTrue(fragment instanceof LocationDetailFragment);
     }
 }

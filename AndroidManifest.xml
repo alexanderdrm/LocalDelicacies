@@ -12,7 +12,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Location.LocationDetailActivity"
+        <activity android:name=".location.LocationDetailActivity"
                   android:label="@string/app_name"
                   android:parentActivityName=".MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->

@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.Delicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 /**
  * Created by jwashington on 7/22/14.

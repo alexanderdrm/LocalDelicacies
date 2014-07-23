@@ -1,9 +1,8 @@
-package com.mobiquity.LocalDelicacies.Delicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
-import com.mobiquity.LocalDelicacies.Location.Location;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;

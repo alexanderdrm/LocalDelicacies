@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.NavDrawer;
+package com.mobiquity.LocalDelicacies.navdrawer;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
-import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
 
 import java.util.ArrayList;

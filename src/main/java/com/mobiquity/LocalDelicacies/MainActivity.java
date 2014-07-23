@@ -10,12 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.Location.Location;
-import com.mobiquity.LocalDelicacies.Location.LocationClickedEvent;
-import com.mobiquity.LocalDelicacies.Location.LocationDetailActivity;
-import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
+import com.mobiquity.LocalDelicacies.location.LocationDetailActivity;
+import com.mobiquity.LocalDelicacies.location.LocationListFragment;
+import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
 public class MainActivity extends Activity

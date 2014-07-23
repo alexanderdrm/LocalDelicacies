@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.NavDrawer;
+package com.mobiquity.LocalDelicacies.navdrawer;
 
 import com.mobiquity.LocalDelicacies.BaseEvent;
 

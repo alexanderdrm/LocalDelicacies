@@ -8,14 +8,14 @@ import android.view.MenuItem;
 
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import com.mobiquity.LocalDelicacies.Delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.Location.Location;
-import com.mobiquity.LocalDelicacies.Location.LocationClickedEvent;
-import com.mobiquity.LocalDelicacies.Location.LocationDetailActivity;
-import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.location.Location;
+import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
+import com.mobiquity.LocalDelicacies.location.LocationDetailActivity;
+import com.mobiquity.LocalDelicacies.location.LocationListFragment;
+import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerFragment;
+import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerFragment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

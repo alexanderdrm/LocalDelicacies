@@ -1,6 +1,5 @@
 package com.mobiquity.LocalDelicacies;
 
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Bus;
 
 /**

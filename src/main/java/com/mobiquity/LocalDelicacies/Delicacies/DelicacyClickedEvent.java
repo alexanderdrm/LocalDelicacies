@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.Delicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 import com.mobiquity.LocalDelicacies.BaseEvent;
 

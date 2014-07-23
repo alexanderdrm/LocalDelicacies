@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.Delicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -6,18 +6,12 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.mobiquity.LocalDelicacies.Location.Location;
-import com.mobiquity.LocalDelicacies.Location.LocationListAdapter;
-import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
-import com.mobiquity.LocalDelicacies.MainActivity;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.util.FragmentTestUtil;
 
 import java.util.ArrayList;
 

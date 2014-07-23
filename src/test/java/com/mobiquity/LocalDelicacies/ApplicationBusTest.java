@@ -1,7 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
-import com.mobiquity.LocalDelicacies.NavDrawer.NavigationDrawerClickEvent;
+import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.mobiquity.LocalDelicacies.support.BusHelper;
 import org.junit.Before;
 import org.junit.Test;

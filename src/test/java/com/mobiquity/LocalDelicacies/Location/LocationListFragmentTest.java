@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.Location;
+package com.mobiquity.LocalDelicacies.location;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -7,9 +7,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.mobiquity.LocalDelicacies.Location.Location;
-import com.mobiquity.LocalDelicacies.Location.LocationListAdapter;
-import com.mobiquity.LocalDelicacies.Location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 

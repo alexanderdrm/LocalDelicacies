@@ -1,6 +1,5 @@
-package com.mobiquity.LocalDelicacies.Delicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;

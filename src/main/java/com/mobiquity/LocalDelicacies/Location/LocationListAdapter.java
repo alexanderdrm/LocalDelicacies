@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.Location;
+package com.mobiquity.LocalDelicacies.location;
 
 import android.content.Context;
 import android.view.LayoutInflater;

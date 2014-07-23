@@ -1,11 +1,9 @@
-package com.mobiquity.LocalDelicacies.Delicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;

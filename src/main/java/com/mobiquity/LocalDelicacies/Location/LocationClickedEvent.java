@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.Location;
+package com.mobiquity.LocalDelicacies.location;
 
 import com.mobiquity.LocalDelicacies.BaseEvent;
 

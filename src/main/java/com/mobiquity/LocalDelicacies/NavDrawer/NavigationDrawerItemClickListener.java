@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.NavDrawer;
+package com.mobiquity.LocalDelicacies.navdrawer;
 
 import android.content.Context;
 import android.view.View;

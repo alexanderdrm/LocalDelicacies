@@ -7,7 +7,7 @@ import android.os.Bundle;
  */
 public class Location
 {
-    private String  name;
+    private String name;
     private String imageURL;
     private boolean bookmarked;
 

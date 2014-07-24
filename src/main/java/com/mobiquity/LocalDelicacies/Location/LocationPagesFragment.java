@@ -1,6 +1,8 @@
 package com.mobiquity.LocalDelicacies.location;
 
+import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -65,6 +67,78 @@ public class LocationPagesFragment extends Fragment {
         return new LocationPagesAdapter(views);
     }
 
+    @Subscribe
+    public void onDataUpdated(DataUpdateEvent due) {
+        allLocations = due.getLocations();
+
+        for(LocationListAdapter lladapter : adapters) {
+            lladapter.updateData(allLocations);
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        configureActionBar();
+
+        ApplicationBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        ApplicationBus.getInstance().unregister(this);
+        getActivity().getActionBar().removeAllTabs();
+        getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
+    }
+
+    private void configureActionBar()
+    {
+        final ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            }
+
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            }
+        };
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText(getResources()
+                                .getString(R.string.all))
+                        .setTabListener(tabListener));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText(getResources()
+                                .getString(R.string.bookmarked))
+                        .setTabListener(tabListener));
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
     protected class LocationPagesAdapter extends PagerAdapter
     {
 
@@ -90,30 +164,6 @@ public class LocationPagesFragment extends Fragment {
         public boolean isViewFromObject(View view, Object object) {
             return view.equals(object);
         }
-    }
-
-    @Subscribe
-    public void onDataUpdated(DataUpdateEvent due) {
-        allLocations = due.getLocations();
-
-        for(LocationListAdapter lladapter : adapters) {
-            lladapter.updateData(allLocations);
-        }
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-
-        ApplicationBus.getInstance().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        ApplicationBus.getInstance().unregister(this);
     }
 
 }

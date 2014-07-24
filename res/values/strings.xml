@@ -5,6 +5,8 @@
     <string name="no_items">No data</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <string name="all">All</string>
+    <string name="bookmarked">Bookmarked</string>
 
     <string name="locations">Locations</string>
     <string name="delicaices">Delicacies</string>

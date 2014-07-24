@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.os.Bundle;
+import com.mobiquity.LocalDelicacies.Specality;
 
 /**
  * Created by jwashington on 7/22/14.
@@ -12,12 +13,19 @@ public class Delicacy {
 
     private int ratingInHalfStars;
 
-    public Delicacy(String name, String imageUrl, boolean bookmarked, int ratingInHalfStars)
+    private String description;
+
+    public Delicacy(Specality spec) {
+        this(spec.getTitle(), spec.getImageUrl(), false, 0, spec.getDescription());
+    }
+
+    public Delicacy(String name, String imageUrl, boolean bookmarked, int ratingInHalfStars, String description)
     {
         this.name = name;
         this.imageUrl = imageUrl;
         this.bookmarked = bookmarked;
         this.ratingInHalfStars = ratingInHalfStars;
+        this.description = description;
     }
 
     public Delicacy(String name, String imageUrl)
@@ -27,7 +35,7 @@ public class Delicacy {
 
     public Delicacy(String name, String imageUrl, boolean bookmarked)
     {
-        this(name, imageUrl, bookmarked, 0);
+        this(name, imageUrl, bookmarked, 0, "No Description");
     }
 
     public String getName() {
@@ -71,6 +79,7 @@ public class Delicacy {
         bundle.putString("imageURL", delicacy.imageUrl);
         bundle.putBoolean("bookmarked", delicacy.bookmarked);
         bundle.putInt("rating", delicacy.ratingInHalfStars);
+        bundle.putString("description", delicacy.description);
         return bundle;
     }
 
@@ -80,7 +89,8 @@ public class Delicacy {
                 bundle.getString("name"),
                 bundle.getString("imageURL"),
                 bundle.getBoolean("bookmarked"),
-                bundle.getInt("rating")
+                bundle.getInt("rating"),
+                bundle.getString("description")
         );
     }
 

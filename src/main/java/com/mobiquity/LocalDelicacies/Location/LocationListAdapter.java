@@ -1,13 +1,12 @@
 package com.mobiquity.LocalDelicacies.location;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.Filter;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -17,16 +16,13 @@ import java.util.ArrayList;
 public class LocationListAdapter extends BaseListAdapter
 {
 
-    private Filter filter;
-
     public LocationListAdapter(Context context, ArrayList<Location> items)
     {
         this(context, items, new PermissiveFilter());
     }
 
     public LocationListAdapter(Context context, ArrayList<Location> items, Filter filter) {
-        super(context, items);
-        this.filter = filter;
+        super(context, items, filter);
     }
 
     @Override
@@ -58,14 +54,12 @@ public class LocationListAdapter extends BaseListAdapter
         return convertView;
     }
 
-
-
     private void configureView(final Location location, final ViewHolder holder)
     {
         if(holder==null) {
             return;
         }
-        holder.name.setText(location.getName());
+        holder.name.setText(location.getTitle());
         holder.image.setImageResource(R.drawable.sample_city);
 
         if ( location.isBookmarked() )
@@ -110,5 +104,10 @@ public class LocationListAdapter extends BaseListAdapter
     }
 
 
+    public void updateData(ArrayList<Location> locs) {
+        items = locs;
+        
+        notifyDataSetChanged();
+    }
 }
 

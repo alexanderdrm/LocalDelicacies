@@ -12,15 +12,15 @@ public class TestModule {
     public static ArrayList<Location> generateTestLocations()
     {
         ArrayList<Location> list = new ArrayList<Location>();
-        list.add( new Location( "Las Vegas", null, true ) );
-        list.add( new Location( "Nevada", null, false ) );
-        list.add( new Location( "Philly", null, true ) );
-        list.add( new Location( "Gainseville", null, false ) );
-        list.add( new Location( "Tallahassee", null, true ) );
-        list.add( new Location( "Amsterdam", null, false ) );
-        list.add( new Location( "Oaxaca", null, true ) );
-        list.add( new Location( "Portland", null, false ) );
-        list.add( new Location( "London", null, true ) );
+        list.add( new Location( "Las Vegas", null, "default" , true) );
+        list.add( new Location( "Nevada", null,"default" , false ) );
+        list.add( new Location( "Philly", null,"default" , true ) );
+        list.add( new Location( "Gainseville","default" , null, false ) );
+        list.add( new Location( "Tallahassee", null,"default" , true ) );
+        list.add( new Location( "Amsterdam", null,"default" , false ) );
+        list.add( new Location( "Oaxaca", null,"default" , true ) );
+        list.add( new Location( "Portland", null,"default" , false ) );
+        list.add( new Location( "London", null,"default" , true ) );
         return list;
     }
 }

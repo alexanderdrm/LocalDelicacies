@@ -14,6 +14,9 @@ public class ApplicationBus extends Bus {
         return instance;
     }
 
+    public static void postEvent(BaseEvent e) {
+        ApplicationBus.getInstance().post(e);
+    }
 
     private ApplicationBus()
     {

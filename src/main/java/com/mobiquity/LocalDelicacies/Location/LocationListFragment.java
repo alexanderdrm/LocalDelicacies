@@ -7,9 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.mobiquity.LocalDelicacies.PermissiveFilter;
-import com.mobiquity.LocalDelicacies.R;
-import com.mobiquity.LocalDelicacies.TestModule;
+import com.mobiquity.LocalDelicacies.*;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -45,6 +44,8 @@ public class LocationListFragment extends Fragment
         return new LocationListAdapter( context, TestModule.generateTestLocations(), new PermissiveFilter());
     }
 
+
+
     @Override
     public void onResume()
     {
@@ -53,6 +54,8 @@ public class LocationListFragment extends Fragment
         {
             locationListView.setVisibility( View.GONE );
         }
+
     }
+
 
 }

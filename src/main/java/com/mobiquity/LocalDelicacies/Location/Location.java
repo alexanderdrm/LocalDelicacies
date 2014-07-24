@@ -1,47 +1,53 @@
 package com.mobiquity.LocalDelicacies.location;
 
 import android.os.Bundle;
+import com.mobiquity.LocalDelicacies.LocationData;
 
 /**
  * @since 1.0
  */
 public class Location
 {
-    private String name;
-    private String imageURL;
+    private String title;
+    private String imageUrl;
     private boolean bookmarked;
+    private String description;
 
-    public Location( String name, String imageURL )
-    {
-        this.name = name;
-        this.imageURL = imageURL;
-        bookmarked = false;
+    public Location(LocationData ld) {
+        this(ld.getTitle(), ld.getImageUrl(), ld.getDescription(), false);
     }
 
-    public Location(String name, String imageURL, boolean bookmarked)
+    public Location( String title, String imageUrl)
     {
-        this(name, imageURL);
+        this(title, imageUrl, "",  false);
+    }
+
+    public Location(String title, String imageUrl, String description, boolean bookmarked)
+    {
+        this.title = title;
+        this.imageUrl = imageUrl;
         this.bookmarked = bookmarked;
+        this.description = description;
     }
 
-    public String getName()
+    public String getTitle()
     {
-        return name;
+        return title;
     }
 
-    public void setName( String name )
+    public void setTitle(String title)
     {
-        this.name = name;
+        this.title = title;
     }
 
-    public String getImageURL()
+    public String getImageUrl()
     {
-        return imageURL;
+        return imageUrl;
     }
 
-    public void setImageURL( String imageURL )
+    public void setImageUrl(String imageUrl)
     {
-        this.imageURL = imageURL;
+        this.imageUrl = imageUrl;
     }
 
     public boolean isBookmarked() {
@@ -55,17 +61,19 @@ public class Location
     public static Bundle createBundleFromLocation(Location location)
     {
         Bundle bundle = new Bundle();
-        bundle.putString("name", location.name);
-        bundle.putString("imageURL", location.imageURL);
+        bundle.putString("title", location.title);
+        bundle.putString("imageUrl", location.imageUrl);
         bundle.putBoolean("bookmarked", location.bookmarked);
+        bundle.putString("description", location.description);
         return bundle;
     }
 
     public static Location createLocationFromBundle(Bundle bundle)
     {
         return new Location(
-                bundle.getString("name"),
-                bundle.getString("imageURL"),
+                bundle.getString("title"),
+                bundle.getString("imageUrl"),
+                bundle.getString("description"),
                 bundle.getBoolean("bookmarked")
         );
     }
@@ -78,16 +86,16 @@ public class Location
         Location location = (Location) o;
 
         if (bookmarked != location.bookmarked) return false;
-        if (imageURL != null ? !imageURL.equals(location.imageURL) : location.imageURL != null) return false;
-        if (!name.equals(location.name)) return false;
+        if (imageUrl != null ? !imageUrl.equals(location.imageUrl) : location.imageUrl != null) return false;
+        if (!title.equals(location.title)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + (imageURL != null ? imageURL.hashCode() : 0);
+        int result = title.hashCode();
+        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
         result = 31 * result + (bookmarked ? 1 : 0);
         return result;
     }

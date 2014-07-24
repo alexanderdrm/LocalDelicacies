@@ -9,10 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.mobiquity.LocalDelicacies.Filter;
-import com.mobiquity.LocalDelicacies.PermissiveFilter;
-import com.mobiquity.LocalDelicacies.R;
-import com.mobiquity.LocalDelicacies.TestModule;
+import com.mobiquity.LocalDelicacies.*;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -24,25 +22,28 @@ public class LocationPagesFragment extends Fragment {
     ViewPager pager;
     LocationPagesAdapter adapter;
 
+    ArrayList<LocationListAdapter> adapters = new ArrayList<LocationListAdapter>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
 
         pager = (ViewPager) rootView.findViewById(R.id.pager);
-        adapter = generateTestAdapter(inflater.getContext());
+        adapter = generateAdapter(inflater.getContext());
         pager.setAdapter(adapter);
 
 
         return rootView;
     }
 
-    private LocationPagesAdapter generateTestAdapter(Context context)
+    private LocationPagesAdapter generateAdapter(Context context)
     {
         ListView all = new ListView(context);
         ArrayList<Location> allLocations = TestModule.generateTestLocations();
         LocationListAdapter locationListAdapter = new LocationListAdapter(context, allLocations, new PermissiveFilter());
         all.setAdapter(locationListAdapter);
+
+        adapters.add(locationListAdapter);
 
         ListView pinned =  new ListView(context);
         LocationListAdapter pinnedListAdapter = new LocationListAdapter(context, allLocations, new Filter() {
@@ -53,6 +54,7 @@ public class LocationPagesFragment extends Fragment {
         });
         pinned.setAdapter(pinnedListAdapter);
 
+        adapters.add(pinnedListAdapter);
 
         ArrayList<ListView> views = new ArrayList<ListView>();
         views.add(all);
@@ -87,5 +89,28 @@ public class LocationPagesFragment extends Fragment {
         }
     }
 
+    @Subscribe
+    public void onDataUpdated(DataUpdateEvent due) {
+        ArrayList<Location> locs = due.getLocations();
+
+        for(LocationListAdapter lladapter : adapters) {
+            lladapter.updateData(locs);
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        ApplicationBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        ApplicationBus.getInstance().unregister(this);
+    }
 
 }

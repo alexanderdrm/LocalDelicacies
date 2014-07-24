@@ -1,6 +1,5 @@
 package com.mobiquity.LocalDelicacies.location;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +8,6 @@ import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -67,7 +65,7 @@ public class LocationDetailFragmentTest {
     {
         TextView locationName = (TextView) locationDetailFragment.getView().findViewById(R.id.name);
         assertViewIsVisible(locationName);
-        assertThat(locationName.getText().toString(), equalTo(getBundledLocation().getName()));
+        assertThat(locationName.getText().toString(), equalTo(getBundledLocation().getTitle()));
     }
 
     @Test

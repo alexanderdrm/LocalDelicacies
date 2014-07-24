@@ -3,7 +3,6 @@ package com.mobiquity.LocalDelicacies.location;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mobiquity.LocalDelicacies.Filter;
@@ -17,7 +16,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowBaseAdapter;
-import org.robolectric.shadows.ShadowListView;
 
 import java.util.ArrayList;
 
@@ -95,7 +93,7 @@ public class LocationListAdapterTest
             TextView locationName = (TextView) view.findViewById( R.id.name);
             assertViewIsVisible( locationName );
             assertThat( locationName.getText().toString(),
-                        equalTo( testData.get( index ).getName() ) );
+                        equalTo( testData.get( index ).getTitle() ) );
             assertViewIsVisible( view.findViewById( R.id.image) );
         }
     }

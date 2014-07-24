@@ -1,6 +1,5 @@
 package com.mobiquity.LocalDelicacies.location;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -43,7 +42,7 @@ public class LocationDetailFragment extends Fragment {
         location = Location.createLocationFromBundle(getArguments());
 
         locationName = (TextView) view.findViewById(R.id.name);
-        locationName.setText(location.getName());
+        locationName.setText(location.getTitle());
 
         bookmarkedButton = (ImageView) view.findViewById(R.id.bookmarked_button);
         if (location.isBookmarked()) {

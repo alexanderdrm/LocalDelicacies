@@ -17,10 +17,17 @@ public class BaseListAdapter extends BaseAdapter {
     protected Context context;
     protected ArrayList<?> items;
 
-    public BaseListAdapter(Context context, ArrayList<?> items)
+    protected Filter filter;
+
+    public BaseListAdapter(Context context, ArrayList<?> items) {
+        this(context, items, new PermissiveFilter());
+    }
+
+    public BaseListAdapter(Context context, ArrayList<?> items, Filter filter)
     {
         this.context = context;
         this.items = items;
+        this.filter = filter;
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.location.Location;
 
 import java.util.ArrayList;
 
@@ -78,6 +79,11 @@ public class DelicacyListAdapter extends BaseListAdapter {
                 delicacy.setBookmarked(!delicacy.isBookmarked());
             }
         });
+    }
+
+    public void updateData(ArrayList<Location> locs) {
+        items = locs;
+        notifyDataSetChanged();
     }
 
 }

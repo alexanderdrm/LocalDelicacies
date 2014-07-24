@@ -59,7 +59,7 @@ public class LocationListFragment extends Fragment
         list.add( new Location( "Las Vegas", null ) );
         list.add( new Location( "Nevada", null, true ) );
         list.add( new Location( "Philly", null, true ) );
-        list.add( new Location( "Gainseville", null, true ) );
+        list.add( new Location( "Gainesville", null, true ) );
         list.add( new Location( "Tallahassee", null, true ) );
         list.add( new Location( "Amsterdam", null, true ) );
         list.add( new Location( "Oaxaca", null, true ) );

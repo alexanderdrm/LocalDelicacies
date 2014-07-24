@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies.support;
 
 import com.mobiquity.LocalDelicacies.BaseEvent;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
@@ -17,6 +18,12 @@ public class BusHelper {
 
     @Subscribe
     public void onNavigationDrawerClickEvent(NavigationDrawerClickEvent event)
+    {
+        this.event = event;
+    }
+
+    @Subscribe
+    public void onDataUpdateEvent(DataUpdateEvent event)
     {
         this.event = event;
     }

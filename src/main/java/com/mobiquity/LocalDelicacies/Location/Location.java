@@ -1,7 +1,7 @@
 package com.mobiquity.LocalDelicacies.location;
 
 import android.os.Bundle;
-import com.mobiquity.LocalDelicacies.LocationData;
+
 
 /**
  * @since 1.0

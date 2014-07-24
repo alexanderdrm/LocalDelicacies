@@ -3,35 +3,23 @@ package com.mobiquity.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import com.google.gson.Gson;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailActivity;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.http.DataFetchTask;
 import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity
 {
@@ -58,7 +46,7 @@ public class MainActivity extends Activity
         {
             title = getString(R.string.locations);
             getActionBar().setTitle(title);
-            switchFragment(LocationListFragment.TAG);
+            switchFragment(LocationPagesFragment.TAG);
         }
 
         new DataFetchTask(getApplicationContext()).execute();
@@ -73,7 +61,7 @@ public class MainActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        ApplicationBus.getInstance().register( this );
+        ApplicationBus.getInstance().register(this);
     }
 
     @Override
@@ -132,7 +120,6 @@ public class MainActivity extends Activity
     {
         Fragment fragment = new LocationDetailFragment();
         Bundle bundle = Location.createBundleFromLocation(event.getLocation());
-
         switchFragment(fragment, bundle, event.getLocation().getTitle());
     }
 
@@ -155,7 +142,7 @@ public class MainActivity extends Activity
     private void switchFragment(String fragmentTag)
     {
         Fragment fragment = null;
-        if (fragmentTag.equals(LocationListFragment.TAG))
+        if (fragmentTag.equals(LocationPagesFragment.TAG))
         {
             fragment = new LocationPagesFragment();
         }

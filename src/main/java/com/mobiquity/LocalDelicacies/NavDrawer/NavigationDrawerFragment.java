@@ -11,6 +11,7 @@ import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
 import com.mobiquity.LocalDelicacies.location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.location.LocationPagesFragment;
 
 import java.util.ArrayList;
 
@@ -70,7 +71,7 @@ public class NavigationDrawerFragment extends Fragment
         navigationListTitles.add(getResources().getString(R.string.delicaices));
 
         fragmentTags = new ArrayList<String>();
-        fragmentTags.add(LocationListFragment.TAG);
+        fragmentTags.add(LocationPagesFragment.TAG);
         fragmentTags.add(DelicacyListFragment.TAG);
     }
 

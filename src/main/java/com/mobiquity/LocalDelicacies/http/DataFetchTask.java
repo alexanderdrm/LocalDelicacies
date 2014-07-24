@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.http;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,12 +6,13 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
+import com.mobiquity.LocalDelicacies.delicacies.Specality;
 import com.mobiquity.LocalDelicacies.location.Location;
+import com.mobiquity.LocalDelicacies.location.LocationData;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -34,7 +35,6 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
     @Override
     protected List<LocationData> doInBackground(String... params) {
 
-        Gson gson = new Gson();
         ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -58,8 +58,6 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             int response = conn.getResponseCode();
             Log.d(DEBUG_TAG, "The response is: " + response);
 
-
-            // Convert the InputStream into a string
             BufferedReader reader = null;
             reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
             StringBuilder sb = new StringBuilder();
@@ -68,10 +66,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             }
 
             String result = sb.toString();
-
-            List<LocationData> locations = gson.fromJson(result, RemoteData.class).getLocations();
-
-            return locations;
+            return parseLocationJson(result);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -101,5 +96,13 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         }
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
+    }
+
+    protected List<LocationData> parseLocationJson(String result) throws IOException {
+        // Convert the InputStream into a string
+        Gson gson = new Gson();
+
+        List<LocationData> locations = gson.fromJson(result, RemoteData.class).getLocations();
+        return locations;
     }
 }

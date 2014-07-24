@@ -9,10 +9,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.location.Location;
-import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
-import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
-import com.mobiquity.LocalDelicacies.location.LocationListFragment;
+import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerFragment;
@@ -113,7 +110,7 @@ public class MainActivityTest
         //Locations Fragment
         Robolectric.shadowOf(drawerList).performItemClick(0);
         fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
-        assertTrue(fragment instanceof LocationListFragment);
+        assertTrue(fragment instanceof LocationPagesFragment);
 
         //Delicacies Fragment
         Robolectric.shadowOf(drawerList).performItemClick(1);

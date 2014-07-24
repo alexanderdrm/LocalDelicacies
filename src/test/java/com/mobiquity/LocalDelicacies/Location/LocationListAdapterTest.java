@@ -3,19 +3,26 @@ package com.mobiquity.LocalDelicacies.location;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mobiquity.LocalDelicacies.Filter;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.TestModule;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowBaseAdapter;
+import org.robolectric.shadows.ShadowListView;
 
 import java.util.ArrayList;
 
 import static com.mobiquity.LocalDelicacies.BaseListAdapter.ViewHolder;
+import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsGone;
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
 import static com.mobiquity.LocalDelicacies.support.ResourceLocator.getDrawable;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -34,7 +41,7 @@ public class LocationListAdapterTest
     {
         activity = FragmentUtil.createActivity();
 
-        testData = generateTestData();
+        testData = TestModule.generateTestLocations();
         locationListAdapter = new LocationListAdapter( activity, testData );
     }
 
@@ -77,14 +84,6 @@ public class LocationListAdapterTest
         {
             assertNotNull(getViewById(index));
         }
-    }
-
-    private View createRecycledView()
-    {
-        View theView = View.inflate( activity, R.layout.layout_text_image, null );
-        ViewHolder holder = ViewHolder.createViewHolder( theView );
-        theView.setTag( holder );
-        return theView;
     }
 
     @Test
@@ -160,28 +159,57 @@ public class LocationListAdapterTest
         }
     }
 
-    private View getViewById( int index )
-    {
-        return locationListAdapter.getView( index,
-                                            createRecycledView(),
-                                            null );
-    }
-
     @Test
     public void createHolder_shouldReturnViewHolder() throws Exception
     {
-        ViewHolder holder = ViewHolder
-                                                                   .createViewHolder( createRecycledView() );
+        ViewHolder holder = ViewHolder.createViewHolder(createRecycledView());
         assertNotNull( holder );
     }
 
-    private ArrayList<Location> generateTestData()
+    @Test
+    public void shouldFilterLocationsOnBookmarkedStatus() throws Exception
     {
-        testData = new ArrayList<Location>();
-        testData.add( new Location( "hello", "goodbye" ) );
-        testData.add( new Location( "yo", "lo", true ) );
+        Filter filter = new Filter() {
+            @Override
+            public boolean shouldDisplay(Object location) {
+                return ((Location)location).isBookmarked();
+            }
+        };
 
-        return testData;
+        LocationListAdapter filterAdapter = new LocationListAdapter(activity, testData, filter);
+
+        ShadowBaseAdapter adapter = Robolectric.shadowOf(filterAdapter);
+        for(int index = 0; index < testData.size(); index++)
+        {
+            View view = filterAdapter.getView(index, null, null);
+            if(filter.shouldDisplay(testData.get(index)))
+            {
+                assertViewIsVisible(view.findViewById(R.id.name));
+                assertViewIsVisible(view.findViewById(R.id.image));
+                assertViewIsVisible(view.findViewById(R.id.bookmarked_button));
+            }
+            else
+            {
+                assertViewIsGone(view.findViewById(R.id.name));
+                assertViewIsGone(view.findViewById(R.id.image));
+                assertViewIsGone(view.findViewById(R.id.bookmarked_button));
+            }
+        }
+    }
+
+    private View getViewById( int index )
+    {
+        return locationListAdapter.getView( index,
+                createRecycledView(),
+                null );
+    }
+
+    private View createRecycledView()
+    {
+        View theView = View.inflate( activity, R.layout.layout_text_image, null );
+        ViewHolder holder = ViewHolder.createViewHolder( theView );
+        theView.setTag( holder );
+        return theView;
     }
 }
 

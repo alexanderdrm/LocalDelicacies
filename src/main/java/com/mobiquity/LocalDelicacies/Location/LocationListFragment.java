@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.mobiquity.LocalDelicacies.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.TestModule;
 
 import java.util.ArrayList;
 
@@ -40,7 +42,7 @@ public class LocationListFragment extends Fragment
 
     protected LocationListAdapter createAdapter( Context context )
     {
-        return new LocationListAdapter( context, createDummyData() );
+        return new LocationListAdapter( context, TestModule.generateTestLocations(), new PermissiveFilter());
     }
 
     @Override
@@ -53,18 +55,5 @@ public class LocationListFragment extends Fragment
         }
     }
 
-    private ArrayList<Location> createDummyData()
-    {
-        ArrayList<Location> list = new ArrayList<Location>();
-        list.add( new Location( "Las Vegas", null ) );
-        list.add( new Location( "Nevada", null, true ) );
-        list.add( new Location( "Philly", null, true ) );
-        list.add( new Location( "Gainseville", null, true ) );
-        list.add( new Location( "Tallahassee", null, true ) );
-        list.add( new Location( "Amsterdam", null, true ) );
-        list.add( new Location( "Oaxaca", null, true ) );
-        list.add( new Location( "Portland", null, true ) );
-        list.add( new Location( "London", null, true ) );
-        return list;
-    }
+
 }

@@ -7,6 +7,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mobiquity.LocalDelicacies.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 
@@ -81,7 +82,7 @@ public class LocationListFragmentTest
         @Override
         protected LocationListAdapter createAdapter( Context context )
         {
-            return new LocationListAdapter( context, new ArrayList<Location>() );
+            return new LocationListAdapter( context, new ArrayList<Location>() , new PermissiveFilter());
         }
     }
 }

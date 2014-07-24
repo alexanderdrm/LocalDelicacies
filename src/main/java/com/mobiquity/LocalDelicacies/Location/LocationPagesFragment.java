@@ -24,25 +24,27 @@ public class LocationPagesFragment extends Fragment {
 
     ViewPager pager;
     LocationPagesAdapter adapter;
+    ArrayList<Location> allLocations;
 
     ArrayList<LocationListAdapter> adapters = new ArrayList<LocationListAdapter>();
+    public static String TAG="LOCAITON_PAGES_FRAGMENT";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
 
         pager = (ViewPager) rootView.findViewById(R.id.pager);
-        adapter = generateAdapter(inflater.getContext());
+        adapter = generateTestAdapter(inflater.getContext());
         pager.setAdapter(adapter);
 
 
         return rootView;
     }
 
-    private LocationPagesAdapter generateAdapter(Context context)
+    private LocationPagesAdapter generateTestAdapter(Context context)
     {
         ListView all = new ListView(context);
-        ArrayList<Location> allLocations = TestModule.generateTestLocations();
+        allLocations = TestModule.generateTestLocations();
         LocationListAdapter locationListAdapter = new LocationListAdapter(context, allLocations, new PermissiveFilter());
         all.setAdapter(locationListAdapter);
 
@@ -94,10 +96,10 @@ public class LocationPagesFragment extends Fragment {
 
     @Subscribe
     public void onDataUpdated(DataUpdateEvent due) {
-        ArrayList<Location> locs = due.getLocations();
+        allLocations = due.getLocations();
 
         for(LocationListAdapter lladapter : adapters) {
-            lladapter.updateData(locs);
+            lladapter.updateData(allLocations);
         }
     }
 

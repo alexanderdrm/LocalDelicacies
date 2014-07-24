@@ -1,5 +1,7 @@
 package com.mobiquity.LocalDelicacies.location;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import com.mobiquity.LocalDelicacies.BaseEvent;
 
 /**
@@ -20,4 +22,5 @@ public class LocationClickedEvent extends BaseEvent {
     public void setLocation(Location location) {
         this.location = location;
     }
+
 }

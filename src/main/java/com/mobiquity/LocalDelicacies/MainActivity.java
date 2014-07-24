@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,8 @@ import com.mobiquity.LocalDelicacies.http.DataFetchTask;
 import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
+
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity
 {
@@ -43,7 +46,7 @@ public class MainActivity extends Activity
         {
             title = getString(R.string.locations);
             getActionBar().setTitle(title);
-            switchFragment(LocationListFragment.TAG);
+            switchFragment(LocationPagesFragment.TAG);
         }
 
         new DataFetchTask(getApplicationContext()).execute();
@@ -117,7 +120,6 @@ public class MainActivity extends Activity
     {
         Fragment fragment = new LocationDetailFragment();
         Bundle bundle = Location.createBundleFromLocation(event.getLocation());
-
         switchFragment(fragment, bundle, event.getLocation().getTitle());
     }
 
@@ -140,7 +142,7 @@ public class MainActivity extends Activity
     private void switchFragment(String fragmentTag)
     {
         Fragment fragment = null;
-        if (fragmentTag.equals(LocationListFragment.TAG))
+        if (fragmentTag.equals(LocationPagesFragment.TAG))
         {
             fragment = new LocationPagesFragment();
         }

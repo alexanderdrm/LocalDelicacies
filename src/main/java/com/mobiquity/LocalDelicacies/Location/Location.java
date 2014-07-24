@@ -2,6 +2,7 @@ package com.mobiquity.LocalDelicacies.location;
 
 import android.os.Bundle;
 
+
 /**
  * @since 1.0
  */

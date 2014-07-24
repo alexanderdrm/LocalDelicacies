@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by jwashington on 7/22/14.
@@ -18,15 +19,9 @@ public class LocationDetailFragment extends Fragment {
 
     public static final String TAG = "LOCATION_DETAIL_FRAGMENT";
 
-    public static Intent createIntent(Context context, Location location)
-    {
-        Intent intent = new Intent(context, LocationDetailFragment.class);
-        intent.putExtras(Location.createBundleFromLocation(location));
-        return intent;
-    }
-
     private Location location;
     private TextView locationName;
+    private ImageView locationImage;
     private ImageView bookmarkedButton;
 
     @Override
@@ -44,6 +39,8 @@ public class LocationDetailFragment extends Fragment {
         locationName = (TextView) view.findViewById(R.id.name);
         locationName.setText(location.getTitle());
 
+        locationImage = (ImageView) view.findViewById(R.id.image);
+
         bookmarkedButton = (ImageView) view.findViewById(R.id.bookmarked_button);
         if (location.isBookmarked()) {
             bookmarkedButton.setImageResource(R.drawable.love);
@@ -51,7 +48,17 @@ public class LocationDetailFragment extends Fragment {
             bookmarkedButton.setImageResource(R.drawable.no_love);
         }
 
+        configureImage(inflater.getContext(), location.getImageUrl(), locationImage);
         return view;
+    }
+
+    private void configureImage(Context context, String imageUrl, ImageView imageView)
+    {
+        Picasso.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.sample_city)
+                .error(R.drawable.error_image)
+                .into(imageView);
     }
 
 }

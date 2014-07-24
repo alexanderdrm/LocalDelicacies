@@ -1,12 +1,14 @@
 package com.mobiquity.LocalDelicacies.location;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class LocationListAdapter extends BaseListAdapter
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         final Location location = (Location) items.get( position );
 
-        ViewHolder holder;
+        final ViewHolder holder;
         if ( convertView == null )
         {
             convertView = inflater.inflate( R.layout.layout_text_image,
@@ -56,11 +58,12 @@ public class LocationListAdapter extends BaseListAdapter
 
     private void configureView(final Location location, final ViewHolder holder)
     {
-        if(holder==null) {
-            return;
-        }
         holder.name.setText(location.getTitle());
-        holder.image.setImageResource(R.drawable.sample_city);
+        Picasso.with(context)
+                .load(location.getImageUrl())
+                .placeholder(R.drawable.sample_city)
+                .error(R.drawable.error_image)
+                .into(holder.image);
 
         if ( location.isBookmarked() )
         {

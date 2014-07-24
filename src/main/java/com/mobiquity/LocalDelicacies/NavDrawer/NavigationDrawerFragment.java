@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.location.LocationPagesFragment;
 

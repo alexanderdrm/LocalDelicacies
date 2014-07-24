@@ -1,16 +1,14 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dalexander on 7/24/14.
  */
 public @Generated("org.jsonschema2pojo")
-class LocationData {
+class Specality {
 
     @Expose
     private String title;
@@ -18,8 +16,6 @@ class LocationData {
     private String description;
     @Expose
     private String imageUrl;
-    @Expose
-    private List<Specality> specalities = new ArrayList<Specality>();
 
     public String getTitle() {
         return title;
@@ -43,14 +39,6 @@ class LocationData {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public List<Specality> getSpecalities() {
-        return specalities;
-    }
-
-    public void setSpecalities(List<Specality> specalities) {
-        this.specalities = specalities;
     }
 
 }

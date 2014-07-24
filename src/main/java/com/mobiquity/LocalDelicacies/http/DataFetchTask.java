@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.http;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,8 +6,11 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
+import com.mobiquity.LocalDelicacies.delicacies.Specality;
 import com.mobiquity.LocalDelicacies.location.Location;
+import com.mobiquity.LocalDelicacies.location.LocationData;
 
 import java.io.BufferedReader;
 import java.io.IOException;

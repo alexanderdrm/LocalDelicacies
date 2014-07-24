@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.filters.Filter;
+import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 
 import java.util.ArrayList;
 

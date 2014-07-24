@@ -1,5 +1,6 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.http;
 
+import com.mobiquity.LocalDelicacies.BaseEvent;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.location.Location;
 

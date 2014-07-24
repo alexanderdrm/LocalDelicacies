@@ -1,7 +1,6 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.os.Bundle;
-import com.mobiquity.LocalDelicacies.Specality;
 
 /**
  * Created by jwashington on 7/22/14.

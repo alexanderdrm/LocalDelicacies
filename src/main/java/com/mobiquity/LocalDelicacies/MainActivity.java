@@ -3,35 +3,20 @@ package com.mobiquity.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import com.google.gson.Gson;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailActivity;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.http.DataFetchTask;
 import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends Activity
 {
@@ -73,7 +58,7 @@ public class MainActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        ApplicationBus.getInstance().register( this );
+        ApplicationBus.getInstance().register(this);
     }
 
     @Override

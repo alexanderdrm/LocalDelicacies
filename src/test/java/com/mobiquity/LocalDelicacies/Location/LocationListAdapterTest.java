@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mobiquity.LocalDelicacies.Filter;
+import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.TestModule;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;

@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies;
+package com.mobiquity.LocalDelicacies.filters;
 
 /**
  * Created by jwashington on 7/23/14.

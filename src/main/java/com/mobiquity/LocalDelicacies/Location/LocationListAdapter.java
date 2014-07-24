@@ -106,7 +106,7 @@ public class LocationListAdapter extends BaseListAdapter
 
     public void updateData(ArrayList<Location> locs) {
         items = locs;
-        
+
         notifyDataSetChanged();
     }
 }

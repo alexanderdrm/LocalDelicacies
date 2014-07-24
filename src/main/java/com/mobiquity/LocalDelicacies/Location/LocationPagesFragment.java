@@ -24,7 +24,7 @@ public class LocationPagesFragment extends Fragment {
 
     ViewPager pager;
     LocationPagesAdapter adapter;
-    ArrayList<Location> allLocations;
+    volatile ArrayList<Location> allLocations = TestModule.generateTestLocations();
 
     ArrayList<LocationListAdapter> adapters = new ArrayList<LocationListAdapter>();
     public static String TAG="LOCAITON_PAGES_FRAGMENT";
@@ -37,14 +37,12 @@ public class LocationPagesFragment extends Fragment {
         adapter = generateTestAdapter(inflater.getContext());
         pager.setAdapter(adapter);
 
-
         return rootView;
     }
 
     private LocationPagesAdapter generateTestAdapter(Context context)
     {
         ListView all = new ListView(context);
-        allLocations = TestModule.generateTestLocations();
         LocationListAdapter locationListAdapter = new LocationListAdapter(context, allLocations, new PermissiveFilter());
         all.setAdapter(locationListAdapter);
 

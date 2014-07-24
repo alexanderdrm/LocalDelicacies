@@ -1,12 +1,13 @@
 package com.mobiquity.LocalDelicacies.location;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.mobiquity.LocalDelicacies.ApplicationBus;
-import com.mobiquity.LocalDelicacies.BaseListAdapter;
-import com.mobiquity.LocalDelicacies.R;
+import android.widget.*;
+import com.mobiquity.LocalDelicacies.*;
+import com.mobiquity.LocalDelicacies.Filter;
 
 import java.util.ArrayList;
 
@@ -16,9 +17,16 @@ import java.util.ArrayList;
 public class LocationListAdapter extends BaseListAdapter
 {
 
+    private Filter filter;
 
-    public LocationListAdapter(Context context, ArrayList<Location> items) {
+    public LocationListAdapter(Context context, ArrayList<Location> items)
+    {
+        this(context, items, new PermissiveFilter());
+    }
+
+    public LocationListAdapter(Context context, ArrayList<Location> items, Filter filter) {
         super(context, items);
+        this.filter = filter;
     }
 
     @Override
@@ -47,14 +55,16 @@ public class LocationListAdapter extends BaseListAdapter
                 ApplicationBus.getInstance().post(new LocationClickedEvent(location));
             }
         });
-
-
         return convertView;
     }
 
 
+
     private void configureView(final Location location, final ViewHolder holder)
     {
+        if(holder==null) {
+            return;
+        }
         holder.name.setText(location.getName());
         holder.image.setImageResource(R.drawable.sample_city);
 
@@ -84,9 +94,21 @@ public class LocationListAdapter extends BaseListAdapter
             }
         } );
 
+        if(filter.shouldDisplay(location))
+        {
+            holder.name.setVisibility(View.VISIBLE);
+            holder.image.setVisibility(View.VISIBLE);
+            holder.bookmarkButton.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.name.setVisibility(View.GONE);
+            holder.image.setVisibility(View.GONE);
+            holder.bookmarkButton.setVisibility(View.GONE);
+        }
+
     }
 
 
-
-
 }
+

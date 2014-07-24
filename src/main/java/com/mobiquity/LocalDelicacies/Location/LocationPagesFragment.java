@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.mobiquity.LocalDelicacies.Filter;
+import com.mobiquity.LocalDelicacies.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.TestModule;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ public class LocationPagesFragment extends Fragment {
 
     ViewPager pager;
     LocationPagesAdapter adapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,25 +39,28 @@ public class LocationPagesFragment extends Fragment {
 
     private LocationPagesAdapter generateTestAdapter(Context context)
     {
-        ListView view1 = new ListView(context);
-        ArrayList<Location> testLocations = new ArrayList<Location>();
-        testLocations.add(new Location("Test_location", null));
-        LocationListAdapter locationListAdapter = new LocationListAdapter(context, testLocations);
-        view1.setAdapter(locationListAdapter);
+        ListView all = new ListView(context);
+        ArrayList<Location> allLocations = TestModule.generateTestLocations();
+        LocationListAdapter locationListAdapter = new LocationListAdapter(context, allLocations, new PermissiveFilter());
+        all.setAdapter(locationListAdapter);
 
-        ListView view2 = new ListView(context);
-        ArrayList<Location> testLocations2 = new ArrayList<Location>();
-        testLocations2.add(new Location("Test_location2", null));
-        LocationListAdapter locationListAdapter2 = new LocationListAdapter(context, testLocations2);
-        view2.setAdapter(locationListAdapter2);
+        ListView pinned =  new ListView(context);
+        LocationListAdapter pinnedListAdapter = new LocationListAdapter(context, allLocations, new Filter() {
+            @Override
+            public boolean shouldDisplay(Object object) {
+                return ((Location)object).isBookmarked();
+            }
+        });
+        pinned.setAdapter(pinnedListAdapter);
+
 
         ArrayList<ListView> views = new ArrayList<ListView>();
-        views.add(view1);
-        views.add(view2);
+        views.add(all);
+        views.add(pinned);
         return new LocationPagesAdapter(views);
     }
 
-    private class LocationPagesAdapter extends PagerAdapter
+    protected class LocationPagesAdapter extends PagerAdapter
     {
 
         private ArrayList<ListView> pages;
@@ -79,4 +86,6 @@ public class LocationPagesFragment extends Fragment {
             return view.equals(object);
         }
     }
+
+
 }

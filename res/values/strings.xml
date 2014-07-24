@@ -7,6 +7,7 @@
     <string name="close_drawer">Close Drawer</string>
     <string name="all">All</string>
     <string name="bookmarked">Bookmarked</string>
+    <string name="eaten">Eaten</string>
 
     <string name="locations">Locations</string>
     <string name="delicaices">Delicacies</string>

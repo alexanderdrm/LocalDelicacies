@@ -1,5 +1,6 @@
 package com.mobiquity.LocalDelicacies;
 
+import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.location.Location;
 
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ public class TestModule {
         list.add( new Location( "Portland", null,"default" , false ) );
         list.add( new Location( "London", null,"default" , true ) );
         return list;
+    }
+
+    public static ArrayList<Delicacy> generateTestDelicacies()
+    {
+        ArrayList<Delicacy> list = new ArrayList<Delicacy>();
+        list.add(new Delicacy("Apple", null, false));
+        list.add(new Delicacy("Chocolate", null, true));
+        return  list;
     }
 
 

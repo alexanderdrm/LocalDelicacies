@@ -11,9 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
-import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailActivity;
-import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.delicacies.*;
 import com.mobiquity.LocalDelicacies.http.DataFetchTask;
 import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
@@ -50,6 +48,8 @@ public class MainActivity extends Activity
         }
 
         new DataFetchTask(getApplicationContext()).execute();
+
+        DelicacyData.touch();
     }
 
     @Override
@@ -134,9 +134,13 @@ public class MainActivity extends Activity
     @Subscribe
     public void onDelicacyClicked(DelicacyClickedEvent event)
     {
-        Intent intent = DelicacyDetailActivity.createIntent(this, event.getDelicacy());
+        /*Intent intent = DelicacyDetailActivity.createIntent(this, event.getDelicacy());
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+        startActivity(intent);*/
+
+        Fragment fragment = new DelicacyDetailFragment();
+        Bundle bundle = Delicacy.createBundleFromDelicacy(event.getDelicacy());
+        switchFragment(fragment, bundle, event.getDelicacy().getName());
     }
 
     private void switchFragment(String fragmentTag)
@@ -146,9 +150,9 @@ public class MainActivity extends Activity
         {
             fragment = new LocationPagesFragment();
         }
-        else if(fragmentTag.equals(DelicacyListFragment.TAG))
+        else if(fragmentTag.equals(DelicacyPagesFragment.TAG))
         {
-            fragment = new DelicacyListFragment();
+            fragment = new DelicacyPagesFragment();
         }
         else if(fragmentTag.equals(LocationDetailFragment.TAG))
         {

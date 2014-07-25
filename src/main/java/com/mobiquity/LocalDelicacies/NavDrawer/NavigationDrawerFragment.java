@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
-import com.mobiquity.LocalDelicacies.location.LocationListFragment;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyPagesFragment;
 import com.mobiquity.LocalDelicacies.location.LocationPagesFragment;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class NavigationDrawerFragment extends Fragment
 
         fragmentTags = new ArrayList<String>();
         fragmentTags.add(LocationPagesFragment.TAG);
-        fragmentTags.add(DelicacyListFragment.TAG);
+        fragmentTags.add(DelicacyPagesFragment.TAG);
     }
 
 }

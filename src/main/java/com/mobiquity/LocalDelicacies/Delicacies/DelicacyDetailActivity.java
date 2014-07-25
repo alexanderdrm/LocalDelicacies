@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,7 +32,7 @@ public class DelicacyDetailActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delicacy_detail);
+        setContentView(R.layout.fragment_delicacy_detail);
 
         delicacy = Delicacy.createDelicacyFromBundle(getIntent().getExtras());
         name = (TextView) findViewById(R.id.name);

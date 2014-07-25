@@ -1,4 +1,4 @@
-package com.mobiquity.LocalDelicacies.location;
+package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -9,18 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.location.Location;
 import com.squareup.picasso.Picasso;
 
+
 /**
- * Created by jwashington on 7/22/14.
+ * Created by dalexander on 7/24/14.
  */
-public class LocationDetailFragment extends Fragment {
+public class DelicacyDetailFragment extends Fragment {
 
-    public static final String TAG = "LOCATION_DETAIL_FRAGMENT";
+    public static final String TAG = "DELICACY_DETAIL_FRAGMENT";
 
-    private Location location;
-    private TextView locationName;
-    private ImageView locationImage;
+    private Delicacy delicacy;
+    private TextView delicacyName;
+    private ImageView delicacyImage;
     private ImageView bookmarkedButton;
 
     @Override
@@ -28,36 +30,34 @@ public class LocationDetailFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate( R.layout.fragment_location_detail,
+        View view = inflater.inflate(R.layout.fragment_location_detail,
                 container,
-                false );
+                false);
 
 
-        location = Location.createLocationFromBundle(getArguments());
+        delicacy = Delicacy.createDelicacyFromBundle(getArguments());
 
-        locationName = (TextView) view.findViewById(R.id.name);
-        locationName.setText(location.getTitle());
+        delicacyName = (TextView) view.findViewById(R.id.name);
+        delicacyName.setText(delicacy.getName());
 
-        locationImage = (ImageView) view.findViewById(R.id.image);
+        delicacyImage = (ImageView) view.findViewById(R.id.image);
 
         bookmarkedButton = (ImageView) view.findViewById(R.id.bookmarked_button);
-        if (location.isBookmarked()) {
+        if (delicacy.isBookmarked()) {
             bookmarkedButton.setImageResource(R.drawable.love);
         } else {
             bookmarkedButton.setImageResource(R.drawable.no_love);
         }
 
-        configureImage(inflater.getContext(), location.getImageUrl(), locationImage);
+        configureImage(inflater.getContext(), delicacy.getImageUrl(), delicacyImage);
         return view;
     }
 
-    private void configureImage(Context context, String imageUrl, ImageView imageView)
-    {
+    private void configureImage(Context context, String imageUrl, ImageView imageView) {
         Picasso.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.sample_city)
+                .placeholder(R.drawable.sample_delicacy)
                 .error(R.drawable.error_image)
                 .into(imageView);
     }
-
 }

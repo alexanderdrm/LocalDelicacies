@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.TestModule;
+import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ public class DelicacyListFragment extends Fragment {
 
     protected DelicacyListAdapter createAdapter(Context context)
     {
-        return new DelicacyListAdapter(context, createDummyData());
+        return new DelicacyListAdapter(context, TestModule.generateTestDelicacies(), new PermissiveFilter());
     }
 
     @Override
@@ -46,12 +48,5 @@ public class DelicacyListFragment extends Fragment {
         }
     }
 
-    private ArrayList<Delicacy> createDummyData()
-    {
-        ArrayList<Delicacy> list = new ArrayList<Delicacy>();
-        list.add(new Delicacy("Apple", null, false));
-        list.add(new Delicacy("Chocolate", null, true));
-        return  list;
 
-    }
 }

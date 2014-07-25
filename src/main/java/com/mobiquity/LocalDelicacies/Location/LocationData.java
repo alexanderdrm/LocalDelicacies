@@ -20,7 +20,7 @@ class LocationData {
     @Expose
     private String imageUrl;
     @Expose
-    private List<Specality> specalities = new ArrayList<Specality>();
+    private List<Specality> delicacies = new ArrayList<Specality>();
 
     public String getTitle() {
         return title;
@@ -47,11 +47,11 @@ class LocationData {
     }
 
     public List<Specality> getSpecalities() {
-        return specalities;
+        return delicacies;
     }
 
     public void setSpecalities(List<Specality> specalities) {
-        this.specalities = specalities;
+        this.delicacies = specalities;
     }
 
 }

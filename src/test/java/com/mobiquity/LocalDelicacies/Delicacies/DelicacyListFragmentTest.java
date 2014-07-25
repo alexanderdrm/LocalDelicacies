@@ -7,6 +7,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,7 +80,7 @@ public class DelicacyListFragmentTest {
     {
         @Override
         protected DelicacyListAdapter createAdapter(Context context) {
-            return new DelicacyListAdapter(context, new ArrayList<Delicacy>());
+            return new DelicacyListAdapter(context, new ArrayList<Delicacy>(), new PermissiveFilter());
         }
     }
 

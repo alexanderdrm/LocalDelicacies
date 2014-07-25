@@ -1,11 +1,8 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +12,8 @@ import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.location.Location;
+import com.mobiquity.LocalDelicacies.location.LocationListAdapter;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ import java.util.ArrayList;
  */
 public class DelicacyPagesFragment extends BasePagesFragment {
 
-    //volatile ArrayList<Delicacy> allDelicacies = TestModule.generateTestDelicacies();
+    ArrayList<Delicacy> delicacies;
 
     ArrayList<DelicacyListAdapter> adapters = new ArrayList<DelicacyListAdapter>();
     ArrayList<ActionBar.Tab> tabs;
@@ -32,47 +31,59 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
-
         pager = (ViewPager) rootView.findViewById(R.id.pager);
-        adapter = generateTestAdapter(inflater.getContext());
-        pager.setAdapter(adapter);
-
         return rootView;
     }
 
-    private BasePagesAdapter generateTestAdapter(Context context)
-    {
-        ListView all = new ListView(context);
-        DelicacyListAdapter delicacyListAdapter = new DelicacyListAdapter(context, DelicacyData.getDelicacyData(), new PermissiveFilter());
-        all.setAdapter(delicacyListAdapter);
-
-        adapters.add(delicacyListAdapter);
-
-        ListView pinned =  new ListView(context);
-        DelicacyListAdapter pinnedListAdapter = new DelicacyListAdapter(context, DelicacyData.getDelicacyData(), new Filter() {
-            @Override
-            public boolean shouldDisplay(Object object) {
-                return ((Location)object).isBookmarked();
-            }
-        });
-        pinned.setAdapter(pinnedListAdapter);
-
-        adapters.add(pinnedListAdapter);
-
-        ArrayList<ListView> views = new ArrayList<ListView>();
-        views.add(all);
-        views.add(pinned);
-        return new BasePagesAdapter(views);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        delicacies = LocalDelicacyApplication.getInstance().getDelicacies();
+        prepareAdapterList(getActivity());
     }
 
-    /*@Subscribe
-    public void onDataUpdated(DataUpdateEvent due) {
-        allDelicacies = due.getDelicacies();
+    private void prepareAdapterList(Context context)
+    {
+        ListView allDelicaciesListView = new ListView(context);
+        DelicacyListAdapter delicacyListAdapter = new DelicacyListAdapter(context, delicacies, new PermissiveFilter());
+        allDelicaciesListView.setAdapter(delicacyListAdapter);
+        adapters.add(delicacyListAdapter);
+
+        ListView pinnedDelicaciesListView =  new ListView(context);
+        DelicacyListAdapter pinnedListAdapter = new DelicacyListAdapter(context, delicacies, new Filter() {
+            @Override
+            public boolean shouldDisplay(Object object) {
+                return ((Delicacy)object).isBookmarked();
+            }
+        });
+        pinnedDelicaciesListView.setAdapter(pinnedListAdapter);
+        adapters.add(pinnedListAdapter);
+
+        ListView eatenDelicaicesListView =  new ListView(context);
+        DelicacyListAdapter eatenListAdapter = new DelicacyListAdapter(context, delicacies, new Filter() {
+            @Override
+            public boolean shouldDisplay(Object object) {
+                return ((Delicacy)object).getRatingInHalfStars()>0;
+            }
+        });
+        eatenDelicaicesListView.setAdapter(eatenListAdapter);
+        adapters.add(eatenListAdapter);
+
+        ArrayList<ListView> views = new ArrayList<ListView>();
+        views.add(allDelicaciesListView);
+        views.add(pinnedDelicaciesListView);
+        views.add(eatenDelicaicesListView);
+        pager.setAdapter( new BasePagesAdapter(views));
+    }
+
+    @Subscribe
+    public void onDataUpdated(NotifyFragmentsOfDataEvent due) {
+        delicacies = LocalDelicacyApplication.getInstance().getDelicacies();
 
         for(DelicacyListAdapter dladapter : adapters) {
-            dladapter.updateData(allDelicacies);
+            dladapter.updateData(delicacies);
         }
-    }*/
+    }
 
     @Override
     public void onResume()

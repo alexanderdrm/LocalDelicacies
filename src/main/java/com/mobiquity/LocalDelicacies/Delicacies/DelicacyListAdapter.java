@@ -8,6 +8,7 @@ import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.filters.Filter;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.squareup.picasso.Picasso;
 
@@ -84,8 +85,32 @@ public class DelicacyListAdapter extends BaseListAdapter {
                     holder.bookmarkButton.setImageResource(R.drawable.no_love);
                 }
                 delicacy.setBookmarked(!delicacy.isBookmarked());
+                ApplicationBus.getInstance().post(new DataUpdateEvent(null, (ArrayList<Delicacy>) items, false, true));
             }
         });
+
+        if(filter.shouldDisplay(delicacy))
+        {
+            holder.name.setVisibility(View.VISIBLE);
+            holder.image.setVisibility(View.VISIBLE);
+            holder.bookmarkButton.setVisibility(View.VISIBLE);
+            holder.ratingBar.setVisibility(View.VISIBLE);
+
+        }
+        else
+        {
+           holder.name.setVisibility(View.GONE);
+            holder.image.setVisibility(View.GONE);
+            holder.bookmarkButton.setVisibility(View.GONE);
+            holder.ratingBar.setVisibility(View.GONE);
+        }
+
+        holder.ratingBar.setClickable(false);
+        holder.ratingBar.setIsIndicator(true);
+        holder.ratingBar.setEnabled(false);
+        holder.ratingBar.setFocusable(false);
+        holder.ratingBar.setLongClickable(false);
+
     }
 
     public void updateData(ArrayList<Delicacy> locs) {

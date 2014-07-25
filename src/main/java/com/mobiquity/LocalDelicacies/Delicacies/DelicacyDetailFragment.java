@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +25,10 @@ public class DelicacyDetailFragment extends Fragment {
 
     private Delicacy delicacy;
     private TextView delicacyName;
+    private TextView delicacyDescription;
     private ImageView delicacyImage;
     private ImageView bookmarkedButton;
+    private RatingBar ratingBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -40,7 +45,11 @@ public class DelicacyDetailFragment extends Fragment {
         delicacyName = (TextView) view.findViewById(R.id.name);
         delicacyName.setText(delicacy.getName());
 
+        delicacyDescription = (TextView) view.findViewById(R.id.description);
+        delicacyDescription.setText(delicacy.getDescription());
         delicacyImage = (ImageView) view.findViewById(R.id.image);
+
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
         bookmarkedButton = (ImageView) view.findViewById(R.id.bookmarked_button);
         if (delicacy.isBookmarked()) {
@@ -50,6 +59,7 @@ public class DelicacyDetailFragment extends Fragment {
         }
 
         configureImage(inflater.getContext(), delicacy.getImageUrl(), delicacyImage);
+        configureRatingBar();
         return view;
     }
 
@@ -59,5 +69,16 @@ public class DelicacyDetailFragment extends Fragment {
                 .placeholder(R.drawable.sample_delicacy)
                 .error(R.drawable.error_image)
                 .into(imageView);
+    }
+
+    private void configureRatingBar()
+    {
+        ratingBar.setClickable(true);
+        ratingBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delicacy.setRatingInHalfStars((int) (ratingBar.getRating() * 2));
+            }
+        });
     }
 }

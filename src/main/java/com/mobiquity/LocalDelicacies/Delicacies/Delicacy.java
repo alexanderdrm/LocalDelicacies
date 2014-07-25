@@ -71,6 +71,14 @@ public class Delicacy {
         this.ratingInHalfStars = ratingInHalfStars;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public static Bundle createBundleFromDelicacy(Delicacy delicacy)
     {
         Bundle bundle = new Bundle();

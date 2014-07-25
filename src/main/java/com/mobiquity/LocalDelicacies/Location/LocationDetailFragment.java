@@ -20,6 +20,7 @@ public class LocationDetailFragment extends Fragment {
 
     private Location location;
     private TextView locationName;
+    private TextView locationDescription;
     private ImageView locationImage;
     private ImageView bookmarkedButton;
 
@@ -37,6 +38,9 @@ public class LocationDetailFragment extends Fragment {
 
         locationName = (TextView) view.findViewById(R.id.name);
         locationName.setText(location.getTitle());
+
+        locationDescription = (TextView) view.findViewById(R.id.description);
+        locationDescription.setText(location.getDescription());
 
         locationImage = (ImageView) view.findViewById(R.id.image);
 

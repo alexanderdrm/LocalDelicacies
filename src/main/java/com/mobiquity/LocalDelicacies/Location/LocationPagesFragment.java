@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -88,6 +89,9 @@ public class LocationPagesFragment extends BasePagesFragment {
                 .setText(getResources()
                         .getString(R.string.bookmarked)));
         configureActionBar(actionBar, tabs);
+
+        int tabIndex = getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).getInt("currentLocationTab", 0);
+        pager.setCurrentItem(tabIndex);
     }
 
     @Override
@@ -100,6 +104,8 @@ public class LocationPagesFragment extends BasePagesFragment {
             SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
             l.saveToDatabase(db);
         }
+
+        getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).edit().putInt("currentLocationTab",pager.getCurrentItem()).commit();
 
     }
 

@@ -7,20 +7,18 @@ import com.mobiquity.LocalDelicacies.BaseEvent;
  */
 public class NavigationDrawerClickEvent extends BaseEvent{
     private String title;
-    private String fragmentTag;
+    private Class fragmentClass;
 
-    public NavigationDrawerClickEvent(String title, String fragmentTag)
+
+    public NavigationDrawerClickEvent(String title, Class fragmentClass)
     {
         this.title = title;
-        this.fragmentTag = fragmentTag;
+        this.fragmentClass = fragmentClass;
     }
 
     public String getTitle()
     {
         return title;
     }
-
-    public String getFragmentTag() {
-        return fragmentTag;
-    }
+    public Class getFragmentClass() { return fragmentClass; }
 }

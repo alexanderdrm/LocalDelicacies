@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
-import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyPagesFragment;
 import com.mobiquity.LocalDelicacies.location.LocationPagesFragment;
@@ -21,31 +20,25 @@ import java.util.ArrayList;
 public class NavigationDrawerFragment extends Fragment
 {
 
-    private ArrayList<String> navigationListTitles;
-    private ArrayList<String> fragmentTags;
+    private ArrayList<String> navigationTitles;
+    private ArrayList<Class> fragmentClasses;
     private ListView drawerList;
-
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupNavigationDrawerTitlesAndFragments();
-    }
 
     @Override
     public View onCreateView( LayoutInflater inflater,
                               ViewGroup container,
                               Bundle savedInstanceState )
     {
+        setupNavigationDrawerTitlesAndFragments();
+
         View layout = inflater.inflate( R.layout.fragment_navigation_drawer, container, false );
         drawerList = (ListView) layout.findViewById(R.id.drawer_list);
-        drawerList.setAdapter( new ArrayAdapter<String>(inflater.getContext(), R.layout.drawer_list_item, navigationListTitles));
+        drawerList.setAdapter( new ArrayAdapter<String>(inflater.getContext(), R.layout.drawer_list_item, navigationTitles));
         drawerList.setOnItemClickListener(
                 new NavigationDrawerItemClickListener(
                         inflater.getContext(),
-                        navigationListTitles,
-                        fragmentTags)
+                        navigationTitles,
+                        fragmentClasses)
         );
 
         return layout;
@@ -66,13 +59,13 @@ public class NavigationDrawerFragment extends Fragment
 
     private void setupNavigationDrawerTitlesAndFragments()
     {
-        navigationListTitles = new ArrayList<String>();
-        navigationListTitles.add(getResources().getString(R.string.locations));
-        navigationListTitles.add(getResources().getString(R.string.delicaices));
+        navigationTitles = new ArrayList<String>();
+        navigationTitles.add(getResources().getString(R.string.locations));
+        navigationTitles.add(getResources().getString(R.string.delicaices));
 
-        fragmentTags = new ArrayList<String>();
-        fragmentTags.add(LocationPagesFragment.TAG);
-        fragmentTags.add(DelicacyPagesFragment.TAG);
+        fragmentClasses = new ArrayList<Class>();
+        fragmentClasses.add(LocationPagesFragment.class);
+        fragmentClasses.add(DelicacyPagesFragment.class);
     }
 
 }

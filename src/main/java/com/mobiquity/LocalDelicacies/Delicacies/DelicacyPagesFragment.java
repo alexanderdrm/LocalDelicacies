@@ -11,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import com.mobiquity.LocalDelicacies.ApplicationBus;
-import com.mobiquity.LocalDelicacies.DelicacyData;
-import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.location.Location;
@@ -23,13 +21,12 @@ import java.util.ArrayList;
 /**
  * Created by dalexander on 7/24/14.
  */
-public class DelicacyPagesFragment extends Fragment {
+public class DelicacyPagesFragment extends BasePagesFragment {
 
-    ViewPager pager;
-    DelicacyPagesAdapter adapter;
     //volatile ArrayList<Delicacy> allDelicacies = TestModule.generateTestDelicacies();
 
     ArrayList<DelicacyListAdapter> adapters = new ArrayList<DelicacyListAdapter>();
+    ArrayList<ActionBar.Tab> tabs = new ArrayList<ActionBar.Tab>();
     public static String TAG="DELICACY_PAGES_FRAGMENT";
 
     @Override
@@ -43,7 +40,7 @@ public class DelicacyPagesFragment extends Fragment {
         return rootView;
     }
 
-    private DelicacyPagesAdapter generateTestAdapter(Context context)
+    private BasePagesAdapter generateTestAdapter(Context context)
     {
         ListView all = new ListView(context);
         DelicacyListAdapter delicacyListAdapter = new DelicacyListAdapter(context, DelicacyData.getDelicacyData(), new PermissiveFilter());
@@ -65,7 +62,7 @@ public class DelicacyPagesFragment extends Fragment {
         ArrayList<ListView> views = new ArrayList<ListView>();
         views.add(all);
         views.add(pinned);
-        return new DelicacyPagesAdapter(views);
+        return new BasePagesAdapter(views);
     }
 
     /*@Subscribe
@@ -81,89 +78,25 @@ public class DelicacyPagesFragment extends Fragment {
     public void onResume()
     {
         super.onResume();
-        configureActionBar();
-
-        ApplicationBus.getInstance().register(this);
+        ActionBar actionBar = getActivity().getActionBar();
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.all)));
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.bookmarked)));
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.eaten)));
+        configureActionBar(actionBar, tabs);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        ApplicationBus.getInstance().unregister(this);
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
     }
 
-    private void configureActionBar()
-    {
-        final ActionBar actionBar = getActivity().getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            @Override
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                pager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            }
-
-            @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            }
-        };
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText(getResources()
-                                .getString(R.string.all))
-                        .setTabListener(tabListener));
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText(getResources()
-                                .getString(R.string.bookmarked))
-                        .setTabListener(tabListener));
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-    }
-
-    protected class DelicacyPagesAdapter extends PagerAdapter
-    {
-
-        private ArrayList<ListView> pages;
-
-        public DelicacyPagesAdapter(ArrayList<ListView> pages)
-        {
-            this.pages = pages;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(pages.get(position));
-            return pages.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return pages.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view.equals(object);
-        }
-    }
 }

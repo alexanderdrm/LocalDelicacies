@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
+import android.app.Fragment;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.mobiquity.LocalDelicacies.support.BusHelper;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class ApplicationBusTest {
     @Test
     public void shouldPostNavigationDrawerClickEvent()
     {
-        BaseEvent testEvent = new NavigationDrawerClickEvent("Test_Event", "TAG");
+        BaseEvent testEvent = new NavigationDrawerClickEvent("Test_Event", Fragment.class);
         bus.post(testEvent);
         assertTrue(busHelper.getLastEvent() instanceof NavigationDrawerClickEvent);
     }

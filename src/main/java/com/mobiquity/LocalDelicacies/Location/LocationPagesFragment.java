@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -94,6 +95,11 @@ public class LocationPagesFragment extends BasePagesFragment {
         super.onPause();
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
+        for(Location l: allLocations) {
+            SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+            l.saveToDatabase(db);
+        }
 
     }
 

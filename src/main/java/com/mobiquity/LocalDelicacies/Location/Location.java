@@ -19,10 +19,10 @@ public class Location
     private String description;
 
     private int id;
+
     public Location(LocationData ld) {
         this(ld.getTitle(), ld.getImageUrl(), ld.getDescription(), false, -1);
     }
-
     public Location( String title, String imageUrl)
     {
         this(title, imageUrl, "",  false, -1);
@@ -40,6 +40,14 @@ public class Location
     public String getTitle()
     {
         return title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -117,7 +125,7 @@ public class Location
         values.put(DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL, getImageUrl());
         values.put(DataContract.LocationEntry.COLUMN_NAME_BOOKMARKED, isBookmarked());
 
-        db.insert(DataContract.LocationEntry.TABLE_NAME, "null", values);
+        db.insertWithOnConflict(DataContract.LocationEntry.TABLE_NAME, "null", values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     @Override

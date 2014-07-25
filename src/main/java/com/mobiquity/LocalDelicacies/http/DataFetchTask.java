@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -88,8 +89,15 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         ArrayList<Location> locations = new ArrayList<Location>();
         ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
 
+        HashMap<String, Location> locs = new HashMap<String, Location>();
+
         for(LocationData ld: data) {
-            locations.add(new Location(ld));
+
+            Location loc = new Location(ld);
+
+            locations.add(loc);
+
+            locs.put(loc.getTitle(), loc);
 
             for(Specality spec: ld.getSpecalities()) {
                 delicacies.add(new Delicacy(spec));
@@ -117,10 +125,20 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 null                                 // The sort order
         );
 
-        c.moveToFirst();
+        ArrayList<Location> dbLocs = new ArrayList<Location>();
+        for(int i = 0; i < c.getCount(); i++) {
+            c.moveToPosition(i);
+            Location dbLocation = Location.loadFromCursor(c);
+            Location remoteLocation = locs.get(dbLocation.getTitle());
+            if(remoteLocation != null) {
+                remoteLocation.setBookmarked(dbLocation.isBookmarked());
+                remoteLocation.setId(dbLocation.getId());
+            } else {
+                locs.put(dbLocation.getTitle(), dbLocation);
+                locations.add(dbLocation);
+            }
+        }
 
-        Location l = Location.loadFromCursor(c);
-        locations.add(l);
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }

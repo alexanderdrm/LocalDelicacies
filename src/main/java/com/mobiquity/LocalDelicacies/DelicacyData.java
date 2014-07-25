@@ -29,11 +29,6 @@ public class DelicacyData {
         return instance.delicacies;
     }
 
-    public void touchIt() {
-
-    }
-
     public static void touch() {
-        instance.touchIt();
     }
 }

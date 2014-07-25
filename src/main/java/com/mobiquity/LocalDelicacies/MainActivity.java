@@ -3,8 +3,8 @@ package com.mobiquity.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -16,8 +16,6 @@ import com.mobiquity.LocalDelicacies.http.DataFetchTask;
 import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
-
-import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity
 {
@@ -50,6 +48,18 @@ public class MainActivity extends Activity
         new DataFetchTask(getApplicationContext()).execute();
 
         DelicacyData.touch();
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DataContract.LocationEntry._ID, 0);
+        values.put(DataContract.LocationEntry.COLUMN_NAME_NAME, "Orlando");
+        values.put(DataContract.LocationEntry.COLUMN_NAME_DESCRIPTION, "Not to be confused with New Orleans");
+        values.put(DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL, "http://upload.wikimedia.org/wikipedia/commons/e/e3/Orlando_Skyline.jpg");
+
+        db.insert(DataContract.LocationEntry.TABLE_NAME, "null", values);
     }
 
     @Override
@@ -103,8 +113,6 @@ public class MainActivity extends Activity
             return true;
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Subscribe
     public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)

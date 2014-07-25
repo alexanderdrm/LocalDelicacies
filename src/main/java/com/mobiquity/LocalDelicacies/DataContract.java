@@ -11,6 +11,7 @@ public class DataContract {
         public static final String COLUMN_NAME_NAME = "title";
         public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_IMAGE_URL = "imageurl";
+        public static final String COLUMN_NAME_BOOKMARKED = "bookmarked";
     }
 
     public static final String TEXT_TYPE = " TEXT";
@@ -20,7 +21,8 @@ public class DataContract {
                     LocationEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     LocationEntry.COLUMN_NAME_NAME + " TEXT," +
                     LocationEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
-                    LocationEntry.COLUMN_NAME_IMAGE_URL + " TEXT" +
+                    LocationEntry.COLUMN_NAME_IMAGE_URL + " TEXT," +
+                    LocationEntry.COLUMN_NAME_BOOKMARKED + " INTEGER" +
             " )";
 
     public static final String SQL_DELETE_ENTRIES =

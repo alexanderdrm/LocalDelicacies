@@ -99,16 +99,13 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
 
-// Define a projection that specifies which columns from the database
-// you will actually use after this query.
         String[] projection = {
                 DataContract.LocationEntry._ID,
                 DataContract.LocationEntry.COLUMN_NAME_NAME,
                 DataContract.LocationEntry.COLUMN_NAME_DESCRIPTION,
-                DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL
+                DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL,
+                DataContract.LocationEntry.COLUMN_NAME_BOOKMARKED
         };
-
-
 
         Cursor c = db.query(
                 DataContract.LocationEntry.TABLE_NAME,  // The table to query
@@ -121,11 +118,8 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         );
 
         c.moveToFirst();
-        String name = c.getString(1);
-        String desc = c.getString(2);
-        String url = c.getString(3);
 
-        Location l = new Location(name, url, desc, false);
+        Location l = Location.loadFromCursor(c);
         locations.add(l);
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));

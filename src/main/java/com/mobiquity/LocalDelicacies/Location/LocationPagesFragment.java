@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class LocationPagesFragment extends BasePagesFragment {
 
     volatile ArrayList<Location> allLocations = TestModule.generateTestLocations();
-    ArrayList<ActionBar.Tab> tabs = new ArrayList<ActionBar.Tab>();
+    ArrayList<ActionBar.Tab> tabs;
 
     ArrayList<LocationListAdapter> adapters = new ArrayList<LocationListAdapter>();
     public static String TAG="LOCAITON_PAGES_FRAGMENT";
@@ -79,6 +79,7 @@ public class LocationPagesFragment extends BasePagesFragment {
     {
         super.onResume();
         ActionBar actionBar = getActivity().getActionBar();
+        tabs = new ArrayList<ActionBar.Tab>();
         tabs.add(actionBar.newTab()
                 .setText(getResources()
                         .getString(R.string.all)));

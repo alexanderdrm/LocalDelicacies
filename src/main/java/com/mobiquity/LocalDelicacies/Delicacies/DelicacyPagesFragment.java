@@ -26,7 +26,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     //volatile ArrayList<Delicacy> allDelicacies = TestModule.generateTestDelicacies();
 
     ArrayList<DelicacyListAdapter> adapters = new ArrayList<DelicacyListAdapter>();
-    ArrayList<ActionBar.Tab> tabs = new ArrayList<ActionBar.Tab>();
+    ArrayList<ActionBar.Tab> tabs;
     public static String TAG="DELICACY_PAGES_FRAGMENT";
 
     @Override
@@ -79,6 +79,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     {
         super.onResume();
         ActionBar actionBar = getActivity().getActionBar();
+        tabs = new ArrayList<ActionBar.Tab>();
         tabs.add(actionBar.newTab()
                 .setText(getResources()
                         .getString(R.string.all)));

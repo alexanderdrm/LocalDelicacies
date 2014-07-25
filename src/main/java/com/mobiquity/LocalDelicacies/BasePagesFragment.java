@@ -36,6 +36,7 @@ public class BasePagesFragment extends Fragment {
 
     protected void configureActionBar(final ActionBar actionBar, ArrayList<ActionBar.Tab> tabs)
     {
+        getActivity().getActionBar().removeAllTabs();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             @Override

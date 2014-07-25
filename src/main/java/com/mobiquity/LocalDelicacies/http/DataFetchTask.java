@@ -1,6 +1,8 @@
 package com.mobiquity.LocalDelicacies.http;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -94,6 +96,37 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             }
 
         }
+
+        SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                DataContract.LocationEntry._ID,
+                DataContract.LocationEntry.COLUMN_NAME_NAME,
+                DataContract.LocationEntry.COLUMN_NAME_DESCRIPTION,
+                DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL
+        };
+
+
+
+        Cursor c = db.query(
+                DataContract.LocationEntry.TABLE_NAME,  // The table to query
+                projection,                               // The columns to return
+                null,                                // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                 // The sort order
+        );
+
+        c.moveToFirst();
+        String name = c.getString(1);
+        String desc = c.getString(2);
+        String url = c.getString(3);
+
+        Location l = new Location(name, url, desc, false);
+        locations.add(l);
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }

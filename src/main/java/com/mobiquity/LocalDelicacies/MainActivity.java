@@ -63,7 +63,7 @@ public class MainActivity extends Activity
 
         DelicacyData.touch();
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        /*DatabaseHelper dbHelper = new DatabaseHelper(this);
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -73,7 +73,7 @@ public class MainActivity extends Activity
         values.put(DataContract.LocationEntry.COLUMN_NAME_DESCRIPTION, "Not to be confused with New Orleans");
         values.put(DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL, "http://upload.wikimedia.org/wikipedia/commons/e/e3/Orlando_Skyline.jpg");
 
-        db.insert(DataContract.LocationEntry.TABLE_NAME, "null", values);
+        db.insert(DataContract.LocationEntry.TABLE_NAME, "null", values);*/
     }
 
     @Override

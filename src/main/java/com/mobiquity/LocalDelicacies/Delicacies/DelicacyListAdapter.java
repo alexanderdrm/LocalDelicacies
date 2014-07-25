@@ -105,12 +105,13 @@ public class DelicacyListAdapter extends BaseListAdapter {
             holder.ratingBar.setVisibility(View.GONE);
         }
 
-        holder.ratingBar.setClickable(false);
         holder.ratingBar.setIsIndicator(true);
-        holder.ratingBar.setEnabled(false);
-        holder.ratingBar.setFocusable(false);
-        holder.ratingBar.setLongClickable(false);
-
+        holder.ratingBar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return false;
+            }
+        });
     }
 
     public void updateData(ArrayList<Delicacy> locs) {

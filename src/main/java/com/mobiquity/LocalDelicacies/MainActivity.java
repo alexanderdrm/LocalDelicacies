@@ -3,6 +3,7 @@ package com.mobiquity.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -144,18 +145,13 @@ public class MainActivity extends Activity
     private void switchFragment(Fragment fragment, Bundle bundle, boolean addToBackStack) {
         if(bundle != null)
             fragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
         if(addToBackStack)
         {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            transaction.addToBackStack(null);
         }
-        else
-        {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
-        }
+        transaction.commit();
     }
 }

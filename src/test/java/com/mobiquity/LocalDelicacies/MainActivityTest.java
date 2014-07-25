@@ -1,15 +1,13 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import com.mobiquity.LocalDelicacies.delicacies.DelicacyListFragment;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyPagesFragment;
 import com.mobiquity.LocalDelicacies.location.*;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 
@@ -20,11 +18,9 @@ import org.junit.runner.RunWith;
 
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.tester.android.view.TestMenuItem;
 
 import static com.mobiquity.LocalDelicacies.support.Assert.assertViewIsVisible;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 @RunWith (RobolectricTestRunner.class)
@@ -87,9 +83,9 @@ public class MainActivityTest
     public void shouldCloseDrawerLayoutOnEvent() throws Exception
     {
         drawerLayout.openDrawer(Gravity.START);
-        assertTrue( drawerLayout.isDrawerOpen(Gravity.START ) );
-        bus.post(new NavigationDrawerClickEvent("",""));
-        assertFalse( drawerLayout.isDrawerOpen( Gravity.START ) );
+        assertTrue(drawerLayout.isDrawerOpen(Gravity.START));
+        bus.post(new NavigationDrawerClickEvent("Test_Fragment", Fragment.class));
+        assertFalse(drawerLayout.isDrawerOpen(Gravity.START));
     }
 
     @Test
@@ -116,7 +112,7 @@ public class MainActivityTest
         //Delicacies Fragment
         Robolectric.shadowOf(drawerList).performItemClick(1);
         fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
-        assertTrue(fragment instanceof DelicacyListFragment);
+        assertTrue(fragment instanceof DelicacyPagesFragment);
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.mobiquity.LocalDelicacies.location;
 import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import com.mobiquity.LocalDelicacies.BasePagesAdapter;
 import com.mobiquity.LocalDelicacies.R;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class LocationPagesFragmentTest
     public void shouldHaveAnAdapter() throws Exception
     {
         assertNotNull(pager.getAdapter());
-        assertTrue(pager.getAdapter() instanceof LocationPagesFragment.LocationPagesAdapter);
+        assertTrue(pager.getAdapter() instanceof BasePagesAdapter);
     }
 
 

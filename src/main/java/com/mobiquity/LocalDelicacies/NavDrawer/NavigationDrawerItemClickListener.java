@@ -16,13 +16,13 @@ public class NavigationDrawerItemClickListener implements ListView.OnItemClickLi
 
     private Context context;
     private ArrayList<String> titles;
-    private ArrayList<String> fragmentTags;
+    private ArrayList<Class> fragmentClasses;
 
-    public NavigationDrawerItemClickListener(Context context, ArrayList<String> titles, ArrayList<String> fragmentTags)
+    public NavigationDrawerItemClickListener(Context context, ArrayList<String> titles, ArrayList<Class> fragmentClasses)
     {
         this.context = context;
         this.titles = titles;
-        this.fragmentTags = fragmentTags;
+        this.fragmentClasses = fragmentClasses;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class NavigationDrawerItemClickListener implements ListView.OnItemClickLi
 
     private void selectItem(int position)
     {
-        ApplicationBus.getInstance().post(new NavigationDrawerClickEvent(titles.get(position), fragmentTags.get(position)));
+        ApplicationBus.getInstance().post(new NavigationDrawerClickEvent(titles.get(position), fragmentClasses.get(position)));
         Toast.makeText(context, titles.get(position), Toast.LENGTH_SHORT).show();
     }
 }

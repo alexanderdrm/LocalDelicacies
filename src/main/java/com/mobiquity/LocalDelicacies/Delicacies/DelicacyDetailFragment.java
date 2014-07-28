@@ -69,6 +69,10 @@ public class DelicacyDetailFragment extends Fragment {
             }
         });
 
+
+
+        ratingBar.setRating(delicacy.getRatingInHalfStars() / 2f);
+
         configureImage(inflater.getContext(), delicacy.getImageUrl(), delicacyImage);
         configureRatingBar();
         return view;
@@ -85,10 +89,13 @@ public class DelicacyDetailFragment extends Fragment {
     private void configureRatingBar()
     {
         ratingBar.setClickable(true);
-        ratingBar.setOnClickListener(new View.OnClickListener() {
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
             @Override
-            public void onClick(View view) {
-                delicacy.setRatingInHalfStars((int) (ratingBar.getRating() * 2));
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                int temp = Math.round(rating * 2);
+                delicacy.setRatingInHalfStars(temp);
             }
         });
     }

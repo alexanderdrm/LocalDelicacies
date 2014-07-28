@@ -112,6 +112,8 @@ public class DelicacyListAdapter extends BaseListAdapter {
                 return false;
             }
         });
+
+        holder.ratingBar.setRating(delicacy.getRatingInHalfStars() / 2f);
     }
 
     public void updateData(ArrayList<Delicacy> locs) {

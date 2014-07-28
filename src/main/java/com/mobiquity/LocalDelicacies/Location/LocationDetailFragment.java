@@ -2,6 +2,7 @@ package com.mobiquity.LocalDelicacies.location;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -43,16 +44,23 @@ public class LocationDetailFragment extends BasePagesFragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+        location.saveToDatabase(db);
+    }
     private void prepareAdapter(Context context)
     {
         TextView title;
         ImageView image;
         TextView description;
-        ImageView bookmarkButton;
+        final ImageView bookmarkButton;
         RatingBar ratingBar;
 
         //Setting up the location Details
-        CustomDetailView locationView = new CustomDetailView(context);
+        final CustomDetailView locationView = new CustomDetailView(context);
 
         title = (TextView) locationView.findViewById(R.id.name);
         title.setText(location.getTitle());
@@ -68,6 +76,22 @@ public class LocationDetailFragment extends BasePagesFragment {
         description.setText(location.getDescription());
 
         bookmarkButton = (ImageView) locationView.findViewById(R.id.bookmarked_button);
+        if (location.isBookmarked()) {
+            bookmarkButton.setImageResource(R.drawable.love);
+        } else {
+            bookmarkButton.setImageResource(R.drawable.no_love);
+        }
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                location.setBookmarked(!location.isBookmarked());
+                if (location.isBookmarked()) {
+                    bookmarkButton.setImageResource(R.drawable.love);
+                } else {
+                    bookmarkButton.setImageResource(R.drawable.no_love);
+                }
+            }
+        });
 
         ratingBar = (RatingBar) locationView.findViewById(R.id.ratingBar);
         ratingBar.setVisibility(View.GONE);

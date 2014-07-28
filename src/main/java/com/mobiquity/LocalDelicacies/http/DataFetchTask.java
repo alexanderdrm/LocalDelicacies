@@ -14,6 +14,7 @@ import com.mobiquity.LocalDelicacies.delicacies.DelicacyPagesFragment;
 import com.mobiquity.LocalDelicacies.delicacies.Specality;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationData;
+import javafx.util.Pair;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -23,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dalexander on 7/24/14.
@@ -93,7 +95,6 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         HashMap<String, Location> locationMap = new HashMap<String, Location>();
         HashMap<String, Delicacy> delicacyMap = new HashMap<String, Delicacy>();
 
-
         for(LocationData ld: data) {
 
             Location loc = new Location(ld);
@@ -108,7 +109,6 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 delicacies.add(del);
                 delicacyMap.put(del.getName(), del);
             }
-
         }
 
         SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
@@ -126,6 +126,14 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 locationMap.put(dbLocation.getTitle(), dbLocation);
                 locations.add(dbLocation);
             }
+            //simultaneously keep track of locations we do not have locally
+            //by removing visited ones from the map
+            locationMap.remove(dbLocation.getTitle());
+        }
+
+        SQLiteDatabase wdb = new DatabaseHelper(context).getReadableDatabase();
+        for(Map.Entry<String, Location> pair : locationMap.entrySet()) {
+            pair.getValue().saveToDatabase(wdb);
         }
 
         Cursor delCursor = DatabaseHelper.getDelicacyCursor(context);

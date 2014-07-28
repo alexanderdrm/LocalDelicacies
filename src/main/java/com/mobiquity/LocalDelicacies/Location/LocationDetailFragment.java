@@ -56,7 +56,7 @@ public class LocationDetailFragment extends BasePagesFragment {
         TextView title;
         ImageView image;
         TextView description;
-        final ImageView bookmarkButton;
+        ImageView bookmarkButton;
         RatingBar ratingBar;
 
         //Setting up the location Details
@@ -81,26 +81,15 @@ public class LocationDetailFragment extends BasePagesFragment {
         } else {
             bookmarkButton.setImageResource(R.drawable.no_love);
         }
-        bookmarkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                location.setBookmarked(!location.isBookmarked());
-                if (location.isBookmarked()) {
-                    bookmarkButton.setImageResource(R.drawable.love);
-                } else {
-                    bookmarkButton.setImageResource(R.drawable.no_love);
-                }
-            }
-        });
-
         ratingBar = (RatingBar) locationView.findViewById(R.id.ratingBar);
         ratingBar.setVisibility(View.GONE);
 
         ArrayList<CustomDetailView> views = new ArrayList<CustomDetailView>();
         views.add(locationView);
 
+        ArrayList<Delicacy> delicacies = DatabaseHelper.getDelicacies(context, location);
         //Setting up views for each delicacy
-        /*for(Delicacy delicacy : location.getDelicacies())
+        for(Delicacy delicacy : delicacies)
         {
             CustomDetailView delicacyView = new CustomDetailView(context);
 
@@ -121,7 +110,7 @@ public class LocationDetailFragment extends BasePagesFragment {
 
             ratingBar = (RatingBar) delicacyView.findViewById(R.id.ratingBar);
             views.add(delicacyView);
-        }*/
+        }
 
         pager.setAdapter(new DetailPagesAdapter(views));
     }

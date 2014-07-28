@@ -95,6 +95,21 @@ public class Delicacy {
         this.description = description;
     }
 
+    public int getCityid() {
+        return cityid;
+    }
+
+    public void setCityid(int cityid) {
+        this.cityid = cityid;
+    }
+
+    public Location getCity() {
+        return city;
+    }
+
+    public void setCity(Location city) {
+        this.city = city;
+    }
 
     public static Bundle createBundleFromDelicacy(Delicacy delicacy)
     {

@@ -100,6 +100,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             locs.put(loc.getTitle(), loc);
 
             for(Specality spec: ld.getSpecalities()) {
+                spec.setCity(loc);
                 delicacies.add(new Delicacy(spec));
             }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.TestModule;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.support.FragmentUtil;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class DelicacyListAdapterTest
     public void setUp()
     {
         activity = FragmentUtil.createActivity();
-        testData = generateTestData();
+        testData = TestModule.generateTestDelicacies();
         delicacyListAdapter = new DelicacyListAdapter(activity, testData, new PermissiveFilter());
     }
 
@@ -92,11 +93,4 @@ public class DelicacyListAdapterTest
         }
     }
 
-    private ArrayList<Delicacy> generateTestData()
-    {
-        ArrayList<Delicacy> data = new ArrayList<Delicacy>();
-        data.add(new Delicacy("Apple", null));
-        data.add(new Delicacy("Banana", null));
-        return data;
-    }
 }

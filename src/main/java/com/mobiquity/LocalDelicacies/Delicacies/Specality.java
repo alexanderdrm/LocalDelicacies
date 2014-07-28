@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import com.google.gson.annotations.Expose;
+import com.mobiquity.LocalDelicacies.location.Location;
 
 import javax.annotation.Generated;
 
@@ -16,6 +17,8 @@ class Specality {
     private String description;
     @Expose
     private String imageUrl;
+
+    private Location city = null;
 
     public String getTitle() {
         return title;
@@ -39,6 +42,14 @@ class Specality {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setCity(Location l) {
+        this.city = l;
+    }
+
+    public Location getCity() {
+        return city;
     }
 
 }

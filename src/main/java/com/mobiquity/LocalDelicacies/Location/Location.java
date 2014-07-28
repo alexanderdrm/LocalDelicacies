@@ -99,7 +99,6 @@ public class Location
         );
     }
 
-    //TODO: implement this
     public static Location loadFromCursor(Cursor cursor) {
 
         String name = cursor.getString(cursor.getColumnIndex(DataContract.LocationEntry.COLUMN_NAME_NAME));
@@ -125,7 +124,12 @@ public class Location
         values.put(DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL, getImageUrl());
         values.put(DataContract.LocationEntry.COLUMN_NAME_BOOKMARKED, isBookmarked());
 
-        db.insertWithOnConflict(DataContract.LocationEntry.TABLE_NAME, "null", values, SQLiteDatabase.CONFLICT_REPLACE);
+        long id = db.insertWithOnConflict(DataContract.LocationEntry.TABLE_NAME, "null", values, SQLiteDatabase.CONFLICT_REPLACE);
+
+        if(id >= 0) {
+            this.id = (int)id;
+        }
+
     }
 
     @Override

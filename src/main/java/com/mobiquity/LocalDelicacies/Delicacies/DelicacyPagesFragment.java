@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,7 +15,9 @@ import android.widget.ListView;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -23,7 +26,7 @@ import java.util.ArrayList;
  */
 public class DelicacyPagesFragment extends BasePagesFragment {
 
-    //volatile ArrayList<Delicacy> allDelicacies = TestModule.generateTestDelicacies();
+    volatile ArrayList<Delicacy> allDelicacies;
 
     ArrayList<DelicacyListAdapter> adapters = new ArrayList<DelicacyListAdapter>();
     ArrayList<ActionBar.Tab> tabs;
@@ -31,6 +34,8 @@ public class DelicacyPagesFragment extends BasePagesFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        allDelicacies = DelicacyData.getDelicacyData();
+
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
 
         pager = (ViewPager) rootView.findViewById(R.id.pager);
@@ -65,19 +70,22 @@ public class DelicacyPagesFragment extends BasePagesFragment {
         return new BasePagesAdapter(views);
     }
 
-    /*@Subscribe
+    @Subscribe
     public void onDataUpdated(DataUpdateEvent due) {
         allDelicacies = due.getDelicacies();
 
         for(DelicacyListAdapter dladapter : adapters) {
             dladapter.updateData(allDelicacies);
         }
-    }*/
+    }
 
     @Override
     public void onResume()
     {
         super.onResume();
+
+        allDelicacies = DelicacyData.getDelicacyData();
+
         ActionBar actionBar = getActivity().getActionBar();
         tabs = new ArrayList<ActionBar.Tab>();
         tabs.add(actionBar.newTab()
@@ -90,6 +98,8 @@ public class DelicacyPagesFragment extends BasePagesFragment {
                 .setText(getResources()
                         .getString(R.string.eaten)));
         configureActionBar(actionBar, tabs);
+
+
     }
 
     @Override
@@ -97,6 +107,11 @@ public class DelicacyPagesFragment extends BasePagesFragment {
         super.onPause();
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
+        for(Delicacy del: allDelicacies) {
+            SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+            del.saveToDatabase(db);
+        }
 
     }
 

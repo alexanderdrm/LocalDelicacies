@@ -53,21 +53,6 @@ public class MainActivity extends Activity
         }
 
         new DataFetchTask(getApplicationContext()).execute();
-
-        //DelicacyData.touch();
-
-        /*DatabaseHelper dbHelper = new DatabaseHelper(this);
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DataContract.LocationEntry._ID, 0);
-        values.put(DataContract.LocationEntry.COLUMN_NAME_NAME, "Orlando");
-        values.put(DataContract.LocationEntry.COLUMN_NAME_DESCRIPTION, "Not to be confused with New Orleans");
-        values.put(DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL, "http://upload.wikimedia.org/wikipedia/commons/e/e3/Orlando_Skyline.jpg");
-        values.put(DataContract.LocationEntry.COLUMN_NAME_BOOKMARKED, 1);
-
-        db.insert(DataContract.LocationEntry.TABLE_NAME, "null", values);*/
     }
 
     @Override

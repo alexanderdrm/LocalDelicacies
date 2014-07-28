@@ -25,7 +25,6 @@ public class LocationPagesFragment extends BasePagesFragment {
     ArrayList<ActionBar.Tab> tabs;
 
     ArrayList<LocationListAdapter> adapters = new ArrayList<LocationListAdapter>();
-    public static String TAG="LOCAITON_PAGES_FRAGMENT";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class LocationPagesFragment extends BasePagesFragment {
         super.onActivityCreated(savedInstanceState);
         locations = LocalDelicacyApplication.getInstance().getLocations();
         prepareAdapterList(getActivity());
-
     }
 
     private void prepareAdapterList(Context context)

@@ -35,7 +35,7 @@ public class DelicacyDetailFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_location_detail,
+        View view = inflater.inflate(R.layout.fragment_detail_layout,
                 container,
                 false);
 

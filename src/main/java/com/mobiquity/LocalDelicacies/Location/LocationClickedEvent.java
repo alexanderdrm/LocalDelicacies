@@ -19,8 +19,4 @@ public class LocationClickedEvent extends BaseEvent {
         return location;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
 }

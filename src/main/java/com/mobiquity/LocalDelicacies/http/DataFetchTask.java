@@ -10,6 +10,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
+import com.mobiquity.LocalDelicacies.delicacies.DelicacyPagesFragment;
 import com.mobiquity.LocalDelicacies.delicacies.Specality;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationData;
@@ -89,7 +90,9 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         ArrayList<Location> locations = new ArrayList<Location>();
         ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
 
-        HashMap<String, Location> locs = new HashMap<String, Location>();
+        HashMap<String, Location> locationMap = new HashMap<String, Location>();
+        HashMap<String, Delicacy> delicacyMap = new HashMap<String, Delicacy>();
+
 
         for(LocationData ld: data) {
 
@@ -97,11 +100,13 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
             locations.add(loc);
 
-            locs.put(loc.getTitle(), loc);
+            locationMap.put(loc.getTitle(), loc);
 
             for(Specality spec: ld.getSpecalities()) {
                 spec.setCity(loc);
-                delicacies.add(new Delicacy(spec));
+                Delicacy del = new Delicacy(spec);
+                delicacies.add(del);
+                delicacyMap.put(del.getName(), del);
             }
 
         }
@@ -116,7 +121,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 DataContract.LocationEntry.COLUMN_NAME_BOOKMARKED
         };
 
-        Cursor c = db.query(
+        Cursor locCursor = db.query(
                 DataContract.LocationEntry.TABLE_NAME,  // The table to query
                 projection,                               // The columns to return
                 null,                                // The columns for the WHERE clause
@@ -126,17 +131,50 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 null                                 // The sort order
         );
 
-        ArrayList<Location> dbLocs = new ArrayList<Location>();
-        for(int i = 0; i < c.getCount(); i++) {
-            c.moveToPosition(i);
-            Location dbLocation = Location.loadFromCursor(c);
-            Location remoteLocation = locs.get(dbLocation.getTitle());
+        for(int i = 0; i < locCursor.getCount(); i++) {
+            locCursor.moveToPosition(i);
+            Location dbLocation = Location.loadFromCursor(locCursor);
+            Location remoteLocation = locationMap.get(dbLocation.getTitle());
             if(remoteLocation != null) {
                 remoteLocation.setBookmarked(dbLocation.isBookmarked());
                 remoteLocation.setId(dbLocation.getId());
             } else {
-                locs.put(dbLocation.getTitle(), dbLocation);
+                locationMap.put(dbLocation.getTitle(), dbLocation);
                 locations.add(dbLocation);
+            }
+        }
+
+        String[] delicacyColumns = {
+                DataContract.DelicacyEntry._ID,
+                DataContract.DelicacyEntry.COLUMN_NAME_NAME,
+                DataContract.DelicacyEntry.COLUMN_NAME_DESCRIPTION,
+                DataContract.DelicacyEntry.COLUMN_NAME_IMAGE_URL,
+                DataContract.DelicacyEntry.COLUMN_NAME_BOOKMARKED,
+                DataContract.DelicacyEntry.COLUMN_NAME_CITY_ID,
+                DataContract.DelicacyEntry.COLUMN_NAME_RATING
+        };
+
+        Cursor delCursor = db.query(
+                DataContract.DelicacyEntry.TABLE_NAME,  // The table to query
+                delicacyColumns,                               // The columns to return
+                null,                                // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                 // The sort order
+        );
+
+        for(int i = 0; i < delCursor.getCount(); i++) {
+            delCursor.moveToPosition(i);
+            Delicacy dbDelicacy = Delicacy.loadFromCursor(delCursor);
+            Delicacy remoteDelicacy = delicacyMap.get(dbDelicacy.getName());
+            if(remoteDelicacy != null) {
+                remoteDelicacy.setBookmarked(dbDelicacy.isBookmarked());
+                remoteDelicacy.setId(dbDelicacy.getId());
+                remoteDelicacy.setRatingInHalfStars(dbDelicacy.getRatingInHalfStars());
+            } else {
+                delicacyMap.put(dbDelicacy.getName(), dbDelicacy);
+                delicacies.add(dbDelicacy);
             }
         }
 

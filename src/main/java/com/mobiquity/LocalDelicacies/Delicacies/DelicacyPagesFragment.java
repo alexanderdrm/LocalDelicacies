@@ -44,7 +44,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        delicacies = LocalDelicacyApplication.getInstance().getDelicacies();
+        delicacies = DatabaseHelper.getDelicacies(getActivity());//LocalDelicacyApplication.getInstance().getDelicacies();
         prepareAdapterList(getActivity());
     }
 
@@ -85,7 +85,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     @Subscribe
 
     public void onDataUpdated(NotifyFragmentsOfDataEvent due) {
-        delicacies = LocalDelicacyApplication.getInstance().getDelicacies();
+        delicacies = DatabaseHelper.getDelicacies(getActivity());
 
         for(DelicacyListAdapter dladapter : adapters) {
             dladapter.updateData(delicacies);

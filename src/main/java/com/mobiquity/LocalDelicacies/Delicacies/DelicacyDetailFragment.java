@@ -2,6 +2,7 @@ package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import com.mobiquity.LocalDelicacies.ApplicationBus;
+import com.mobiquity.LocalDelicacies.DatabaseHelper;
 import com.mobiquity.LocalDelicacies.R;
-import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
-import com.mobiquity.LocalDelicacies.location.Location;
 import com.squareup.picasso.Picasso;
 
 
@@ -27,7 +26,7 @@ public class DelicacyDetailFragment extends Fragment {
     private TextView delicacyName;
     private TextView delicacyDescription;
     private ImageView delicacyImage;
-    private ImageView bookmarkedButton;
+    private ImageView bookmarkButton;
     private RatingBar ratingBar;
 
     @Override
@@ -51,12 +50,24 @@ public class DelicacyDetailFragment extends Fragment {
 
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
-        bookmarkedButton = (ImageView) view.findViewById(R.id.bookmarked_button);
+        bookmarkButton = (ImageView) view.findViewById(R.id.bookmarked_button);
         if (delicacy.isBookmarked()) {
-            bookmarkedButton.setImageResource(R.drawable.love);
+            bookmarkButton.setImageResource(R.drawable.love);
         } else {
-            bookmarkedButton.setImageResource(R.drawable.no_love);
+            bookmarkButton.setImageResource(R.drawable.no_love);
         }
+
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delicacy.setBookmarked(!delicacy.isBookmarked());
+                if (delicacy.isBookmarked()) {
+                    bookmarkButton.setImageResource(R.drawable.love);
+                } else {
+                    bookmarkButton.setImageResource(R.drawable.no_love);
+                }
+            }
+        });
 
         configureImage(inflater.getContext(), delicacy.getImageUrl(), delicacyImage);
         configureRatingBar();
@@ -80,5 +91,13 @@ public class DelicacyDetailFragment extends Fragment {
                 delicacy.setRatingInHalfStars((int) (ratingBar.getRating() * 2));
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+        delicacy.saveToDatabase(db);
     }
 }

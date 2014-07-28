@@ -113,23 +113,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
 
-        String[] projection = {
-                DataContract.LocationEntry._ID,
-                DataContract.LocationEntry.COLUMN_NAME_NAME,
-                DataContract.LocationEntry.COLUMN_NAME_DESCRIPTION,
-                DataContract.LocationEntry.COLUMN_NAME_IMAGE_URL,
-                DataContract.LocationEntry.COLUMN_NAME_BOOKMARKED
-        };
-
-        Cursor locCursor = db.query(
-                DataContract.LocationEntry.TABLE_NAME,  // The table to query
-                projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                 // The sort order
-        );
+        Cursor locCursor = DatabaseHelper.getLocationCursor(context);
 
         for(int i = 0; i < locCursor.getCount(); i++) {
             locCursor.moveToPosition(i);
@@ -144,25 +128,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             }
         }
 
-        String[] delicacyColumns = {
-                DataContract.DelicacyEntry._ID,
-                DataContract.DelicacyEntry.COLUMN_NAME_NAME,
-                DataContract.DelicacyEntry.COLUMN_NAME_DESCRIPTION,
-                DataContract.DelicacyEntry.COLUMN_NAME_IMAGE_URL,
-                DataContract.DelicacyEntry.COLUMN_NAME_BOOKMARKED,
-                DataContract.DelicacyEntry.COLUMN_NAME_CITY_ID,
-                DataContract.DelicacyEntry.COLUMN_NAME_RATING
-        };
-
-        Cursor delCursor = db.query(
-                DataContract.DelicacyEntry.TABLE_NAME,  // The table to query
-                delicacyColumns,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                 // The sort order
-        );
+        Cursor delCursor = DatabaseHelper.getDelicacyCursor(context);
 
         for(int i = 0; i < delCursor.getCount(); i++) {
             delCursor.moveToPosition(i);
@@ -179,7 +145,8 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         }
 
 
-        ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies, true, true));
+
+        ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }
 
     protected List<LocationData> parseLocationJson(String result) throws IOException {

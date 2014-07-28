@@ -85,7 +85,7 @@ public class DelicacyListAdapter extends BaseListAdapter {
                     holder.bookmarkButton.setImageResource(R.drawable.no_love);
                 }
                 delicacy.setBookmarked(!delicacy.isBookmarked());
-                ApplicationBus.getInstance().post(new DataUpdateEvent(null, (ArrayList<Delicacy>) items, false, true));
+                ApplicationBus.getInstance().post(new DataUpdateEvent(null, (ArrayList<Delicacy>) items));
             }
         });
 

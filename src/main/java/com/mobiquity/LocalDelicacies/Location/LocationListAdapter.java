@@ -84,7 +84,7 @@ public class LocationListAdapter extends BaseListAdapter
                     holder.bookmarkButton.setImageResource(R.drawable.love);
                 }
                 location.setBookmarked(!location.isBookmarked());
-                ApplicationBus.getInstance().post(new DataUpdateEvent((ArrayList<Location>) items, null, true, false));
+                ApplicationBus.getInstance().post(new DataUpdateEvent((ArrayList<Location>) items, null));
             }
         });
 

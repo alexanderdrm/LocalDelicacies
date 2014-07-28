@@ -37,7 +37,7 @@ public class LocationPagesFragment extends BasePagesFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        locations = LocalDelicacyApplication.getInstance().getLocations();
+        locations = DatabaseHelper.getLocations(getActivity());
         prepareAdapterList(getActivity());
     }
 
@@ -67,7 +67,7 @@ public class LocationPagesFragment extends BasePagesFragment {
 
     @Subscribe
     public void onDataUpdated(NotifyFragmentsOfDataEvent notifyFragmentsOfDataEvent) {
-        locations = LocalDelicacyApplication.getInstance().getLocations();
+        locations = DatabaseHelper.getLocations(getActivity());
         for(LocationListAdapter lladapter : adapters) {
             lladapter.updateData(locations);
         }

@@ -1,6 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
@@ -22,41 +23,35 @@ public class LocalDelicacyApplication extends Application {
     }
 
     private static LocalDelicacyApplication instance;
-    private ArrayList<Location> locations = new ArrayList<Location>();
-    private ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
 
     public static LocalDelicacyApplication getInstance() {
         return instance;
     }
 
-    public ArrayList<Location> getLocations()
-    {
-        return locations;
-    }
-
-    public void setLocations(ArrayList<Location> locations) {
-        this.locations = locations;
-    }
-
-    public ArrayList<Delicacy> getDelicacies() {
-        return delicacies;
-    }
-
-    public void setDelicacies(ArrayList<Delicacy> delicacies) {
-        this.delicacies = delicacies;
-    }
-
     @Subscribe
     public void onDataUpdated(DataUpdateEvent event)
     {
-        if(event.shouldOverwriteLocationData())
-        {
-            locations = event.getLocations();
+        ArrayList<Location> locations = event.getLocations();
+        ArrayList<Delicacy> delicacies = event.getDelicacies();
+
+        SQLiteDatabase db = new DatabaseHelper(this).getWritableDatabase();
+
+        if(locations != null) {
+            for(Location l : locations) {
+                l.saveToDatabase(db);
+            }
         }
-        if(event.shouldOverwriteDelicacyData())
-        {
-            delicacies = event.getDelicacies();
+
+        if(delicacies != null) {
+            for(Delicacy del : delicacies) {
+                del.saveToDatabase(db);
+            }
         }
+
+        //should save the data here?
+
+
+
         NotifyFragmentsOfDataEvent notifyEvent = new NotifyFragmentsOfDataEvent();
         ApplicationBus.getInstance().post(notifyEvent);
 

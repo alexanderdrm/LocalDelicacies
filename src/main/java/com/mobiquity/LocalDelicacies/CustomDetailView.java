@@ -25,10 +25,22 @@ public class CustomDetailView extends LinearLayout {
 
     public CustomDetailView(Context context) {
         super(context);
+        init(context);
+    }
+
+    public CustomDetailView(Context context, AttributeSet attributeSet)
+    {
+        super(context, attributeSet);
+        init(context);
+    }
+
+    private void init(Context context)
+    {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.layout_detail, this, true);
     }
+
 
 
 }

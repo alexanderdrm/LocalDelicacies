@@ -73,17 +73,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getDelicacyCursor(db);
     }
 
-    public static Cursor getDelicacyCursor(SQLiteDatabase db){
+    private static String[] delicacyColumns = {
+            DataContract.DelicacyEntry._ID,
+            DataContract.DelicacyEntry.COLUMN_NAME_NAME,
+            DataContract.DelicacyEntry.COLUMN_NAME_DESCRIPTION,
+            DataContract.DelicacyEntry.COLUMN_NAME_IMAGE_URL,
+            DataContract.DelicacyEntry.COLUMN_NAME_BOOKMARKED,
+            DataContract.DelicacyEntry.COLUMN_NAME_CITY_ID,
+            DataContract.DelicacyEntry.COLUMN_NAME_RATING
+    };
 
-        String[] delicacyColumns = {
-                DataContract.DelicacyEntry._ID,
-                DataContract.DelicacyEntry.COLUMN_NAME_NAME,
-                DataContract.DelicacyEntry.COLUMN_NAME_DESCRIPTION,
-                DataContract.DelicacyEntry.COLUMN_NAME_IMAGE_URL,
-                DataContract.DelicacyEntry.COLUMN_NAME_BOOKMARKED,
-                DataContract.DelicacyEntry.COLUMN_NAME_CITY_ID,
-                DataContract.DelicacyEntry.COLUMN_NAME_RATING
-        };
+    public static Cursor getDelicacyCursor(SQLiteDatabase db){
 
         Cursor delCursor = db.query(
                 DataContract.DelicacyEntry.TABLE_NAME,  // The table to query
@@ -126,6 +126,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return data;
+    }
+
+    public static Cursor getDelicacyCursorByCity(SQLiteDatabase db, int argid){
+
+        Cursor delCursor = db.query(
+                DataContract.DelicacyEntry.TABLE_NAME,  // The table to query
+                delicacyColumns,                        // The columns to return
+                "id=?",                                 // The columns for the WHERE clause
+                new String[]{""+argid},                 // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+
+        return delCursor;
     }
 
 }

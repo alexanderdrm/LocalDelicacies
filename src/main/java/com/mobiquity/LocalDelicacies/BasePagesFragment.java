@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class BasePagesFragment extends Fragment {
 
     protected ViewPager pager;
-    protected BasePagesAdapter adapter;
 
     @Override
     public void onResume() {

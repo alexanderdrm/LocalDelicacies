@@ -13,10 +13,15 @@ import java.util.List;
 public class DataUpdateEvent extends BaseEvent {
     ArrayList<Location> locations;
     ArrayList<Delicacy> delicacies;
+    boolean shouldOverwriteLocationData;
+    boolean shouldOverwriteDelicacyData;
 
-    public DataUpdateEvent(ArrayList<Location> locations, ArrayList<Delicacy> delicacies) {
+    public DataUpdateEvent(ArrayList<Location> locations, ArrayList<Delicacy> delicacies,
+                           boolean shouldOverwriteLocationData, boolean shouldOverwriteDelicacyData) {
         this.locations = locations;
         this.delicacies = delicacies;
+        this.shouldOverwriteLocationData = shouldOverwriteLocationData;
+        this.shouldOverwriteDelicacyData = shouldOverwriteDelicacyData;
     }
 
     public ArrayList<Location> getLocations() {
@@ -27,4 +32,11 @@ public class DataUpdateEvent extends BaseEvent {
         return delicacies;
     }
 
+    public boolean shouldOverwriteLocationData() {
+        return shouldOverwriteLocationData;
+    }
+
+    public boolean shouldOverwriteDelicacyData() {
+        return shouldOverwriteDelicacyData;
+    }
 }

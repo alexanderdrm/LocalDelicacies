@@ -78,8 +78,16 @@ public class Delicacy {
         this.ratingInHalfStars = ratingInHalfStars;
     }
 
-
     //could move this and the reverse method from being static to just being members or a constructor
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
     public static Bundle createBundleFromDelicacy(Delicacy delicacy)
     {
         Bundle bundle = new Bundle();

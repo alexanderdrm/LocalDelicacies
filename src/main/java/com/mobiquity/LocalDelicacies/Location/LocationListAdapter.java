@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class LocationListAdapter extends BaseListAdapter
                     holder.bookmarkButton.setImageResource(R.drawable.love);
                 }
                 location.setBookmarked(!location.isBookmarked());
+                ApplicationBus.getInstance().post(new DataUpdateEvent((ArrayList<Location>) items, null, true, false));
             }
         });
 
@@ -98,6 +100,7 @@ public class LocationListAdapter extends BaseListAdapter
             holder.image.setVisibility(View.GONE);
             holder.bookmarkButton.setVisibility(View.GONE);
         }
+        holder.ratingBar.setVisibility(View.GONE);
 
     }
 

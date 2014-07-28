@@ -4,7 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
+import com.google.gson.Gson;
 import com.mobiquity.LocalDelicacies.DataContract;
+import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
+import com.mobiquity.LocalDelicacies.delicacies.Specality;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -15,13 +22,17 @@ public class Location
     private String title;
     private String imageUrl;
     private boolean bookmarked;
-
     private String description;
 
     private int id;
 
     public Location(LocationData ld) {
-        this(ld.getTitle(), ld.getImageUrl(), ld.getDescription(), false, -1);
+
+        this.title = ld.getTitle();
+        this.imageUrl = ld.getImageUrl();
+        this.bookmarked = false;
+        this.description = ld.getDescription();
+        this.id = -1;
     }
     public Location( String title, String imageUrl)
     {
@@ -77,6 +88,11 @@ public class Location
         this.bookmarked = bookmarked;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
     public static Bundle createBundleFromLocation(Location location)
     {
         Bundle bundle = new Bundle();
@@ -90,13 +106,14 @@ public class Location
 
     public static Location createLocationFromBundle(Bundle bundle)
     {
+
         return new Location(
                 bundle.getString("title"),
                 bundle.getString("imageUrl"),
                 bundle.getString("description"),
                 bundle.getBoolean("bookmarked"),
-                bundle.getInt("id")
-        );
+                bundle.getInt("id"));
+
     }
 
     public static Location loadFromCursor(Cursor cursor) {

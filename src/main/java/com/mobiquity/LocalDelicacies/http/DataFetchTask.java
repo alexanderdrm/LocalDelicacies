@@ -141,7 +141,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
         }
 
 
-        ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
+        ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies, true, true));
     }
 
     protected List<LocationData> parseLocationJson(String result) throws IOException {

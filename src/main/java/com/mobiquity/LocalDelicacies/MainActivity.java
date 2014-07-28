@@ -2,10 +2,7 @@ package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +13,7 @@ import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailFragment;
 import com.mobiquity.LocalDelicacies.http.DataFetchTask;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
 import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
@@ -33,17 +31,12 @@ public class MainActivity extends Activity
     private CharSequence drawerTitle;
     private CharSequence title;
 
-    private ArrayList<Location> locationList;
-    private ArrayList<Delicacy> delicacyList;
-
     @Override
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main);
 
-        locationList = new ArrayList<Location>();
-        delicacyList = new ArrayList<Delicacy>();
         title = getTitle();
         drawerTitle = getTitle();
 
@@ -59,21 +52,13 @@ public class MainActivity extends Activity
             switchFragment(new LocationPagesFragment(), null, false);
         }
 
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        Location orlando = new Location("Orlando",
-                "http://upload.wikimedia.org/wikipedia/commons/e/e3/Orlando_Skyline.jpg",
-                "Not to be confused with new Orleans",
-                true,
-                0);
-
-        orlando.saveToDatabase(db);
+        //DelicacyData.touch();
 
         new DataFetchTask(getApplicationContext()).execute();
 
-        DelicacyData.touch();
     }
 
     @Override
@@ -101,39 +86,6 @@ public class MainActivity extends Activity
         if(drawerToggle.onOptionsItemSelected(item))
             return true;
         return super.onOptionsItemSelected(item);
-    }
-
-    @Subscribe
-    public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)
-    {
-        title = event.getTitle();
-        drawerLayout.closeDrawer(Gravity.START);
-
-        try {
-            Fragment fragment = (Fragment) event.getFragmentClass().newInstance();
-            switchFragment(fragment, null, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Subscribe
-    public void onLocationClicked(LocationClickedEvent event)
-    {
-        Fragment fragment = new LocationDetailFragment();
-        Bundle bundle = Location.createBundleFromLocation(event.getLocation());
-        switchFragment(fragment, bundle, true);
-    }
-
-
-
-    @Subscribe
-    public void onDelicacyClicked(DelicacyClickedEvent event)
-    {
-        Fragment fragment = new DelicacyDetailFragment();
-        Bundle bundle = Delicacy.createBundleFromDelicacy(event.getDelicacy());
-        switchFragment(fragment, bundle, true);
     }
 
     private void initDrawer()
@@ -172,5 +124,39 @@ public class MainActivity extends Activity
             transaction.addToBackStack(null);
         }
         transaction.commit();
+
     }
+
+    //Otto Events -----------------
+    @Subscribe
+    public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)
+    {
+        title = event.getTitle();
+        drawerLayout.closeDrawer(Gravity.START);
+
+        try {
+            Fragment fragment = (Fragment) event.getFragmentClass().newInstance();
+            switchFragment(fragment, null, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void onLocationClicked(LocationClickedEvent event)
+    {
+        Fragment fragment = new LocationDetailFragment();
+        Bundle bundle = Location.createBundleFromLocation(event.getLocation());
+        switchFragment(fragment, bundle, true);
+    }
+
+    @Subscribe
+    public void onDelicacyClicked(DelicacyClickedEvent event)
+    {
+        Fragment fragment = new DelicacyDetailFragment();
+        Bundle bundle = Delicacy.createBundleFromDelicacy(event.getDelicacy());
+        switchFragment(fragment, bundle, true);
+    }
+
+
 }

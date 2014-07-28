@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
@@ -57,6 +58,7 @@ public class BaseListAdapter extends BaseAdapter {
         public TextView name;
         public ImageView image;
         public ImageView bookmarkButton;
+        public RatingBar ratingBar;
 
         public static ViewHolder createViewHolder( View theView )
         {
@@ -65,6 +67,7 @@ public class BaseListAdapter extends BaseAdapter {
             holder.name = (TextView) theView.findViewById( R.id.name);
             holder.image = (ImageView) theView.findViewById( R.id.image);
             holder.bookmarkButton = (ImageView) theView.findViewById( R.id.bookmarked_button);
+            holder.ratingBar = (RatingBar) theView.findViewById(R.id.ratingBar);
 
             return holder;
         }

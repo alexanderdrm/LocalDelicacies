@@ -39,6 +39,7 @@ public class CustomDetailView extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.layout_detail, this, true);
+        setOrientation(VERTICAL);
     }
 
 

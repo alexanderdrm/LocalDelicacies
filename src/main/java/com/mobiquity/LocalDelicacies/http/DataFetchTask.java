@@ -146,10 +146,15 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 remoteDelicacy.setBookmarked(dbDelicacy.isBookmarked());
                 remoteDelicacy.setId(dbDelicacy.getId());
                 remoteDelicacy.setRatingInHalfStars(dbDelicacy.getRatingInHalfStars());
+                remoteDelicacy.setCityid(remoteDelicacy.getCity().getId());
+
             } else {
                 delicacyMap.put(dbDelicacy.getName(), dbDelicacy);
+                dbDelicacy.setCityid(dbDelicacy.getCity().getId());
                 delicacies.add(dbDelicacy);
             }
+
+
         }
 
 

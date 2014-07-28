@@ -113,8 +113,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public static ArrayList<Delicacy> getDelicacies(Context context) {
-        Cursor cursor = getDelicacyCursor(context);
+    public static ArrayList<Delicacy> getDelicacies(Context context, Location location) {
+        Cursor cursor;
+        SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
+
+        if(location == null)
+            cursor = getDelicacyCursor(context);
+        else
+            cursor = getDelicacyCursorByCity(db, location.getId());
 
         ArrayList<Delicacy> data = new ArrayList<Delicacy>();
 
@@ -133,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor delCursor = db.query(
                 DataContract.DelicacyEntry.TABLE_NAME,  // The table to query
                 delicacyColumns,                        // The columns to return
-                "id=?",                                 // The columns for the WHERE clause
+                "cityid=?",                                 // The columns for the WHERE clause
                 new String[]{""+argid},                 // The values for the WHERE clause
                 null,                                   // don't group the rows
                 null,                                   // don't filter by row groups

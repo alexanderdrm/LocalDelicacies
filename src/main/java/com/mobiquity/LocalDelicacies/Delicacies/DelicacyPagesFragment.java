@@ -120,7 +120,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
         for(Delicacy del: delicacies) {
-            SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+            SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
             del.saveToDatabase(db);
         }
 

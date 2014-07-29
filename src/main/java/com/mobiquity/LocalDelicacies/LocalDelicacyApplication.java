@@ -34,7 +34,7 @@ public class LocalDelicacyApplication extends Application {
         ArrayList<Location> locations = event.getLocations();
         ArrayList<Delicacy> delicacies = event.getDelicacies();
 
-        SQLiteDatabase db = new DatabaseHelper(this).getWritableDatabase();
+        SQLiteDatabase db = DatabaseHelper.getInstance(this).getWritableDatabase();
 
         if(locations != null) {
             for(Location l : locations) {

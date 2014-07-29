@@ -98,7 +98,7 @@ public class LocationPagesFragment extends BasePagesFragment {
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
         for(Location l: locations) {
-            SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+            SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
             l.saveToDatabase(db);
         }
 

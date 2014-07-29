@@ -48,7 +48,7 @@ public class LocationDetailFragment extends BasePagesFragment {
     public void onPause() {
         super.onPause();
 
-        SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+        SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
         location.saveToDatabase(db);
     }
     private void prepareAdapter(Context context)

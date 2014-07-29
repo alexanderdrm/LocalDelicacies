@@ -50,7 +50,7 @@ public class LocationDetailFragment extends BasePagesFragment {
 
         SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
         location.saveToDatabase(db);
-        db.close();
+        //db.close();
     }
     private void prepareAdapter(Context context)
     {

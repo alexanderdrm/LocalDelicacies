@@ -106,6 +106,6 @@ public class DelicacyDetailFragment extends Fragment {
 
         SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
         delicacy.saveToDatabase(db);
-        db.close();
+        //db.close();
     }
 }

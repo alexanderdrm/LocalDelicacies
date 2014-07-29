@@ -1,6 +1,5 @@
 package com.mobiquity.LocalDelicacies;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -10,11 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailFragment;
 import com.mobiquity.LocalDelicacies.http.DataFetchTask;
-import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
 import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
 import com.mobiquity.LocalDelicacies.location.LocationPagesFragment;
@@ -29,12 +26,14 @@ public class MainActivity extends FragmentActivity
 
     private CharSequence drawerTitle;
     private CharSequence title;
+    private boolean isTablet;
 
     @Override
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main);
+        isTablet = (findViewById(R.id.content_frame_detail) != null);
 
         title = getTitle();
         drawerTitle = getTitle();
@@ -49,6 +48,11 @@ public class MainActivity extends FragmentActivity
             title = getString(R.string.locations);
             getActionBar().setTitle(title);
             switchFragment(new LocationPagesFragment(), null, false);
+
+            if(isTablet)
+            {
+
+            }
         }
 
         new DataFetchTask(getApplicationContext()).execute();
@@ -121,6 +125,16 @@ public class MainActivity extends FragmentActivity
 
     }
 
+    private void switchDetailFragment(Fragment fragment, Bundle bundle)
+    {
+        if(bundle != null)
+            fragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame_detail, fragment);
+        transaction.commit();
+    }
+
     //Otto Events -----------------
     @Subscribe
     public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)
@@ -141,7 +155,12 @@ public class MainActivity extends FragmentActivity
     {
         Fragment fragment = new LocationDetailFragment();
         Bundle bundle = event.getLocation().createBundleFromModel();
-        switchFragment(fragment, bundle, true);
+        if(isTablet)
+        {
+            switchDetailFragment(fragment, bundle);
+        } else {
+            switchFragment(fragment, bundle, true);
+        }
     }
 
     @Subscribe

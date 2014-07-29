@@ -59,7 +59,7 @@ public class LocationPagesFragment extends BasePagesFragment {
 
         adapters.add(pinnedListAdapter);
 
-        ArrayList<ListView> views = new ArrayList<ListView>();
+        ArrayList<View> views = new ArrayList<View>();
         views.add(allLocationsListView);
         views.add(pinnedLocationsListView);
         pager.setAdapter( new BasePagesAdapter(views));

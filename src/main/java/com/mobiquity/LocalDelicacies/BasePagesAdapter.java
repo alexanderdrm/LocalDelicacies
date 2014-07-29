@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class BasePagesAdapter extends PagerAdapter
 {
 
-    private ArrayList<ListView> pages;
+    private ArrayList<View> pages;
 
-    public BasePagesAdapter(ArrayList<ListView> pages)
+    public BasePagesAdapter(ArrayList<View> pages)
     {
         this.pages = pages;
     }

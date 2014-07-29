@@ -153,11 +153,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 dbDelicacy.setCityid(dbDelicacy.getCity().getId());
                 delicacies.add(dbDelicacy);
             }
-
-
         }
-
-
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }

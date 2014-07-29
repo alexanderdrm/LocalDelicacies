@@ -1,6 +1,6 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;

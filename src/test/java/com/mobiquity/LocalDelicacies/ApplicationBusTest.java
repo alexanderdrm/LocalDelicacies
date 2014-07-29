@@ -1,7 +1,7 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.mobiquity.LocalDelicacies.support.BusHelper;
 import org.junit.Before;

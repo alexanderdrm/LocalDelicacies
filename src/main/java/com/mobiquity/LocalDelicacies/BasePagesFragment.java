@@ -1,8 +1,8 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -37,18 +37,21 @@ public class BasePagesFragment extends Fragment {
     {
         getActivity().getActionBar().removeAllTabs();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        //need a library to support this
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             @Override
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
                 pager.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
             }
 
             @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
             }
         };
         for(int index = 0; index < tabs.size(); index++)

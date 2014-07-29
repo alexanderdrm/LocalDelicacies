@@ -1,8 +1,9 @@
 package com.mobiquity.LocalDelicacies.support;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import org.robolectric.Robolectric;
 
 /**
@@ -11,17 +12,17 @@ import org.robolectric.Robolectric;
 public class FragmentUtil {
     public static void startFragment( Fragment fragment )
     {
-        Activity activity = createActivity();
+        FragmentActivity activity = createActivity();
 
-        FragmentManager fragmentManager = activity.getFragmentManager();
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add( fragment, null )
                 .commit();
     }
 
-    public static Activity createActivity()
+    public static FragmentActivity createActivity()
     {
-        return Robolectric.buildActivity(Activity.class)
+        return Robolectric.buildActivity(FragmentActivity.class)
                 .create()
                 .start()
                 .resume()

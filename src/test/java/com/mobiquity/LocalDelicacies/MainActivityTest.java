@@ -1,6 +1,6 @@
 package com.mobiquity.LocalDelicacies;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -42,7 +42,7 @@ public class MainActivityTest
                               .resume()
                               .get();
         drawerLayout = (DrawerLayout) activity.findViewById( R.id.drawer_layout );
-        navigationDrawerFragment = (NavigationDrawerFragment) activity.getFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+        navigationDrawerFragment = (NavigationDrawerFragment) activity.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         frameLayout = (FrameLayout) activity.findViewById(R.id.content_frame);
         bus = ApplicationBus.getInstance();
         bus.register( activity );
@@ -106,12 +106,12 @@ public class MainActivityTest
 
         //Locations Fragment
         Robolectric.shadowOf(drawerList).performItemClick(0);
-        fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        fragment = activity.getSupportFragmentManager().findFragmentById(R.id.content_frame);
         assertTrue(fragment instanceof LocationPagesFragment);
 
         //Delicacies Fragment
         Robolectric.shadowOf(drawerList).performItemClick(1);
-        fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        fragment = activity.getSupportFragmentManager().findFragmentById(R.id.content_frame);
         assertTrue(fragment instanceof DelicacyPagesFragment);
     }
 
@@ -120,7 +120,7 @@ public class MainActivityTest
     {
         LocationClickedEvent event = new LocationClickedEvent(new Location("TestLocation", null, "", false, -1));
         bus.post(event);
-        Fragment fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.content_frame);
         assertTrue(fragment instanceof LocationDetailFragment);
     }
 }

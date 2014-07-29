@@ -1,10 +1,10 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.ActionBar;
-import android.app.LoaderManager;
-import android.content.AsyncTaskLoader;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -142,8 +142,26 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
     }
 
 
+    @Override
+    public Loader<ArrayList<Delicacy>> onCreateLoader(int id, Bundle args) {
+        //return null;
+        return new DelicacyLoaderTask(getActivity());
+    }
 
     @Override
+    public void onLoadFinished(Loader<ArrayList<Delicacy>> loader, ArrayList<Delicacy> databaseDelicacies) {
+        delicacies = databaseDelicacies;
+        for(DelicacyListAdapter dladapter : adapters) {
+            dladapter.updateData(delicacies);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<Delicacy>> loader) {
+
+    }
+
+    /*@Override
     public Loader onCreateLoader(int i, Bundle bundle) {
         return new DelicacyLoaderTask(getActivity());
     }
@@ -159,5 +177,5 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
     @Override
     public void onLoaderReset(Loader loader) {
 
-    }
+    }*/
 }

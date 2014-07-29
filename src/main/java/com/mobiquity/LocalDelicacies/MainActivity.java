@@ -1,10 +1,11 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -21,7 +22,7 @@ import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
 
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
 {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -110,7 +111,7 @@ public class MainActivity extends Activity
         if(bundle != null)
             fragment.setArguments(bundle);
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, fragment);
         if(addToBackStack)
         {

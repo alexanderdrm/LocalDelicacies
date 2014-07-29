@@ -73,9 +73,11 @@ public class LocationListAdapter extends BaseListAdapter
                 .into(holder.image);
 
         if(location.isBookmarked()) {
+            //holder.bookmarkButton.setImageResource(R.drawable.love);
             setImageDrawableCrossFade(holder.bookmarkButton,
                     context.getResources().getDrawable(R.drawable.love));
         } else {
+            //holder.bookmarkButton.setImageResource(R.drawable.no_love);
             setImageDrawableCrossFade(holder.bookmarkButton,
                     context.getResources().getDrawable(R.drawable.no_love));
         }
@@ -120,20 +122,6 @@ public class LocationListAdapter extends BaseListAdapter
         notifyDataSetChanged();
     }
 
-    private void setImageDrawableCrossFade(ImageView imageView, Drawable newDrawable)
-    {
-        Drawable currentDrawable = imageView.getDrawable();
-        if(currentDrawable != null) {
-            Drawable [] arrayDrawable = new Drawable[2];
-            arrayDrawable[0] = currentDrawable;
-            arrayDrawable[1] = newDrawable;
-            TransitionDrawable transitionDrawable = new TransitionDrawable(arrayDrawable);
-            transitionDrawable.setCrossFadeEnabled(true);
-            imageView.setImageDrawable(transitionDrawable);
-            transitionDrawable.startTransition(500);
-        } else {
-            imageView.setImageDrawable(newDrawable);
-        }
-    }
+
 }
 

@@ -49,8 +49,8 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
         ActionBar actionBar = getActivity().getActionBar();
         tabs = new ArrayList<ActionBar.Tab>();
         tabs.add(actionBar.newTab()

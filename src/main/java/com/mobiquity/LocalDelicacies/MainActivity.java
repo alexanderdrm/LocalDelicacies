@@ -49,6 +49,7 @@ public class MainActivity extends Activity
             getActionBar().setTitle(title);
             switchFragment(new LocationPagesFragment(), null, false);
         }
+
         new DataFetchTask(getApplicationContext()).execute();
 
     }

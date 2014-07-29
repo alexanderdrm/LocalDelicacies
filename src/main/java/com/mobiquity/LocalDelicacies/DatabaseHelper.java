@@ -127,10 +127,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor;
         SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
 
-        if(location == null)
+        if(location == null) {
             cursor = getDelicacyCursor(context);
-        else
+        } else {
             cursor = getDelicacyCursorByCity(db, location.getId());
+        }
 
         ArrayList<Delicacy> data = new ArrayList<Delicacy>();
 

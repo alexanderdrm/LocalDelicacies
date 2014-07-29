@@ -3,6 +3,7 @@ package com.mobiquity.LocalDelicacies.delicacies;
 import android.app.ActionBar;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -44,8 +45,10 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        delicacies = DatabaseHelper.getDelicacies(getActivity(), null);//LocalDelicacyApplication.getInstance().getDelicacies();
+        delicacies = new ArrayList<Delicacy>();
         prepareAdapterList(getActivity());
+        asyncLoadDelicacyFromDatabase();
+
     }
 
     private void prepareAdapterList(Context context)
@@ -85,11 +88,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     @Subscribe
 
     public void onDataUpdated(NotifyFragmentsOfDataEvent due) {
-        delicacies = DatabaseHelper.getDelicacies(getActivity(), null);
-
-        for(DelicacyListAdapter dladapter : adapters) {
-            dladapter.updateData(delicacies);
-        }
+        asyncLoadDelicacyFromDatabase();
     }
 
     @Override
@@ -119,11 +118,47 @@ public class DelicacyPagesFragment extends BasePagesFragment {
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
-        for(Delicacy del: delicacies) {
-            SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
-            del.saveToDatabase(db);
-        }
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
+                for(Delicacy del: delicacies) {
+                    del.saveToDatabase(db);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
+        }.execute();
+
 
     }
+
+    private void asyncLoadDelicacyFromDatabase()
+    {
+        new AsyncTask<Void, Void, ArrayList<Delicacy>>() {
+            @Override
+            protected ArrayList<Delicacy> doInBackground(Void... voids) {
+               return DatabaseHelper.getDelicacies(getActivity(), null);
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Delicacy> databaseDelicacies) {
+                delicacies = databaseDelicacies;
+                for(DelicacyListAdapter dladapter : adapters) {
+                    dladapter.updateData(delicacies);
+                }
+            }
+        }.execute();
+    }
+
+
+
+
+
+
 
 }

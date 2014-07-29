@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             data.add(loc);
         }
-
+        cursor.close();
         return data;
     }
 
@@ -140,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             data.add(del);
         }
+        cursor.close();
 
         return data;
     }
@@ -155,7 +156,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,                                   // don't filter by row groups
                 null                                    // The sort order
         );
-
         return delCursor;
     }
 

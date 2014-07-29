@@ -157,7 +157,8 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         }
 
-
+        locCursor.close();
+        delCursor.close();
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }

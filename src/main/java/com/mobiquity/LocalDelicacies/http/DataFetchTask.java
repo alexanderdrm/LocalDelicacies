@@ -89,6 +89,9 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
     @Override
     public void onPostExecute(List<LocationData> data) {
 
+        if(data == null){
+            data = new ArrayList<LocationData>();
+        }
         ArrayList<Location> locations = new ArrayList<Location>();
         ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
 

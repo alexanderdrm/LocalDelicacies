@@ -89,7 +89,7 @@ public class DelicacyListAdapterTest
             assertViewIsVisible(delicacyName);
             assertTrue(delicacyName instanceof TextView);
             assertThat(((TextView) delicacyName).getText().toString(),
-                    equalTo(testData.get(index).getName()));
+                    equalTo(testData.get(index).getTitle()));
         }
     }
 

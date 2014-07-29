@@ -75,7 +75,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
         eatenDelicaicesListView.setAdapter(eatenListAdapter);
         adapters.add(eatenListAdapter);
 
-        ArrayList<ListView> views = new ArrayList<ListView>();
+        ArrayList<View> views = new ArrayList<View>();
         views.add(allDelicaciesListView);
         views.add(pinnedDelicaciesListView);
         views.add(eatenDelicaicesListView);

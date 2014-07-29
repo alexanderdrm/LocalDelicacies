@@ -31,7 +31,7 @@ public class LocationDetailFragmentTest {
     public void setUp()
     {
         locationDetailFragment = new LocationDetailFragment();
-        locationDetailFragment.setArguments(Location.createBundleFromLocation(getTestLocation()));
+        locationDetailFragment.setArguments(getTestLocation().createBundleFromModel());
         FragmentUtil.startFragment(locationDetailFragment);
 
     }
@@ -100,12 +100,12 @@ public class LocationDetailFragmentTest {
 
     private Location getBundledLocation()
     {
-        return Location.createLocationFromBundle(locationDetailFragment.getArguments());
+        return new Location(locationDetailFragment.getArguments());
     }
 
     private Location getTestLocation()
     {
-        return new Location("Test_Locaiton", null);
+        return new Location("Test_Locaiton", null, "", false, -1);
     }
 
 

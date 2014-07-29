@@ -118,7 +118,7 @@ public class MainActivityTest
     @Test
     public void shouldLaunchDetailFragment() throws Exception
     {
-        LocationClickedEvent event = new LocationClickedEvent(new Location("TestLocation", null));
+        LocationClickedEvent event = new LocationClickedEvent(new Location("TestLocation", null, "", false, -1));
         bus.post(event);
         Fragment fragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
         assertTrue(fragment instanceof LocationDetailFragment);

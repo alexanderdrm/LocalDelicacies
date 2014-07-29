@@ -39,10 +39,10 @@ public class DelicacyDetailFragment extends Fragment {
                 false);
 
 
-        delicacy = Delicacy.createDelicacyFromBundle(getArguments());
+        delicacy = new Delicacy(getArguments());
 
         delicacyName = (TextView) view.findViewById(R.id.name);
-        delicacyName.setText(delicacy.getName());
+        delicacyName.setText(delicacy.getTitle());
 
         delicacyDescription = (TextView) view.findViewById(R.id.description);
         delicacyDescription.setText(delicacy.getDescription());

@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         for(int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            Location loc = Location.loadFromCursor(cursor);
+            Location loc = new Location(cursor);
 
             data.add(loc);
         }
@@ -127,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         for(int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToPosition(i);
-            Delicacy del = Delicacy.loadFromCursor(cursor);
+            Delicacy del = new Delicacy(cursor);
 
             data.add(del);
         }
@@ -141,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DataContract.DelicacyEntry.TABLE_NAME,  // The table to query
                 delicacyColumns,                        // The columns to return
                 "cityid=?",                                 // The columns for the WHERE clause
-                new String[]{""+argid},                 // The values for the WHERE clause
+                new String[]{"" + argid},                 // The values for the WHERE clause
                 null,                                   // don't group the rows
                 null,                                   // don't filter by row groups
                 null                                    // The sort order

@@ -56,7 +56,7 @@ public class DelicacyListAdapter extends BaseListAdapter {
 
     private void configureView(final Delicacy delicacy, final ViewHolder holder)
     {
-        holder.name.setText(delicacy.getName());
+        holder.name.setText(delicacy.getTitle());
         //holder.image.setImageResource(R.drawable.sample_delicacy);
         Picasso.with(context)
                 .load(delicacy.getImageUrl())

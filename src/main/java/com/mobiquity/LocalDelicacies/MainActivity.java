@@ -75,6 +75,7 @@ public class MainActivity extends FragmentActivity
     protected void onPause() {
         super.onPause();
         ApplicationBus.getInstance().unregister( this );
+        DatabaseHelper.getInstance(this).close();
     }
 
     @Override
@@ -168,7 +169,12 @@ public class MainActivity extends FragmentActivity
     {
         Fragment fragment = new DelicacyDetailFragment();
         Bundle bundle = event.getDelicacy().createBundleFromModel();
-        switchFragment(fragment, bundle, true);
+        if(isTablet)
+        {
+            switchDetailFragment(fragment, bundle);
+        } else {
+            switchFragment(fragment, bundle, true);
+        }
     }
 
 

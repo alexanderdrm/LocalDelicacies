@@ -97,7 +97,7 @@ public class LocationPagesFragment extends BasePagesFragment {
                 for(Location l: locations) {
                     l.saveToDatabase(db);
                 }
-                db.close();
+                //db.close();
                 return null;
             }
         }.execute();

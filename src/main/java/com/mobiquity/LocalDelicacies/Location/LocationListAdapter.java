@@ -2,10 +2,16 @@ package com.mobiquity.LocalDelicacies.location;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import com.mobiquity.LocalDelicacies.*;
+import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
 import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
@@ -66,25 +72,28 @@ public class LocationListAdapter extends BaseListAdapter
                 .error(R.drawable.error_image)
                 .into(holder.image);
 
-        if ( location.isBookmarked() )
-        {
-            holder.bookmarkButton.setImageDrawable(context.getResources().getDrawable(R.drawable.love));
-        }
-        else
-        {
-            holder.bookmarkButton.setImageDrawable( context.getResources().getDrawable( R.drawable.no_love ) );
+        if(location.isBookmarked()) {
+            setImageDrawableCrossFade(holder.bookmarkButton,
+                    context.getResources().getDrawable(R.drawable.love));
+        } else {
+            setImageDrawableCrossFade(holder.bookmarkButton,
+                    context.getResources().getDrawable(R.drawable.no_love));
         }
 
         holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (location.isBookmarked()) {
-                    holder.bookmarkButton.setImageResource(R.drawable.no_love);
-                } else {
-                    holder.bookmarkButton.setImageResource(R.drawable.love);
-                }
                 location.setBookmarked(!location.isBookmarked());
+
+                if(location.isBookmarked()) {
+                    setImageDrawableCrossFade(holder.bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.love));
+                } else {
+                    setImageDrawableCrossFade(holder.bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.no_love));
+                }
                 ApplicationBus.getInstance().post(new DataUpdateEvent((ArrayList<Location>) items, null));
+
             }
         });
 
@@ -109,6 +118,22 @@ public class LocationListAdapter extends BaseListAdapter
         items = locs;
 
         notifyDataSetChanged();
+    }
+
+    private void setImageDrawableCrossFade(ImageView imageView, Drawable newDrawable)
+    {
+        Drawable currentDrawable = imageView.getDrawable();
+        if(currentDrawable != null) {
+            Drawable [] arrayDrawable = new Drawable[2];
+            arrayDrawable[0] = currentDrawable;
+            arrayDrawable[1] = newDrawable;
+            TransitionDrawable transitionDrawable = new TransitionDrawable(arrayDrawable);
+            transitionDrawable.setCrossFadeEnabled(true);
+            imageView.setImageDrawable(transitionDrawable);
+            transitionDrawable.startTransition(500);
+        } else {
+            imageView.setImageDrawable(newDrawable);
+        }
     }
 }
 

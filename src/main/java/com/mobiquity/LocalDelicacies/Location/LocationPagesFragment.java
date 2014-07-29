@@ -2,8 +2,8 @@ package com.mobiquity.LocalDelicacies.location;
 
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -37,8 +37,9 @@ public class LocationPagesFragment extends BasePagesFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        locations = DatabaseHelper.getLocations(getActivity());
+        locations = new ArrayList<Location>();
         prepareAdapterList(getActivity());
+        asyncLoadLocationFromDatabase();
     }
 
     private void prepareAdapterList(Context context)
@@ -67,10 +68,8 @@ public class LocationPagesFragment extends BasePagesFragment {
 
     @Subscribe
     public void onDataUpdated(NotifyFragmentsOfDataEvent notifyFragmentsOfDataEvent) {
-        locations = DatabaseHelper.getLocations(getActivity());
-        for(LocationListAdapter lladapter : adapters) {
-            lladapter.updateData(locations);
-        }
+        asyncLoadLocationFromDatabase();
+
     }
 
     @Override
@@ -97,13 +96,40 @@ public class LocationPagesFragment extends BasePagesFragment {
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
-        for(Location l: locations) {
-            SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
-            l.saveToDatabase(db);
-        }
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
+                for(Location l: locations) {
+                    l.saveToDatabase(db);
+                }
+                db.close();
+                return null;
+            }
+        }.execute();
 
         getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).edit().putInt("currentLocationTab",pager.getCurrentItem()).commit();
 
     }
+
+    private void asyncLoadLocationFromDatabase()
+    {
+        new AsyncTask<Void, Void, ArrayList<Location>>() {
+            @Override
+            protected ArrayList<Location> doInBackground(Void... voids) {
+                return DatabaseHelper.getLocations(getActivity());
+            }
+            @Override
+            protected void onPostExecute(ArrayList<Location> databaseLocations) {
+                locations = databaseLocations;
+                for(LocationListAdapter lladapter : adapters) {
+                    lladapter.updateData(locations);
+                }
+
+            }
+        }.execute();
+    }
+
+
 
 }

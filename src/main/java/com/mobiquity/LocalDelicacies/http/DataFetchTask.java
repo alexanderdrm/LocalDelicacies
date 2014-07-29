@@ -111,7 +111,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             }
         }
 
-        SQLiteDatabase db = new DatabaseHelper(context).getReadableDatabase();
+        SQLiteDatabase db = DatabaseHelper.getInstance(context).getReadableDatabase();
 
         Cursor locCursor = DatabaseHelper.getLocationCursor(context);
 
@@ -131,7 +131,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             locationMap.remove(dbLocation.getTitle());
         }
 
-        SQLiteDatabase wdb = new DatabaseHelper(context).getReadableDatabase();
+        SQLiteDatabase wdb = DatabaseHelper.getInstance(context).getReadableDatabase();
         for(Map.Entry<String, Location> pair : locationMap.entrySet()) {
             pair.getValue().saveToDatabase(wdb);
         }
@@ -154,6 +154,9 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 delicacies.add(dbDelicacy);
             }
         }
+
+        locCursor.close();
+        delCursor.close();
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }

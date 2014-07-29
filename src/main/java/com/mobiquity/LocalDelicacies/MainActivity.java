@@ -51,7 +51,7 @@ public class MainActivity extends Activity
         }
 
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        DatabaseHelper dbHelper = DatabaseHelper.getInstance(this);
 
         //DelicacyData.touch();
 

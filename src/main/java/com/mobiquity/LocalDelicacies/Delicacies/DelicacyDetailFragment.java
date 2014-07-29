@@ -104,7 +104,7 @@ public class DelicacyDetailFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        SQLiteDatabase db = new DatabaseHelper(getActivity()).getWritableDatabase();
+        SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
         delicacy.saveToDatabase(db);
     }
 }

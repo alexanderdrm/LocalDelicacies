@@ -47,6 +47,7 @@ public class LocalDelicacyApplication extends Application {
                 del.saveToDatabase(db);
             }
         }
+        db.close();
 
         //should save the data here?
 

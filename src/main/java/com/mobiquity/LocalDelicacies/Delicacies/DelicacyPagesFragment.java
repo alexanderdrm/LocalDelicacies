@@ -1,7 +1,10 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.ActionBar;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Loader;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by dalexander on 7/24/14.
  */
-public class DelicacyPagesFragment extends BasePagesFragment {
+public class DelicacyPagesFragment extends BasePagesFragment implements LoaderManager.LoaderCallbacks<ArrayList<Delicacy>>{
 
 
     ArrayList<Delicacy> delicacies;
@@ -39,16 +42,27 @@ public class DelicacyPagesFragment extends BasePagesFragment {
 
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
         pager = (ViewPager) rootView.findViewById(R.id.pager);
+        delicacies = new ArrayList<Delicacy>();
+        prepareAdapterList(getActivity());
+        getLoaderManager().initLoader(0, null, this).forceLoad();
         return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        delicacies = new ArrayList<Delicacy>();
-        prepareAdapterList(getActivity());
-        asyncLoadDelicacyFromDatabase();
-
+        ActionBar actionBar = getActivity().getActionBar();
+        tabs = new ArrayList<ActionBar.Tab>();
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.all)));
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.bookmarked)));
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.eaten)));
+        configureActionBar(actionBar, tabs);
     }
 
     private void prepareAdapterList(Context context)
@@ -88,28 +102,7 @@ public class DelicacyPagesFragment extends BasePagesFragment {
     @Subscribe
 
     public void onDataUpdated(NotifyFragmentsOfDataEvent due) {
-        asyncLoadDelicacyFromDatabase();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-
-        ActionBar actionBar = getActivity().getActionBar();
-        tabs = new ArrayList<ActionBar.Tab>();
-        tabs.add(actionBar.newTab()
-                .setText(getResources()
-                        .getString(R.string.all)));
-        tabs.add(actionBar.newTab()
-                .setText(getResources()
-                        .getString(R.string.bookmarked)));
-        tabs.add(actionBar.newTab()
-                .setText(getResources()
-                        .getString(R.string.eaten)));
-        configureActionBar(actionBar, tabs);
-
-
+        getLoaderManager().initLoader(0, null, this).forceLoad();
     }
 
     @Override
@@ -125,40 +118,46 @@ public class DelicacyPagesFragment extends BasePagesFragment {
                 for(Delicacy del: delicacies) {
                     del.saveToDatabase(db);
                 }
+                db.close();
                 return null;
             }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-            }
         }.execute();
 
 
     }
 
-    private void asyncLoadDelicacyFromDatabase()
+
+    static class DelicacyLoaderTask extends AsyncTaskLoader<ArrayList<Delicacy>>
     {
-        new AsyncTask<Void, Void, ArrayList<Delicacy>>() {
-            @Override
-            protected ArrayList<Delicacy> doInBackground(Void... voids) {
-               return DatabaseHelper.getDelicacies(getActivity(), null);
-            }
+        Context context;
+        public DelicacyLoaderTask(Context context) {
+            super(context);
+            this.context = context;
+        }
 
-            @Override
-            protected void onPostExecute(ArrayList<Delicacy> databaseDelicacies) {
-                delicacies = databaseDelicacies;
-                for(DelicacyListAdapter dladapter : adapters) {
-                    dladapter.updateData(delicacies);
-                }
+        @Override
+        public ArrayList<Delicacy> loadInBackground() {
+               return DatabaseHelper.getDelicacies(context, null);
             }
-        }.execute();
     }
 
 
 
+    @Override
+    public Loader onCreateLoader(int i, Bundle bundle) {
+        return new DelicacyLoaderTask(getActivity());
+    }
 
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Delicacy>> arrayListLoader, ArrayList<Delicacy> databaseDelicacies) {
+        delicacies = databaseDelicacies;
+        for(DelicacyListAdapter dladapter : adapters) {
+            dladapter.updateData(delicacies);
+        }
+    }
 
+    @Override
+    public void onLoaderReset(Loader loader) {
 
-
+    }
 }

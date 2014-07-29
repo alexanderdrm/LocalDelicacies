@@ -30,16 +30,28 @@ public class LocationPagesFragment extends BasePagesFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
+        locations = new ArrayList<Location>();
         pager = (ViewPager) rootView.findViewById(R.id.pager);
+        prepareAdapterList(getActivity());
+        asyncLoadLocationFromDatabase();
         return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        locations = new ArrayList<Location>();
-        prepareAdapterList(getActivity());
-        asyncLoadLocationFromDatabase();
+        ActionBar actionBar = getActivity().getActionBar();
+        tabs = new ArrayList<ActionBar.Tab>();
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.all)));
+        tabs.add(actionBar.newTab()
+                .setText(getResources()
+                        .getString(R.string.bookmarked)));
+        configureActionBar(actionBar, tabs);
+
+        int tabIndex = getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).getInt("currentLocationTab", 0);
+        pager.setCurrentItem(tabIndex);
     }
 
     private void prepareAdapterList(Context context)
@@ -70,24 +82,6 @@ public class LocationPagesFragment extends BasePagesFragment {
     public void onDataUpdated(NotifyFragmentsOfDataEvent notifyFragmentsOfDataEvent) {
         asyncLoadLocationFromDatabase();
 
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        ActionBar actionBar = getActivity().getActionBar();
-        tabs = new ArrayList<ActionBar.Tab>();
-        tabs.add(actionBar.newTab()
-                .setText(getResources()
-                        .getString(R.string.all)));
-        tabs.add(actionBar.newTab()
-                .setText(getResources()
-                        .getString(R.string.bookmarked)));
-        configureActionBar(actionBar, tabs);
-
-        int tabIndex = getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).getInt("currentLocationTab", 0);
-        pager.setCurrentItem(tabIndex);
     }
 
     @Override

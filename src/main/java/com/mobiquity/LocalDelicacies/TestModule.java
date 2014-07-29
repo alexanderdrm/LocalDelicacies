@@ -27,8 +27,8 @@ public class TestModule {
 
         //(String name, String imageUrl, boolean bookmarked, int ratingInHalfStars, String description, int id, Location city)
 
-        delicacyList.add(new Delicacy("Apple", null, false, 9, "it's an apple.", -1, -2));
-        delicacyList.add(new Delicacy("Chocolate", null, true, 7, "it's chocolate.", -2, -3));
+        delicacyList.add(new Delicacy("Apple", null, "it's an apple.", false, -1, 9, -2));
+        delicacyList.add(new Delicacy("Chocolate", null, "it's chocolate.", true, -2, 7, -3));
     }
 
     public static ArrayList<Location> generateTestLocations()

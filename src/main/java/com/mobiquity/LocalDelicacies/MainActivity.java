@@ -13,7 +13,6 @@ import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyClickedEvent;
 import com.mobiquity.LocalDelicacies.delicacies.DelicacyDetailFragment;
 import com.mobiquity.LocalDelicacies.http.DataFetchTask;
-import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationClickedEvent;
 import com.mobiquity.LocalDelicacies.location.LocationDetailFragment;
@@ -21,7 +20,6 @@ import com.mobiquity.LocalDelicacies.location.LocationPagesFragment;
 import com.mobiquity.LocalDelicacies.navdrawer.NavigationDrawerClickEvent;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 
 public class MainActivity extends Activity
 {
@@ -146,7 +144,7 @@ public class MainActivity extends Activity
     public void onLocationClicked(LocationClickedEvent event)
     {
         Fragment fragment = new LocationDetailFragment();
-        Bundle bundle = Location.createBundleFromLocation(event.getLocation());
+        Bundle bundle = event.getLocation().createBundleFromModel();
         switchFragment(fragment, bundle, true);
     }
 
@@ -154,7 +152,7 @@ public class MainActivity extends Activity
     public void onDelicacyClicked(DelicacyClickedEvent event)
     {
         Fragment fragment = new DelicacyDetailFragment();
-        Bundle bundle = Delicacy.createBundleFromDelicacy(event.getDelicacy());
+        Bundle bundle = event.getDelicacy().createBundleFromModel();
         switchFragment(fragment, bundle, true);
     }
 

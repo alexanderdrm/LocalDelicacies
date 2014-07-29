@@ -107,7 +107,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 spec.setCity(loc);
                 Delicacy del = new Delicacy(spec);
                 delicacies.add(del);
-                delicacyMap.put(del.getName(), del);
+                delicacyMap.put(del.getTitle(), del);
             }
         }
 
@@ -117,7 +117,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         for(int i = 0; i < locCursor.getCount(); i++) {
             locCursor.moveToPosition(i);
-            Location dbLocation = Location.loadFromCursor(locCursor);
+            Location dbLocation = new Location(locCursor);
             Location remoteLocation = locationMap.get(dbLocation.getTitle());
             if(remoteLocation != null) {
                 remoteLocation.setBookmarked(dbLocation.isBookmarked());
@@ -140,8 +140,8 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         for(int i = 0; i < delCursor.getCount(); i++) {
             delCursor.moveToPosition(i);
-            Delicacy dbDelicacy = Delicacy.loadFromCursor(delCursor);
-            Delicacy remoteDelicacy = delicacyMap.get(dbDelicacy.getName());
+            Delicacy dbDelicacy = new Delicacy(delCursor);
+            Delicacy remoteDelicacy = delicacyMap.get(dbDelicacy.getTitle());
             if(remoteDelicacy != null) {
                 remoteDelicacy.setBookmarked(dbDelicacy.isBookmarked());
                 remoteDelicacy.setId(dbDelicacy.getId());
@@ -149,7 +149,7 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 remoteDelicacy.setCityid(remoteDelicacy.getCity().getId());
 
             } else {
-                delicacyMap.put(dbDelicacy.getName(), dbDelicacy);
+                delicacyMap.put(dbDelicacy.getTitle(), dbDelicacy);
                 dbDelicacy.setCityid(dbDelicacy.getCity().getId());
                 delicacies.add(dbDelicacy);
             }

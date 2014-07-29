@@ -39,7 +39,7 @@ public class LocationDetailFragment extends BasePagesFragment {
                 false );
 
         pager = (ViewPager)view.findViewById(R.id.pager);
-        location = Location.createLocationFromBundle(getArguments());
+        location = new Location(getArguments());
         prepareAdapter(inflater.getContext());
         return view;
     }
@@ -94,7 +94,7 @@ public class LocationDetailFragment extends BasePagesFragment {
             CustomDetailView delicacyView = new CustomDetailView(context);
 
             title = (TextView) delicacyView.findViewById(R.id.name);
-            title.setText(delicacy.getName());
+            title.setText(delicacy.getTitle());
 
             image = (ImageView) delicacyView.findViewById(R.id.image);
             Picasso.with(context)

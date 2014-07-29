@@ -83,11 +83,16 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         }
 
-        return null;
+        return new ArrayList<LocationData>();
     }
 
     @Override
     public void onPostExecute(List<LocationData> data) {
+
+        //this happens when the network is not available or fails.
+        if(data == null) {
+            data = new ArrayList<LocationData>();
+        }
 
         ArrayList<Location> locations = new ArrayList<Location>();
         ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
@@ -145,10 +150,8 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 remoteDelicacy.setId(dbDelicacy.getId());
                 remoteDelicacy.setRatingInHalfStars(dbDelicacy.getRatingInHalfStars());
                 remoteDelicacy.setCityid(remoteDelicacy.getCity().getId());
-
             } else {
                 delicacyMap.put(dbDelicacy.getTitle(), dbDelicacy);
-                dbDelicacy.setCityid(dbDelicacy.getCity().getId());
                 delicacies.add(dbDelicacy);
             }
         }

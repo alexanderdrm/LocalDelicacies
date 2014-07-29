@@ -118,7 +118,7 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
                 for(Delicacy del: delicacies) {
                     del.saveToDatabase(db);
                 }
-                db.close();
+                //db.close();
                 return null;
             }
         }.execute();

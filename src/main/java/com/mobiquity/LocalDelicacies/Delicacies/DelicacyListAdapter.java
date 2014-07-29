@@ -66,25 +66,30 @@ public class DelicacyListAdapter extends BaseListAdapter {
 
         if(delicacy.isBookmarked())
         {
-            holder.bookmarkButton.setImageResource(R.drawable.love);
+            setImageDrawableCrossFade(holder.bookmarkButton,
+                    context.getResources().getDrawable(R.drawable.love));
         }
         else
         {
-            holder.bookmarkButton.setImageResource(R.drawable.no_love);
+            setImageDrawableCrossFade(holder.bookmarkButton,
+                    context.getResources().getDrawable(R.drawable.no_love));
         }
+
 
         holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                delicacy.setBookmarked(!delicacy.isBookmarked());
                 if(delicacy.isBookmarked())
                 {
-                    holder.bookmarkButton.setImageResource(R.drawable.love);
+                    setImageDrawableCrossFade(holder.bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.love));
                 }
                 else
                 {
-                    holder.bookmarkButton.setImageResource(R.drawable.no_love);
+                    setImageDrawableCrossFade(holder.bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.no_love));
                 }
-                delicacy.setBookmarked(!delicacy.isBookmarked());
                 ApplicationBus.getInstance().post(new DataUpdateEvent(null, (ArrayList<Delicacy>) items));
             }
         });

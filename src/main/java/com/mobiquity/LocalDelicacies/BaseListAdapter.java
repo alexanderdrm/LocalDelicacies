@@ -1,6 +1,8 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -70,6 +72,22 @@ public class BaseListAdapter extends BaseAdapter {
             holder.ratingBar = (RatingBar) theView.findViewById(R.id.ratingBar);
 
             return holder;
+        }
+    }
+
+    public void setImageDrawableCrossFade(ImageView imageView, Drawable newDrawable)
+    {
+        Drawable currentDrawable = imageView.getDrawable();
+        if(currentDrawable != null) {
+            Drawable [] arrayDrawable = new Drawable[2];
+            arrayDrawable[0] = currentDrawable;
+            arrayDrawable[1] = newDrawable;
+            TransitionDrawable transitionDrawable = new TransitionDrawable(arrayDrawable);
+            transitionDrawable.setCrossFadeEnabled(true);
+            imageView.setImageDrawable(transitionDrawable);
+            transitionDrawable.startTransition(500);
+        } else {
+            imageView.setImageDrawable(newDrawable);
         }
     }
 }

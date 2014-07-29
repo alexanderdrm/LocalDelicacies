@@ -50,11 +50,6 @@ public class MainActivity extends Activity
             switchFragment(new LocationPagesFragment(), null, false);
         }
 
-
-        DatabaseHelper dbHelper = DatabaseHelper.getInstance(this);
-
-        //DelicacyData.touch();
-
         new DataFetchTask(getApplicationContext()).execute();
 
     }

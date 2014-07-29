@@ -111,8 +111,6 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
             }
         }
 
-        SQLiteDatabase db = DatabaseHelper.getInstance(context).getReadableDatabase();
-
         Cursor locCursor = DatabaseHelper.getLocationCursor(context);
 
         for(int i = 0; i < locCursor.getCount(); i++) {
@@ -157,6 +155,8 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
 
         locCursor.close();
         delCursor.close();
+
+        wdb.close();
 
         ApplicationBus.postEvent(new DataUpdateEvent(locations, delicacies));
     }

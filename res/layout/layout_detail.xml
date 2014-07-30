@@ -6,8 +6,7 @@
 
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/faded_white">
+            android:layout_height="match_parent">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -22,7 +21,9 @@
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/faded_white"/>
+                    android:textSize="@dimen/detail_text_size"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"/>
         </LinearLayout>
 
     </ScrollView>

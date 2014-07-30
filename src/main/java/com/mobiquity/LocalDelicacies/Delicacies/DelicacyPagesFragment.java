@@ -1,6 +1,8 @@
 package com.mobiquity.LocalDelicacies.delicacies;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
@@ -35,14 +37,17 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
 
     ArrayList<DelicacyListAdapter> adapters = new ArrayList<DelicacyListAdapter>();
     ArrayList<ActionBar.Tab> tabs;
-    public static String TAG="DELICACY_PAGES_FRAGMENT";
 
+    private final String PREFERENCES_DELICACY_TAB = "current_delicacy_tab";
+
+    SharedPreferences preferences;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
         pager = (ViewPager) rootView.findViewById(R.id.pager);
         delicacies = new ArrayList<Delicacy>();
+        preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
         prepareAdapterList(getActivity());
         getLoaderManager().initLoader(0, null, this).forceLoad();
         return rootView;
@@ -63,6 +68,9 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
                 .setText(getResources()
                         .getString(R.string.eaten)));
         configureActionBar(actionBar, tabs);
+
+        int tabIndex = preferences.getInt(PREFERENCES_DELICACY_TAB, 0);
+        pager.setCurrentItem(tabIndex);
     }
 
     private void prepareAdapterList(Context context)
@@ -122,6 +130,10 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
                 /*return null;
             }
         }.execute();*/
+
+        preferences.edit()
+                .putInt(PREFERENCES_DELICACY_TAB,pager.getCurrentItem())
+                .commit();
 
 
     }

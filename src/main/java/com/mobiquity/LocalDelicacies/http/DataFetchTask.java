@@ -10,11 +10,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
-import com.mobiquity.LocalDelicacies.delicacies.DelicacyPagesFragment;
 import com.mobiquity.LocalDelicacies.delicacies.Specality;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.mobiquity.LocalDelicacies.location.LocationData;
-import javafx.util.Pair;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -154,6 +152,12 @@ public class DataFetchTask extends AsyncTask<String, Void, List<LocationData>>
                 delicacyMap.put(dbDelicacy.getTitle(), dbDelicacy);
                 delicacies.add(dbDelicacy);
             }
+
+            delicacyMap.remove(dbDelicacy.getTitle());
+        }
+
+        for(Map.Entry<String, Delicacy> pair : delicacyMap.entrySet()) {
+            pair.getValue().saveToDatabase(wdb);
         }
 
         locCursor.close();

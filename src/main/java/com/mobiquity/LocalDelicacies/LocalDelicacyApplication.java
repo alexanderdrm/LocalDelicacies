@@ -2,7 +2,6 @@ package com.mobiquity.LocalDelicacies;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;

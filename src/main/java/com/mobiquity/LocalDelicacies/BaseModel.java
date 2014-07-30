@@ -1,18 +1,21 @@
 package com.mobiquity.LocalDelicacies;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 /**
  * Created by jwashington on 7/29/14.
  */
-public class BaseModel {
+public abstract class BaseModel {
 
     protected String title;
     protected String imageUrl;
     protected boolean bookmarked;
     protected String description;
     protected int id;
+
+    protected boolean changed = false;
 
     public BaseModel(String title, String imageUrl, String description, boolean bookmarked, int id) {
         this.title = title;
@@ -45,6 +48,7 @@ public class BaseModel {
     }
 
     public void setTitle(String title) {
+        changed = true;
         this.title = title;
     }
 
@@ -53,6 +57,7 @@ public class BaseModel {
     }
 
     public void setImageUrl(String imageUrl) {
+        changed = true;
         this.imageUrl = imageUrl;
     }
 
@@ -61,6 +66,7 @@ public class BaseModel {
     }
 
     public void setBookmarked(boolean bookmarked) {
+        changed = true;
         this.bookmarked = bookmarked;
     }
 
@@ -69,6 +75,7 @@ public class BaseModel {
     }
 
     public void setDescription(String description) {
+        changed = true;
         this.description = description;
     }
 
@@ -77,6 +84,7 @@ public class BaseModel {
     }
 
     public void setId(int id) {
+        changed = true;
         this.id = id;
     }
 
@@ -90,6 +98,14 @@ public class BaseModel {
         bundle.putInt("id", id);
         return bundle;
     }
+
+    public void saveToDatabaseIfChanged(SQLiteDatabase db) {
+        if(!changed) return;
+
+        saveToDatabase(db);
+    }
+
+    public abstract void saveToDatabase(SQLiteDatabase db);
 
     @Override
     public boolean equals(Object o) {

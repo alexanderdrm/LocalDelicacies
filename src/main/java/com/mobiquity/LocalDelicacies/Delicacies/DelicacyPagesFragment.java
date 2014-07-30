@@ -119,17 +119,17 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
-        new AsyncTask<Void, Void, Void>() {
+        /*new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Void doInBackground(Void... voids) {*/
                 SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
                 for(Delicacy del: delicacies) {
-                    del.saveToDatabase(db);
+                    del.saveToDatabaseIfChanged(db);
                 }
-                //db.close();
-                return null;
+                db.close();
+                /*return null;
             }
-        }.execute();
+        }.execute();*/
 
         preferences.edit()
                 .putInt(PREFERENCES_DELICACY_TAB,pager.getCurrentItem())

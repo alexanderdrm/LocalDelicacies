@@ -1,23 +1,17 @@
 package com.mobiquity.LocalDelicacies.location;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
-import com.mobiquity.LocalDelicacies.filters.Filter;
-import com.mobiquity.LocalDelicacies.filters.PermissiveFilter;
-import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,8 +44,9 @@ public class LocationDetailFragment extends BasePagesFragment {
 
         SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
         location.saveToDatabase(db);
-        //db.close();
+        db.close();
     }
+
     private void prepareAdapter(Context context)
     {
         TextView title;

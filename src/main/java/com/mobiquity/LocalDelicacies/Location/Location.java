@@ -47,6 +47,7 @@ public class Location extends BaseModel
     }
 
     public void saveToDatabase(SQLiteDatabase db) {
+
         ContentValues values = new ContentValues();
 
         if(id >= 0) { //defaults to -1
@@ -63,6 +64,8 @@ public class Location extends BaseModel
         if(id >= 0) {
             this.id = (int)id;
         }
+
+        changed = false;
 
     }
 

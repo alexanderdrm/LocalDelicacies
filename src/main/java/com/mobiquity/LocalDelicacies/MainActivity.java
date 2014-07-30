@@ -133,13 +133,17 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    private void switchDetailFragment(Fragment fragment, Bundle bundle)
+    private void switchDetailFragment(Fragment fragment, Bundle bundle, boolean addToBackStack)
     {
         if(bundle != null)
             fragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame_detail, fragment);
+        if(addToBackStack)
+        {
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
     }
 
@@ -173,7 +177,7 @@ public class MainActivity extends FragmentActivity
         Bundle bundle = event.getLocation().createBundleFromModel();
         if(isTablet)
         {
-            switchDetailFragment(fragment, bundle);
+            switchDetailFragment(fragment, bundle, true);
         } else {
             switchFragment(fragment, bundle, true);
         }
@@ -186,7 +190,7 @@ public class MainActivity extends FragmentActivity
         Bundle bundle = event.getDelicacy().createBundleFromModel();
         if(isTablet)
         {
-            switchDetailFragment(fragment, bundle);
+            switchDetailFragment(fragment, bundle, true);
         } else {
             switchFragment(fragment, bundle, true);
         }

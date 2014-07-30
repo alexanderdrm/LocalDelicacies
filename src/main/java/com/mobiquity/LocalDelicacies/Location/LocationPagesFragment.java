@@ -119,11 +119,8 @@ public class LocationPagesFragment extends BasePagesFragment {
                 for(LocationListAdapter lladapter : adapters) {
                     lladapter.updateData(locations);
                 }
-
             }
         }.execute();
     }
-
-
 
 }

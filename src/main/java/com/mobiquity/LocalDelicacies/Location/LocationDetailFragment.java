@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
+import sun.applet.AppletListener;
 
 import java.util.ArrayList;
 
@@ -36,6 +40,11 @@ public class LocationDetailFragment extends BasePagesFragment {
         location = new Location(getArguments());
         prepareAdapter(inflater.getContext());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -111,6 +120,23 @@ public class LocationDetailFragment extends BasePagesFragment {
         pager.setAdapter(new BasePagesAdapter(views));
     }
 
+
+    @Subscribe
+    public void onDataUpdated(NotifyFragmentsOfDataEvent nfde) {
+
+        Context context = getActivity();
+        if(context == null) {
+            return; //we aren't attached, no need to update
+        }
+
+        Location newData = DatabaseHelper.getLocationData(context, location.getId());
+
+        location = newData;
+
+        Log.d("com.mobiquity.LocalDelicacies.location.LocationDetailFragment", "Oh hey, updating live data");
+
+        prepareAdapter(context);
+    }
 
 
 }

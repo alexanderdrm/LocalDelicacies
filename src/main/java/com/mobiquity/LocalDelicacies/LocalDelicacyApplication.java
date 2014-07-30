@@ -50,8 +50,6 @@ public class LocalDelicacyApplication extends Application {
 
         //should save the data here?
 
-
-
         NotifyFragmentsOfDataEvent notifyEvent = new NotifyFragmentsOfDataEvent();
         ApplicationBus.getInstance().post(notifyEvent);
 

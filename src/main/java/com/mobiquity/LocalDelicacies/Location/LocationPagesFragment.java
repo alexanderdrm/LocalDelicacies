@@ -87,7 +87,6 @@ public class LocationPagesFragment extends BasePagesFragment {
     @Subscribe
     public void onDataUpdated(NotifyFragmentsOfDataEvent notifyFragmentsOfDataEvent) {
         asyncLoadLocationFromDatabase();
-
     }
 
     @Override

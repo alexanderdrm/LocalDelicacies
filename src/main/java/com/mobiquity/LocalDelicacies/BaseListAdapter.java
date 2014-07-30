@@ -75,7 +75,11 @@ public class BaseListAdapter extends BaseAdapter {
         }
     }
 
-    public void setImageDrawableCrossFade(ImageView imageView, Drawable newDrawable)
+    public void setImageDrawableCrossFade(ImageView imageView, Drawable drawable) {
+        setImageDrawableCrossFade(imageView, drawable, 500);
+    }
+
+    public void setImageDrawableCrossFade(ImageView imageView, Drawable newDrawable, int fadeTime)
     {
         Drawable currentDrawable = imageView.getDrawable();
         if(currentDrawable != null) {
@@ -85,7 +89,7 @@ public class BaseListAdapter extends BaseAdapter {
             TransitionDrawable transitionDrawable = new TransitionDrawable(arrayDrawable);
             transitionDrawable.setCrossFadeEnabled(true);
             imageView.setImageDrawable(transitionDrawable);
-            transitionDrawable.startTransition(500);
+            transitionDrawable.startTransition(fadeTime);
         } else {
             imageView.setImageDrawable(newDrawable);
         }

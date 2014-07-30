@@ -15,23 +15,11 @@ import java.util.ArrayList;
 /**
  * Created by jwashington on 7/25/14.
  */
-public class BasePagesFragment extends Fragment {
+public class BasePagesFragment extends BussedFragment {
 
     protected ViewPager pager;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ApplicationBus.getInstance().register(this);
 
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        ApplicationBus.getInstance().unregister(this);
-    }
 
     protected void configureActionBar(final ActionBar actionBar, ArrayList<ActionBar.Tab> tabs)
     {

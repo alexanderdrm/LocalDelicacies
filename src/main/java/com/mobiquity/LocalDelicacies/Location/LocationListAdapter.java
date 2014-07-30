@@ -95,7 +95,6 @@ public class LocationListAdapter extends BaseListAdapter
                             context.getResources().getDrawable(R.drawable.no_love));
                 }
                 ApplicationBus.getInstance().post(new DataUpdateEvent((ArrayList<Location>) items, null));
-
             }
         });
 

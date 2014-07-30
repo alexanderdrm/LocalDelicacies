@@ -4,21 +4,26 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import com.mobiquity.LocalDelicacies.BussedFragment;
 import com.mobiquity.LocalDelicacies.DatabaseHelper;
+import com.mobiquity.LocalDelicacies.NotifyFragmentsOfDataEvent;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.location.Location;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
 
 /**
  * Created by dalexander on 7/24/14.
  */
-public class DelicacyDetailFragment extends Fragment {
+public class DelicacyDetailFragment extends BussedFragment {
 
     public static final String TAG = "DELICACY_DETAIL_FRAGMENT";
 
@@ -29,6 +34,8 @@ public class DelicacyDetailFragment extends Fragment {
     private ImageView bookmarkButton;
     private RatingBar ratingBar;
 
+    private View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -38,9 +45,16 @@ public class DelicacyDetailFragment extends Fragment {
                 container,
                 false);
 
+        this.view = view;
 
         delicacy = new Delicacy(getArguments());
 
+        configureView(inflater.getContext());
+
+        return view;
+    }
+
+    private void configureView(Context context) {
         delicacyName = (TextView) view.findViewById(R.id.name);
         delicacyName.setText(delicacy.getTitle());
 
@@ -73,9 +87,8 @@ public class DelicacyDetailFragment extends Fragment {
 
         ratingBar.setRating(delicacy.getRatingInHalfStars() / 2f);
 
-        configureImage(inflater.getContext(), delicacy.getImageUrl(), delicacyImage);
+        configureImage(context, delicacy.getImageUrl(), delicacyImage);
         configureRatingBar();
-        return view;
     }
 
     private void configureImage(Context context, String imageUrl, ImageView imageView) {
@@ -107,5 +120,22 @@ public class DelicacyDetailFragment extends Fragment {
         SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
         delicacy.saveToDatabase(db);
         db.close();
+    }
+
+    @Subscribe
+    public void onDataUpdated(NotifyFragmentsOfDataEvent nfde) {
+
+        Context context = getActivity();
+        if(context == null) {
+            return; //we aren't attached, no need to update
+        }
+
+        Delicacy newData = DatabaseHelper.getDelicacyData(context, delicacy.getId());
+
+        delicacy = newData;
+
+        Log.d("com.mobiquity.LocalDelicacies.location.LocationDetailFragment", "Oh hey, updating live data");
+
+        configureView(context);
     }
 }

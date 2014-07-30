@@ -90,17 +90,17 @@ public class LocationPagesFragment extends BasePagesFragment {
         getActivity().getActionBar().removeAllTabs();
         getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
-        new AsyncTask<Void, Void, Void>() {
+        /*new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Void doInBackground(Void... voids) {*/
                 SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getWritableDatabase();
                 for(Location l: locations) {
-                    l.saveToDatabase(db);
+                    l.saveToDatabaseIfChanged(db);
                 }
-                //db.close();
-                return null;
+                db.close();
+                /*return null;
             }
-        }.execute();
+        }.execute();*/
 
         getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).edit().putInt("currentLocationTab",pager.getCurrentItem()).commit();
 

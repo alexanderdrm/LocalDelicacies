@@ -74,8 +74,13 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onPause() {
         super.onPause();
-        ApplicationBus.getInstance().unregister( this );
-        DatabaseHelper.getInstance(this).close();
+        ApplicationBus.getInstance().unregister(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //DatabaseHelper.getInstance(this).close();
     }
 
     @Override

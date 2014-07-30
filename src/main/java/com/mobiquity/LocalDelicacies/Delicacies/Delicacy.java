@@ -53,6 +53,7 @@ public class Delicacy extends BaseModel {
 
     public void setRatingInHalfStars(int ratingInHalfStars)
     {
+        changed = true;
         this.ratingInHalfStars = ratingInHalfStars;
     }
 
@@ -61,6 +62,7 @@ public class Delicacy extends BaseModel {
     }
 
     public void setCityid(int cityid) {
+        changed = true;
         this.cityid = cityid;
     }
 

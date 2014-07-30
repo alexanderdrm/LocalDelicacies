@@ -1,9 +1,11 @@
 package com.mobiquity.LocalDelicacies;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
 import com.mobiquity.LocalDelicacies.location.Location;
 
@@ -13,6 +15,9 @@ import java.util.ArrayList;
  * Created by dalexander on 7/25/14.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+
+    public static final String TAG = "com.mobiquity.LocalDelicacies.SQLiteOpenHelper";
+
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "LocalDelicacies.db";
@@ -158,6 +163,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null                                    // The sort order
         );
         return delCursor;
+    }
+
+    public void applyChange(ContentValues cv) {
+    }
+
+    @Override
+    public void close() {
+        Log.d(TAG, "close called on helper");
+        super.close();
     }
 
 }

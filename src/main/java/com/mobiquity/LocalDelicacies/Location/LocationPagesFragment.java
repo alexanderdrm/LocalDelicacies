@@ -2,9 +2,11 @@ package com.mobiquity.LocalDelicacies.location;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +28,17 @@ public class LocationPagesFragment extends BasePagesFragment {
     ArrayList<ActionBar.Tab> tabs;
 
     ArrayList<LocationListAdapter> adapters = new ArrayList<LocationListAdapter>();
+    SharedPreferences preferences;
+    private final String PREFERENCES_LOCATION_TAB = "current_location_tab";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_view_pager, container, false);
         locations = new ArrayList<Location>();
         pager = (ViewPager) rootView.findViewById(R.id.pager);
-        prepareAdapterList(getActivity());
+        preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
+
+        prepareAdapterList(inflater.getContext());
         asyncLoadLocationFromDatabase();
         return rootView;
     }
@@ -50,7 +56,7 @@ public class LocationPagesFragment extends BasePagesFragment {
                         .getString(R.string.bookmarked)));
         configureActionBar(actionBar, tabs);
 
-        int tabIndex = getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).getInt("currentLocationTab", 0);
+        int tabIndex = preferences.getInt(PREFERENCES_LOCATION_TAB, 0);
         pager.setCurrentItem(tabIndex);
     }
 
@@ -102,7 +108,9 @@ public class LocationPagesFragment extends BasePagesFragment {
             }
         }.execute();
 
-        getActivity().getSharedPreferences("delicacyPreferences",Context.MODE_PRIVATE).edit().putInt("currentLocationTab",pager.getCurrentItem()).commit();
+        preferences.edit()
+                .putInt(PREFERENCES_LOCATION_TAB,pager.getCurrentItem())
+                .commit();
 
     }
 

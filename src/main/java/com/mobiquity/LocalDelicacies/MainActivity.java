@@ -1,5 +1,6 @@
 package com.mobiquity.LocalDelicacies;
 
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class MainActivity extends FragmentActivity
     protected void onPause() {
         super.onPause();
         ApplicationBus.getInstance().unregister( this );
-        DatabaseHelper.getInstance(this).close();
+     //   DatabaseHelper.getInstance(this).close();
     }
 
     @Override
@@ -85,6 +86,12 @@ public class MainActivity extends FragmentActivity
         if(drawerToggle.onOptionsItemSelected(item))
             return true;
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 
     private void initDrawer()
@@ -140,14 +147,16 @@ public class MainActivity extends FragmentActivity
     @Subscribe
     public void onNavigationDrawerItemSelected(NavigationDrawerClickEvent event)
     {
+        CharSequence prevDrawerTitle = title;
         title = event.getTitle();
         drawerLayout.closeDrawer(Gravity.START);
-
-        try {
-            Fragment fragment = (Fragment) event.getFragmentClass().newInstance();
-            switchFragment(fragment, null, false);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!title.equals(prevDrawerTitle)) {
+            try {
+                Fragment fragment = (Fragment) event.getFragmentClass().newInstance();
+                switchFragment(fragment, null, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -176,6 +185,8 @@ public class MainActivity extends FragmentActivity
             switchFragment(fragment, bundle, true);
         }
     }
+
+
 
 
 }

@@ -154,6 +154,12 @@ public class MainActivity extends FragmentActivity
             try {
                 Fragment fragment = (Fragment) event.getFragmentClass().newInstance();
                 switchFragment(fragment, null, false);
+                if(isTablet)
+                {
+                    Fragment detailFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame_detail);
+                    if(detailFragment != null)
+                        getSupportFragmentManager().beginTransaction().remove(detailFragment).commit();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

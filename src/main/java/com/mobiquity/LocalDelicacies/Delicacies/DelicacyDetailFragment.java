@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import com.mobiquity.LocalDelicacies.BussedFragment;
-import com.mobiquity.LocalDelicacies.DatabaseHelper;
-import com.mobiquity.LocalDelicacies.NotifyFragmentsOfDataEvent;
-import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.*;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 
 /**
@@ -35,6 +35,8 @@ public class DelicacyDetailFragment extends BussedFragment {
     private RatingBar ratingBar;
 
     private View view;
+
+    private boolean ignoreNextDataUpdate = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -54,7 +56,7 @@ public class DelicacyDetailFragment extends BussedFragment {
         return view;
     }
 
-    private void configureView(Context context) {
+    private void configureView(final Context context) {
         delicacyName = (TextView) view.findViewById(R.id.name);
         delicacyName.setText(delicacy.getTitle());
 
@@ -76,14 +78,22 @@ public class DelicacyDetailFragment extends BussedFragment {
             public void onClick(View view) {
                 delicacy.setBookmarked(!delicacy.isBookmarked());
                 if (delicacy.isBookmarked()) {
-                    bookmarkButton.setImageResource(R.drawable.love);
+                    //bookmarkButton.setImageResource(R.drawable.love);
+                    UIUtil.setImageDrawableCrossFade(bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.love));
                 } else {
-                    bookmarkButton.setImageResource(R.drawable.no_love);
+                    //bookmarkButton.setImageResource(R.drawable.no_love);
+                    UIUtil.setImageDrawableCrossFade(bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.no_love));
                 }
+
+                ignoreNextDataUpdate = true;
+                ArrayList<Delicacy> delicacyWrapper = new ArrayList<Delicacy>();
+                delicacyWrapper.add(delicacy);
+                ApplicationBus.getInstance().post(new DataUpdateEvent(null, delicacyWrapper));
             }
+
         });
-
-
 
         ratingBar.setRating(delicacy.getRatingInHalfStars() / 2f);
 
@@ -107,8 +117,17 @@ public class DelicacyDetailFragment extends BussedFragment {
 
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(!fromUser) return;
+
                 int temp = Math.round(rating * 2);
                 delicacy.setRatingInHalfStars(temp);
+
+                ratingBar.setRating(temp / 2f);
+
+                ignoreNextDataUpdate = true;
+                ArrayList<Delicacy> delicacyWrapper = new ArrayList<Delicacy>();
+                delicacyWrapper.add(delicacy);
+                ApplicationBus.getInstance().post(new DataUpdateEvent(null, delicacyWrapper));
             }
         });
     }
@@ -125,6 +144,11 @@ public class DelicacyDetailFragment extends BussedFragment {
     @Subscribe
     public void onDataUpdated(NotifyFragmentsOfDataEvent nfde) {
 
+        if(ignoreNextDataUpdate) {
+            ignoreNextDataUpdate = false;
+            return;
+        }
+
         Context context = getActivity();
         if(context == null) {
             return; //we aren't attached, no need to update
@@ -133,8 +157,6 @@ public class DelicacyDetailFragment extends BussedFragment {
         Delicacy newData = DatabaseHelper.getDelicacyData(context, delicacy.getId());
 
         delicacy = newData;
-
-        Log.d("com.mobiquity.LocalDelicacies.location.LocationDetailFragment", "Oh hey, updating live data");
 
         configureView(context);
     }

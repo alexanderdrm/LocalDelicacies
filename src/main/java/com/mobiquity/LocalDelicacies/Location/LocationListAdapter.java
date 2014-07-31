@@ -25,6 +25,8 @@ import java.util.ArrayList;
 public class LocationListAdapter extends BaseListAdapter
 {
 
+    boolean ignoreNextDataUpdate = false;
+
     public LocationListAdapter(Context context, ArrayList<Location> items)
     {
         this(context, items, new PermissiveFilter());
@@ -37,6 +39,7 @@ public class LocationListAdapter extends BaseListAdapter
     @Override
     public View getView( int position, View convertView, ViewGroup parent )
     {
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         final Location location = (Location) items.get( position );
 
@@ -73,13 +76,9 @@ public class LocationListAdapter extends BaseListAdapter
                 .into(holder.image);
 
         if(location.isBookmarked()) {
-            //holder.bookmarkButton.setImageResource(R.drawable.love);
-            setImageDrawableCrossFade(holder.bookmarkButton,
-                    context.getResources().getDrawable(R.drawable.love));
+            holder.bookmarkButton.setImageResource(R.drawable.love);
         } else {
-            //holder.bookmarkButton.setImageResource(R.drawable.no_love);
-            setImageDrawableCrossFade(holder.bookmarkButton,
-                    context.getResources().getDrawable(R.drawable.no_love));
+            holder.bookmarkButton.setImageResource(R.drawable.no_love);
         }
 
         holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
@@ -88,12 +87,14 @@ public class LocationListAdapter extends BaseListAdapter
                 location.setBookmarked(!location.isBookmarked());
 
                 if(location.isBookmarked()) {
-                    setImageDrawableCrossFade(holder.bookmarkButton,
+                    UIUtil.setImageDrawableCrossFade(holder.bookmarkButton,
                             context.getResources().getDrawable(R.drawable.love));
                 } else {
-                    setImageDrawableCrossFade(holder.bookmarkButton,
+                    UIUtil.setImageDrawableCrossFade(holder.bookmarkButton,
                             context.getResources().getDrawable(R.drawable.no_love));
                 }
+                //if we stop listening to the events here, then
+                ignoreNextDataUpdate = true;
                 ApplicationBus.getInstance().post(new DataUpdateEvent((ArrayList<Location>) items, null));
             }
         });
@@ -116,6 +117,10 @@ public class LocationListAdapter extends BaseListAdapter
 
 
     public void updateData(ArrayList<Location> locs) {
+        if(ignoreNextDataUpdate) {
+            ignoreNextDataUpdate = false;
+            return;
+        }
         items = locs;
 
         notifyDataSetChanged();

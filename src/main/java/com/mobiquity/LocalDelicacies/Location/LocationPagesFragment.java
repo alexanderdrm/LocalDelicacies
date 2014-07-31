@@ -84,11 +84,6 @@ public class LocationPagesFragment extends BasePagesFragment {
         pager.setAdapter( new BasePagesAdapter(views));
     }
 
-    @Subscribe
-    public void onDataUpdated(NotifyFragmentsOfDataEvent notifyFragmentsOfDataEvent) {
-        asyncLoadLocationFromDatabase();
-    }
-
     @Override
     public void onPause() {
         super.onPause();
@@ -111,6 +106,11 @@ public class LocationPagesFragment extends BasePagesFragment {
                 .putInt(PREFERENCES_LOCATION_TAB,pager.getCurrentItem())
                 .commit();
 
+    }
+
+    @Subscribe
+    public void onDataUpdated(NotifyFragmentsOfDataEvent notifyFragmentsOfDataEvent) {
+        asyncLoadLocationFromDatabase();
     }
 
     private void asyncLoadLocationFromDatabase()

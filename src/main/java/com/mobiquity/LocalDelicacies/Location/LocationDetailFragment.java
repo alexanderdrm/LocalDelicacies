@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.mobiquity.LocalDelicacies.*;
 import com.mobiquity.LocalDelicacies.delicacies.Delicacy;
+import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 public class LocationDetailFragment extends BasePagesFragment {
 
     Location location;
+
+    boolean ignoreNextDataUpdate = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -56,12 +59,12 @@ public class LocationDetailFragment extends BasePagesFragment {
         db.close();
     }
 
-    private void prepareAdapter(Context context)
+    private void prepareAdapter(final Context context)
     {
         TextView title;
         ImageView image;
         TextView description;
-        ImageView bookmarkButton;
+        final ImageView bookmarkButton;
         RatingBar ratingBar;
 
         //Setting up the location Details
@@ -86,6 +89,27 @@ public class LocationDetailFragment extends BasePagesFragment {
         } else {
             bookmarkButton.setImageResource(R.drawable.no_love);
         }
+
+        bookmarkButton.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location.setBookmarked(!location.isBookmarked());
+
+                if(location.isBookmarked()) {
+                    UIUtil.setImageDrawableCrossFade(bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.love));
+                } else {
+                    UIUtil.setImageDrawableCrossFade(bookmarkButton,
+                            context.getResources().getDrawable(R.drawable.no_love));
+                }
+
+                ArrayList<Location> locationWrapper = new ArrayList<Location>();
+                locationWrapper.add(location);
+                ignoreNextDataUpdate = true;
+                ApplicationBus.getInstance().post(new DataUpdateEvent(locationWrapper, null));
+            }
+        });
+
         ratingBar = (RatingBar) locationView.findViewById(R.id.ratingBar);
         ratingBar.setVisibility(View.GONE);
 
@@ -111,7 +135,7 @@ public class LocationDetailFragment extends BasePagesFragment {
             description = (TextView) delicacyView.findViewById(R.id.description);
             description.setText(delicacy.getDescription());
 
-            bookmarkButton = (ImageView) delicacyView.findViewById(R.id.bookmarked_button);
+            //bookmarkButton = (ImageView) delicacyView.findViewById(R.id.bookmarked_button);
 
             ratingBar = (RatingBar) delicacyView.findViewById(R.id.ratingBar);
             views.add(delicacyView);
@@ -124,6 +148,11 @@ public class LocationDetailFragment extends BasePagesFragment {
     @Subscribe
     public void onDataUpdated(NotifyFragmentsOfDataEvent nfde) {
 
+        if(ignoreNextDataUpdate) {
+            ignoreNextDataUpdate = false;
+            return;
+        }
+
         Context context = getActivity();
         if(context == null) {
             return; //we aren't attached, no need to update
@@ -132,8 +161,6 @@ public class LocationDetailFragment extends BasePagesFragment {
         Location newData = DatabaseHelper.getLocationData(context, location.getId());
 
         location = newData;
-
-        Log.d("com.mobiquity.LocalDelicacies.location.LocationDetailFragment", "Oh hey, updating live data");
 
         prepareAdapter(context);
     }

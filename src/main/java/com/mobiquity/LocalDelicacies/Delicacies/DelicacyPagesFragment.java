@@ -138,7 +138,6 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
 
     }
 
-
     static class DelicacyLoaderTask extends AsyncTaskLoader<ArrayList<Delicacy>>
     {
         Context context;
@@ -149,8 +148,8 @@ public class DelicacyPagesFragment extends BasePagesFragment implements LoaderMa
 
         @Override
         public ArrayList<Delicacy> loadInBackground() {
-               return DatabaseHelper.getDelicacies(context, null);
-            }
+            return DatabaseHelper.getDelicacies(context, null);
+        }
     }
 
 

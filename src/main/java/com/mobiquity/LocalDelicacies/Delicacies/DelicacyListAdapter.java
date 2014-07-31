@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.mobiquity.LocalDelicacies.ApplicationBus;
 import com.mobiquity.LocalDelicacies.BaseListAdapter;
 import com.mobiquity.LocalDelicacies.R;
+import com.mobiquity.LocalDelicacies.UIUtil;
 import com.mobiquity.LocalDelicacies.filters.Filter;
 import com.mobiquity.LocalDelicacies.http.DataUpdateEvent;
 import com.mobiquity.LocalDelicacies.location.Location;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
  */
 public class DelicacyListAdapter extends BaseListAdapter {
 
+    boolean ignoreNextDataUpdate = false;
 
     public DelicacyListAdapter(Context context, ArrayList<Delicacy> items, Filter filter) {
         super(context, items, filter);
@@ -66,15 +68,12 @@ public class DelicacyListAdapter extends BaseListAdapter {
 
         if(delicacy.isBookmarked())
         {
-            setImageDrawableCrossFade(holder.bookmarkButton,
-                    context.getResources().getDrawable(R.drawable.love));
+            holder.bookmarkButton.setImageResource(R.drawable.love);
         }
         else
         {
-            setImageDrawableCrossFade(holder.bookmarkButton,
-                    context.getResources().getDrawable(R.drawable.no_love));
+            holder.bookmarkButton.setImageResource(R.drawable.no_love);
         }
-
 
         holder.bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,14 +81,15 @@ public class DelicacyListAdapter extends BaseListAdapter {
                 delicacy.setBookmarked(!delicacy.isBookmarked());
                 if(delicacy.isBookmarked())
                 {
-                    setImageDrawableCrossFade(holder.bookmarkButton,
+                    UIUtil.setImageDrawableCrossFade(holder.bookmarkButton,
                             context.getResources().getDrawable(R.drawable.love));
                 }
                 else
                 {
-                    setImageDrawableCrossFade(holder.bookmarkButton,
+                    UIUtil.setImageDrawableCrossFade(holder.bookmarkButton,
                             context.getResources().getDrawable(R.drawable.no_love));
                 }
+                ignoreNextDataUpdate = true;
                 ApplicationBus.getInstance().post(new DataUpdateEvent(null, (ArrayList<Delicacy>) items));
             }
         });
@@ -122,6 +122,11 @@ public class DelicacyListAdapter extends BaseListAdapter {
     }
 
     public void updateData(ArrayList<Delicacy> locs) {
+        if(ignoreNextDataUpdate) {
+            ignoreNextDataUpdate = false;
+            return;
+        }
+
         items = locs;
         notifyDataSetChanged();
     }
